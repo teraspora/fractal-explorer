@@ -27,7 +27,7 @@ function draw() {
         var px = Math.floor(pixelNum % W)
         var py = Math.floor(pixelNum / W);
 
-        imgData.data[i] = 32;
+        imgData.data[i] = 16;
         imgData.data[i+1] = 0;
         imgData.data[i+2] = iterate(f, pixelToComplex(px, py));
         imgData.data[i+3] = 255;
