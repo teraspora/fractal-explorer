@@ -12,24 +12,30 @@
 		    right: 0;
 		    bottom: 0;
 		    left: 0;
-		    width: 600px;
-		    height: 600px;
-		    background-color: black;
+		    width: 800px;
+		    height: 800px;
+		    background-color: white;
 		    border-radius: 3px;
 		}
 	</style>
 </head>
 <body>
 	<div id = canvas-wrapper>
-		<canvas id="myCanvas" width="544" height="544" style="border:2px solid black;">
+		<canvas id="root-canvas" style="border:0px solid black;">
 			Your browser does not support the HTML5 canvas tag.
 		</canvas>
 	</div>
 <script>
-
-	var c = document.getElementById("myCanvas");
+	const W = 768;
+	const H = 768;
+	const xSpan = 4;
+	const ySpan = 4;
+	var c = document.getElementById("root-canvas");
+	c.width = W;
+	c.height = H;
 	var ctx = c.getContext("2d");
-	var imgData = ctx.createImageData(512, 512);
+
+	var imgData = ctx.createImageData(W, H);
 
 	draw();
 
@@ -46,10 +52,10 @@
 		for (i = 0; i < imgData.data.length; i += 4) {
 
 			var pixelNum = Math.floor(i / 4);
-			var px = Math.floor(pixelNum % 512)
-			var py = Math.floor(pixelNum / 512);
+			var px = Math.floor(pixelNum % W)
+			var py = Math.floor(pixelNum / W);
 
-		    imgData.data[i] = 128;
+		    imgData.data[i] = 64;
 		    imgData.data[i+1] = 0;
 		    imgData.data[i+2] = iterate(f, pixelToComplex(px, py));
 		    imgData.data[i+3] = 255;
@@ -82,7 +88,7 @@
 	}
 
 	function pixelToComplex(px, py) {
-		return {re: px / 128 - 2, im: 2 - py / 128}
+		return {re: px / (W / 4) - xSpan / 2, im: ySpan / 2 - py / (H / 4)}
 	}
 
 	// attach handler to click event
@@ -91,8 +97,7 @@
 
 </script>
 
-<p><strong>Note:</strong> The canvas tag is not supported in Internet 
-Explorer 8 and earlier versions.</p>
+<p><strong>Note:</strong> IE8 and earlier don't support the HTML5 &lt;canvas&gt; tag: please install a modern browser!</p>
 
 </body>
 </html>
