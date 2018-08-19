@@ -4,9 +4,9 @@ var aspectRatio = W / H;
 
 // Define parameters of the orthogonal rectangular subset of the Complex plane we're looking at
 
+
 var zMin = {re: -2, im: -2};
 var zMax = {re: 2, im: 2};
-
 
 var xSpan = zMax.re - zMin.re;
 var ySpan = zMax.im - zMin.im;
@@ -20,8 +20,10 @@ var bottomRightX = W;
 var bottomRightY = H;
 
 var dragging = false;
+var colourShift = 0;
 
-
+var zoomFactor = 2.0;
+var numPixelsToMove = 100;
 
 const colours = ["#000000", "#56cbff", "#000000",  
          "#ff7ccd", "#000000", "#f93457", "#000000",  "#305cff",                  
@@ -50,15 +52,19 @@ function draw() {
         // var z = {re: zMin.re + px * xIncr, im: zMin.im + py * yIncr};    // convert pixel to Complex
         var z = pixelToComplex(px, py);
         var iterationCount = iterate(f, z);     // iterate the function and get the iteration count 
-        var colourIndex = iterationCount * colourMappingFactor; // map iteration count to a colour
+        var colourIndex = (iterationCount * colourMappingFactor + colourShift) % colours.length; // map iteration count to a colour
         var firstColourIndex = Math.floor(colourIndex);
         var interpolationFactor = colourIndex % 1;
-        var finalColour = interpolateColour(hexrgb(colours[firstColourIndex]), hexrgb(colours[firstColourIndex + 1]), interpolationFactor);
+        var finalColour = interpolateColour(hexrgb(colours[firstColourIndex]), hexrgb(colours[(firstColourIndex + 1) % colours.length]), interpolationFactor);
         imgData.data[i] = finalColour[0];
         imgData.data[i+1] = finalColour[1];
         imgData.data[i+2] = finalColour[2];
         imgData.data[i+3] = 255;
-        // if (px === W / 2) console.log(iterationCount);
+        if (px === W / 2) console.log({
+            "iterationCount": iterationCount,
+            "colourIndex": colourIndex,
+            "interpolationFactor": interpolationFactor,
+            "finalColour": finalColour});
     }
     gc.putImageData(imgData, 16, 16);
 }
@@ -150,10 +156,7 @@ function dragFinishedHandler(e) {
 
     zMin = pixelToComplex(topLeftX, topLeftY);
     zMax = {re: xMin + (topLeftX + newWidth) / W * xSpan, im: yMin + (topLeftY + newHeight) / H * ySpan};
-    xSpan = zMax.re - zMin.re;
-    ySpan = zMax.im - zMin.im;
-    xIncr = xSpan / W;
-    yIncr = ySpan / H;
+    updateGeometryVars();
     draw();
 }
 
@@ -179,8 +182,18 @@ function getMousePos(c, e) {       // got from https://codepen.io/chrisjaime/pen
 
 // attach handlers to click  and mousedown events
 // document.addEventListener('click', clickHandler);
-document.addEventListener("mousedown", dragStartHandler);
-document.addEventListener('click', clickHandler);
+document.getElementById("root-canvas").addEventListener("mousedown", dragStartHandler);
+document.getElementById("root-canvas").addEventListener('click', clickHandler);
+document.getElementById("zoom-in").addEventListener('click', scale);
+document.getElementById("zoom-out").addEventListener('click', scale);
+document.getElementById("move-left").addEventListener('click', translate);
+document.getElementById("move-right").addEventListener('click', translate);
+document.getElementById("move-up").addEventListener('click', translate);
+document.getElementById("move-down").addEventListener('click', translate);
+document.getElementById("reset").addEventListener('click', reset);
+document.getElementById("colour-shift").addEventListener('click', shiftColours);
+
+
 // ====================
 
 // COLOUR STUFF
@@ -208,4 +221,68 @@ function hexrgb(hexColour) {
         parseInt(rgb[1], 16),
         parseInt(rgb[2], 16)
     ] : null;
+}
+
+/*
+=============================================================================================================
+                                                     {re: , im: }
+*/ 
+
+// UI FUNCTIONS
+// ============
+
+function shiftColours() {
+    colourShift = (colourShift + 1) % colours.length;
+    draw();
+}
+
+function scale() {
+    var zoomRatio = this.id === "zoom-out" ? zoomFactor : 1.0 / zoomFactor;
+    var halfDiag = {re: xSpan / 2, im: ySpan / 2};
+    var centre =  {re: zMin.re + halfDiag.re, im: zMin.im + halfDiag.im};
+    zMin = {re: centre.re - halfDiag.re * zoomRatio, im: centre.im - halfDiag.im * zoomRatio};
+    zMax = {re: centre.re + halfDiag.re * zoomRatio, im: centre.im + halfDiag.im * zoomRatio};
+    updateGeometryVars();
+    draw();
+}
+
+function translate() {
+    var windowShiftDeltaX = (zMax.re - zMin.re) / W * numPixelsToMove;
+    var windowShiftDeltaY = (zMax.im - zMin.im) / H * numPixelsToMove;
+    
+    if (this.id === "move-left") {
+        zMin.re += windowShiftDeltaX;
+        zMax.re += windowShiftDeltaX;
+    }
+    else if (this.id === "move-right") {
+        zMin.re -= windowShiftDeltaX;
+        zMax.re -= windowShiftDeltaX;
+    }
+    else if (this.id === "move-up") {
+        zMin.im += windowShiftDeltaY;
+        zMax.im += windowShiftDeltaY;
+    }
+    else if (this.id === "move-down") {
+        zMin.im -= windowShiftDeltaY;
+        zMax.im -= windowShiftDeltaY;
+    }
+    updateGeometryVars();
+    draw();
+}
+
+// GEOMETRY STUFF
+// ==============
+
+function updateGeometryVars() {
+    xSpan = zMax.re - zMin.re;
+    ySpan = zMax.im - zMin.im;
+    xIncr = xSpan / W;
+    yIncr = ySpan / H;
+}
+
+function reset() {
+    zMin = {re: -2, im: -2};
+    zMax = {re: 2, im: 2};
+    updateGeometryVars();
+    draw();
 }
