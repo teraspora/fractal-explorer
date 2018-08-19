@@ -51,7 +51,7 @@ function draw() {
         var py = Math.floor(pixelNum / W);
         // var z = {re: zMin.re + px * xIncr, im: zMin.im + py * yIncr};    // convert pixel to Complex
         var z = pixelToComplex(px, py);
-        var iterationCount = iterate(f, z);     // iterate the function and get the iteration count 
+        var iterationCount = iterate(f3, z);     // iterate the function and get the iteration count 
         var colourIndex = (iterationCount * colourMappingFactor + colourShift) % colours.length; // map iteration count to a colour
         var firstColourIndex = Math.floor(colourIndex);
         var interpolationFactor = colourIndex % 1;
@@ -60,22 +60,31 @@ function draw() {
         imgData.data[i+1] = finalColour[1];
         imgData.data[i+2] = finalColour[2];
         imgData.data[i+3] = 255;
-        if (px === W / 2) console.log({
-            "iterationCount": iterationCount,
-            "colourIndex": colourIndex,
-            "interpolationFactor": interpolationFactor,
-            "finalColour": finalColour});
+        // if (px === W / 2) console.log({
+        //     "iterationCount": iterationCount,
+        //     "colourIndex": colourIndex,
+        //     "interpolationFactor": interpolationFactor,
+        //     "finalColour": finalColour});
     }
     gc.putImageData(imgData, 16, 16);
 }
 
-function f(z, c) {		// standard Mandelbrot / Julia of "z -> z squared plus c"
-    var x = z.re;
-    var y = z.im;
-    var newX = x * x - y * y + c.re;
-    var newY = 2.0 * x * y + c.im;
-    return {re: newX, im: newY};
+// function f(z, c) {		// standard Mandelbrot / Julia of "z -> z squared plus c"
+//     var x = z.re;
+//     var y = z.im;
+//     var newX = x * x - y * y + c.re;
+//     var newY = 2.0 * x * y + c.im;
+//     return {re: newX, im: newY};
+// }
+
+function f(z, c) {      // standard Mandelbrot / Julia of "z -> z squared plus c"
+    return add(sq(z), c);
 }
+
+function f3(z, c) {      // standard Mandelbrot / Julia of "z -> z squared plus c"
+    return add(pow(z, 3), c);
+}
+
 
 function iterate(func, z) {
     var numIterations = 0;
