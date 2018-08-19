@@ -1,15 +1,16 @@
 body {
 	background: black;
 }
-#canvas-wrapper {
+#root-canvas {
 	position: absolute;
     margin: auto;
     top: 0;
     right: 0;
     bottom: 0;
     left: 0;
-    width: 786px;
-    height: 786px;
-    background-color: #777;
+    width: 1000px;
+    height: 1000px;
+    background-color: black;
     border-radius: 3px;
+    border: 0px;
 }

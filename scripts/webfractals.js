@@ -1,16 +1,31 @@
-const W = 768;
-const H = 768;
+const W = 1000;
+const H = 1000;
+var aspectRatio = W / H;
 
+// Define parameters of the orthogonal rectangular subset of the Complex plane we're looking at
 
 var zMin = {re: -2, im: -2};
 var zMax = {re: 2, im: 2};
+
+
 var xSpan = zMax.re - zMin.re;
 var ySpan = zMax.im - zMin.im;
+var xIncr = xSpan / W;
+var yIncr = ySpan / H;
+
+// pixel coords for drag/zoom
+var topLeftX = 0;
+var topLeftY = 0;
+var bottomRightX = W;
+var bottomRightY = H;
+
+var dragging = false;
 
 
-const colours = ["#000000", "#ffdcb0"  ,  "#000000",  "#c33664" ,  "#000000",  "#56cbff" ,  "#000000",  
-         "#ff7ccd" ,  "#000000",  "#f93457" ,  "#000000",  "#305cff" ,                  
-         "#000000",  "#008aff" ,  "#000000"];
+
+const colours = ["#000000", "#56cbff", "#000000",  
+         "#ff7ccd", "#000000", "#f93457", "#000000",  "#305cff",                  
+         "#000000", "#008aff", "#000000", "#000000", "#c33664", "#ffdcb0", "#000000"];
 
 const canv = document.getElementById("root-canvas");
 canv.width = W;
@@ -32,8 +47,10 @@ function draw() {
         // Get x and y coords of pixel
         var px = Math.floor(pixelNum % W)
         var py = Math.floor(pixelNum / W);
-        var iterationCount = iterate(f, pixelToComplex(px, py));
-        var colourIndex = iterationCount * colourMappingFactor;
+        // var z = {re: zMin.re + px * xIncr, im: zMin.im + py * yIncr};    // convert pixel to Complex
+        var z = pixelToComplex(px, py);
+        var iterationCount = iterate(f, z);     // iterate the function and get the iteration count 
+        var colourIndex = iterationCount * colourMappingFactor; // map iteration count to a colour
         var firstColourIndex = Math.floor(colourIndex);
         var interpolationFactor = colourIndex % 1;
         var finalColour = interpolateColour(hexrgb(colours[firstColourIndex]), hexrgb(colours[firstColourIndex + 1]), interpolationFactor);
@@ -41,7 +58,7 @@ function draw() {
         imgData.data[i+1] = finalColour[1];
         imgData.data[i+2] = finalColour[2];
         imgData.data[i+3] = 255;
-        if (px === W / 2) console.log(iterationCount);
+        // if (px === W / 2) console.log(iterationCount);
     }
     gc.putImageData(imgData, 16, 16);
 }
@@ -64,19 +81,25 @@ function iterate(func, z) {
     return numIterations;
 }
 
-function cmod2(z) {
-    var x = z.re;
-    var y = z.im;
+function cmod2(w) {
+    var x = w.re;
+    var y = w.im;
     return x * x + y * y;
 }
 
 function pixelToComplex(px, py) {
-    return {re: px / (W / xSpan) - xSpan / 2, im: ySpan / 2 - py / (H / ySpan)}
+    return {re: px * xIncr + zMin.re, im: py * yIncr + zMin.im};
 }
 
-// MOUSE CLICK HANDLING
-// ====================
+// MOUSE HANDLING
+// ==============
+
 function clickHandler(e) {
+    if (dragging) {
+        dragging = false;
+        return;
+    }
+    console.log("Should not get here after a drag!");
     if (isJulia) {
         isJulia = false;
         draw();
@@ -92,24 +115,77 @@ function clickHandler(e) {
     draw();
 }
 
+function dragStartHandler(e) {
+    e = e || window.event;
+    var pixel = getMousePos(canv, e);
+    topLeftX = pixel.x;
+    topLeftY = pixel.y;
+    dragging = true;
+    console.log("Drag started at (" + topLeftX + ", " + topLeftY + ")");
+    document.addEventListener("mouseup", dragFinishedHandler);
+}
+
+function dragFinishedHandler(e) {
+    e = e || window.event;
+    var pixel = getMousePos(canv, e);
+    bottomRightX = pixel.x;
+    bottomRightY = pixel.y;
+    // if only a few pixels it's not a real drag, it's a click:
+    if (Math.abs(bottomRightX - topLeftX) < 5 || Math.abs(bottomRightY - topLeftY) < 5) {
+        dragging = false;
+        return;
+    }
+
+    console.log("Drag finished at (" + bottomRightX + ", " + bottomRightY + ")");
+    document.removeEventListener("mouseup", dragFinishedHandler);
+    var pixelSpanX = bottomRightX - topLeftX;
+    var pixelSpanY = bottomRightY - topLeftY;
+    var dragLength2 = pixelSpanX * pixelSpanX + pixelSpanY * pixelSpanY; // Pythagoras!
+    var newHeight = Math.sqrt(dragLength2 / (1 + aspectRatio * aspectRatio));
+    var newWidth = newHeight * aspectRatio;
+    var xMin = zMin.re;
+    var yMin = zMin.im;
+    var xMax = zMax.re;
+    var yMax = zMax.im;
+
+    zMin = pixelToComplex(topLeftX, topLeftY);
+    zMax = {re: xMin + (topLeftX + newWidth) / W * xSpan, im: yMin + (topLeftY + newHeight) / H * ySpan};
+    xSpan = zMax.re - zMin.re;
+    ySpan = zMax.im - zMin.im;
+    xIncr = xSpan / W;
+    yIncr = ySpan / H;
+    draw();
+}
+
 function getMousePos(c, e) {       // got from https://codepen.io/chrisjaime/pen/lcEpn; takes a canvas and an event (mouse-click)
     var bounds = c.getBoundingClientRect();
     return {
         x: e.clientX - bounds.left,
         y: e.clientY - bounds.top
-    };
+    }
 }
 
+// function debugZooming(e) {
+//     e = e || window.event;
+//     var pixel = getMousePos(canv, e);
+//     var x = pixel.x;
+//     var y = pixel.y;
+//     var w = pixelToComplex(x, y); 
+//     console.log("px = " + x + ", py = " + y);
+//     console.log("xIncr = " + xIncr + "\nyIncr = " + yIncr + "\nzMin = " + zMin.re + " + " + zMin.im + " i");
+       
+//     console.log("Clicked at (" + x + ", " + y + "):  maps to " + w.re + " + " + w.im + " i");
+// }
 
-// attach handler to click event
-if (document.attachEvent) document.attachEvent('onclick', clickHandler);
-else document.addEventListener('click', clickHandler);
-
+// attach handlers to click  and mousedown events
+// document.addEventListener('click', clickHandler);
+document.addEventListener("mousedown", dragStartHandler);
+document.addEventListener('click', clickHandler);
 // ====================
 
 // COLOUR STUFF
 // ====================
-// Th following code I stole from https://codepen.io/njmcode/pen/axoyD and slightly modified...
+// The following code I stole from https://codepen.io/njmcode/pen/axoyD and slightly modified...
 
 // Interpolates two [r,g,b] colors and returns an [r,g,b] of the result
 // Taken from the awesome ROT.js roguelike dev library at
@@ -122,7 +198,7 @@ function interpolateColour(colour1, colour2, factor) {
     rgb[i] = Math.round(rgb[i] + factor*(colour2[i]-colour1[i]));
   }
   return rgb;
-};
+}
 
 // Converts a #ffffff hex string into an [r,g,b] array
 function hexrgb(hexColour) {
@@ -132,4 +208,4 @@ function hexrgb(hexColour) {
         parseInt(rgb[1], 16),
         parseInt(rgb[2], 16)
     ] : null;
-};
+}
