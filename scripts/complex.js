@@ -74,7 +74,7 @@ function pow(z, n) {
 		case 1:
 			return z;
 		case 2:		// unnecessary case but power 2 is most common so maybe this is a slight optimisation...
-			return sq(z);			
+			return mult(z, z);			
 		default:			
 			return (n % 2 == 0) ? sq(pow(z, n / 2)) : mult(pow(z, n-1), z);
 	}
@@ -91,5 +91,11 @@ function dot(z, w) {		// Note: vector dot product returns a real value
 	return z.re * w.re + z.im * w.im;
 }
 
+function rotate(z, phi) {
+		return mult(z, polar(1.0, phi));
+}
 
+// ======================================================================
+
+	
 	
