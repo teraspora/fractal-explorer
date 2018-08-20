@@ -50,10 +50,10 @@ button:hover {
     background-color: #e6580e;
 }
 
-#max-iterations {
+#max-iterations, #exponent {
     background-color: #ba1257;
     color: black;
-    padding: 16px 32px;
+    padding: 6px 24px;
     text-align: center;
     font-size: 24px;
     cursor: pointer;
@@ -63,7 +63,7 @@ button:hover {
     border-radius: 10px;
 }
 
-#max-iterations:hover {
+#max-iterations:hover, #exponent:hover {
     background-color: #00125c;
     color: white;
     border: 2px solid white;

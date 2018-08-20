@@ -88,11 +88,11 @@ function draw() {
         imgData.data[i+2] = finalColour[2];
         imgData.data[i+3] = 255;
         
-        if (px === W / 2) console.log({
-            "iterationCount": iterationCount,
-            "firstColourIndex": firstColourIndex,
-            "interpolationFactor": interpolationFactor,
-            "finalColour": finalColour});
+        // if (px === W / 2) console.log({
+        //     "iterationCount": iterationCount,
+        //     "firstColourIndex": firstColourIndex,
+        //     "interpolationFactor": interpolationFactor,
+        //     "finalColour": finalColour});
     }
     gc.putImageData(imgData, 16, 16);
 }
@@ -218,6 +218,9 @@ document.getElementById("max-iterations").addEventListener('input', function() {
     maxIterations = this.value;
 });
 document.getElementById("iterate").addEventListener('click', draw);
+document.getElementById("exponent").addEventListener('input', function() {
+    exponent = this.value;
+});
 
 
 // ====================
