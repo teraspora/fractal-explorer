@@ -7,6 +7,11 @@ var aspectRatio = W / H;
 var zMin = {re: -2, im: -2};
 var zMax = {re: 2, im: 2};
 
+var exponent = 2;
+
+const escapeRadius = 6;
+var escapeRadiusSquared = escapeRadius * escapeRadius;
+
 var xSpan = zMax.re - zMin.re;
 var ySpan = zMax.im - zMin.im;
 var xIncr = xSpan / W;
@@ -24,9 +29,15 @@ var colourShift = 0;
 var zoomFactor = 2.0;
 var numPixelsToMove = 100;
 
-const colours = ["#000000", "#56cbff", "#000000",  
-         "#ff7ccd", "#000000", "#f93457", "#000000",  "#305cff",                  
-         "#000000", "#008aff", "#000000", "#000000", "#c33664", "#ffdcb0", "#000000"];
+// const colours = ["#000000", "#56cbff", "#000000",  
+//          "#ff7ccd", "#000000", "#f93457", "#000000",  "#305cff",                  
+//          "#000000", "#008aff", "#000000", "#000000", "#c33664", "#ffdcb0", "#000000"];
+
+
+const colours = ["#000000", "#4d5dff", "#000000", "#81002b", "#000000", "#2c95ff", "#000000",  
+                 "#ffe1ff", "#000000", "#ba1257", "#000000", "#051d78",                 
+                 "#000000", "#ffd2ff", "#000000", "#e30568", "#000000", "#010335", "#000000"];
+var modifiedColours = true;
 
 const canv = document.getElementById("root-canvas");
 canv.width = W;
@@ -36,25 +47,40 @@ var imgData = gc.createImageData(W, H);
 
 var isJulia = false;
 var juliaPoint = ZERO;
-var maxIterations = 512;
+var maxIterations = 64;
 
 draw();
 
-function draw() {
-    var colourMappingFactor = (colours.length - 2) / maxIterations; 
-    for (i = 0; i < imgData.data.length; i += 4) {      // image data has 4 entries (RGBA) for each pixel, scanning L to R for each line
+// ==============================================================================
 
+function draw() {
+    var numFirstColours = colours.length - 1; 
+    var colourMappingFactor = (colours.length - 2) / maxIterations; 
+    for (i = 1; i < imgData.data.length; i += 4) {      // image data has 4 entries (RGBA) for each pixel, scanning L to R for each line
+            // Why start at 1, not 0?  Well, had it at zero but a reddish pallette produced greenish colours; shifting one byte seemed
+            // to produce correct colours so maybe byte 0 is a header byte or magic number??   For now I'll just leave it at 1.
         var pixelNum = Math.floor(i / 4);
         // Get x and y coords of pixel
         var px = Math.floor(pixelNum % W)
         var py = Math.floor(pixelNum / W);
         var z = pixelToComplex(px, py);
 
+        // The beating heart of this program!...
         var iterationCount = iterate(f, z);     // iterate the function and get the iteration count 
 
-        var colourIndex = (iterationCount * colourMappingFactor + colourShift) % colours.length; // map iteration count to a colour
+        var colourIndex = modifiedColours ? iterationCount % numFirstColours + colourShift : (iterationCount * colourMappingFactor + colourShift) % numFirstColours; // map iteration count to a colour
         var firstColourIndex = Math.floor(colourIndex);
         var interpolationFactor = colourIndex % 1;
+
+        // slight hack here, in case iteration value is over max 
+        // (may not actually need this...)
+        if (firstColourIndex >= numFirstColours) {
+            firstColourIndex = numFirstColours - 1;
+            fraction = 1.0;
+        }
+        // another hack!
+        if (firstColourIndex < 0) firstColourIndex = 0;
+
         var finalColour = interpolateColour(hexrgb(colours[firstColourIndex]), hexrgb(colours[(firstColourIndex + 1) % colours.length]), interpolationFactor);
         
         imgData.data[i] = finalColour[0];
@@ -62,31 +88,43 @@ function draw() {
         imgData.data[i+2] = finalColour[2];
         imgData.data[i+3] = 255;
         
-        // if (px === W / 2) console.log({
-        //     "iterationCount": iterationCount,
-        //     "colourIndex": colourIndex,
-        //     "interpolationFactor": interpolationFactor,
-        //     "finalColour": finalColour});
+        if (px === W / 2) console.log({
+            "iterationCount": iterationCount,
+            "firstColourIndex": firstColourIndex,
+            "interpolationFactor": interpolationFactor,
+            "finalColour": finalColour});
     }
     gc.putImageData(imgData, 16, 16);
 }
 
-function f(z, c) {      // standard Mandelbrot / Julia of "z -> z squared plus c"
-    return add(sq(z), c);
-}
-
-function f6(z, c) {      // standard Mandelbrot / Julia of "z -> z cubed plus c"
-    return add(pow(z, 6), c);
+function f(z, c) {      // standard Mandelbrot / Julia of "z -> z cubed plus c"
+    return add(pow(z, exponent), c);
 }
 
 function iterate(func, z) {
-    var numIterations = 0;
+    var realIterations, numIterations = 0;
     var z0 = isJulia ? juliaPoint : z;
-    while (numIterations < maxIterations && mod2(z) < 32) {
+    var zAbs = mod2(z), zAbsPrevious;
+    while (numIterations < maxIterations && mod2(z) < escapeRadiusSquared) {
         numIterations++;
         z = func(z, z0);
+        zAbsPrevious = zAbs;
+        zAbs = mod2(z);
     }
-    return numIterations;
+    // This algorithm for the fractional part of the colour index, based on how far
+    // the final value of z is from the bailout circle, modified from
+    // "On Smooth Fractal Coloring Techniques" by Jussi H¨ark¨onen 
+    // (Master’s Thesis, Dept. of Mathematics, °Abo Akademi University), available as .pdf from
+    // http://jussiharkonen.com/gallery/coloring-techniques/
+    if (zAbs < escapeRadius) {
+        realIterations = numIterations + 1 - (Math.log(Math.log(zAbs + 1) + 1) / Math.log(Math.log(escapeRadius + 1) + 1));
+    }
+    else {
+        var far = Math.max(exponent, Math.log(zAbs) / Math.log(zAbsPrevious));
+        // escapeRadius2 = Math.pow(escapeRadius, far);
+        realIterations = numIterations - ((Math.log(Math.log(zAbs)) - Math.log(Math.log(escapeRadius))) / Math.log(far));
+    }
+    return ++realIterations;
 }
 
 function pixelToComplex(px, py) {
