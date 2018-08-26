@@ -7,8 +7,10 @@ var aspectRatio = W / H;
 var zMin = {re: -2, im: -2};
 var zMax = {re: 2, im: 2};
 
+// Set default values:
 var exponent = 2;
 var funcIndex = 0;
+var paletteIndex = 0;
 
 const escapeRadius = 6;
 var escapeRadiusSquared = escapeRadius * escapeRadius;
@@ -27,10 +29,10 @@ var bottomRightY = H;
 var dragging = false;
 var colourShift = 0;
 
-var zoomFactor = 1.4142135623730951;
-var numPixelsToMove = 100;
+var zoomFactor = 1.4142135623730951;    // root 2
+var numPixelsToMove = 100;      // when we "Move left" etc.
 
-var mBoxScale = -1.5;
+var mBoxScale = -1.5;   // used in Mandelbox function; may allow user to vary it in future
 
 // const colours = ["#000000", "#56cbff", "#000000",  
 //          "#ff7ccd", "#000000", "#f93457", "#000000",  "#305cff",                  
@@ -44,9 +46,12 @@ const colours = [
 
                 ["#000000", "#3aa5f5", "#000000", "#331a80", "#000000", "#ffd4b1", "#000000",  
                 "#3c6cc4", "#000000", "#ff7200", "#000000", "#12007b",                 
-                "#000000", "#ffffff", "#000000", "#41c4ff", "#000000", "#418eff", "#000000"]
+                "#000000", "#ffffff", "#000000", "#41c4ff", "#000000", "#418eff", "#000000"],
+
+                ["#000000", "#ffffff", "#000000", "#ffffff", "#000000", "#ffffff", "#000000",
+                 "#ffffff", "#000000", "#ffffff", "#000000", "#ffffff", "#000000", "#ffffff",
+                 "#000000", "#ffffff", "#000000", "#ffffff", "#000000"]
                 ];
-var paletteIndex = 0;
 
 var modifiedColours = true;
 

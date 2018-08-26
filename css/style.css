@@ -67,22 +67,15 @@ button:hover {
 
 input {
     background-color: #14508d;
-    color: black;
     padding: 0px 0px;
-    text-align: center;
-    font-size: 20px;
-    cursor: pointer;
-    float: right;
-    clear: right;
-    margin: 10px 10px 10px 0px;
-    border-radius: 10px;
     width: 3em;
 }
 
 label {
     color: white;    
     background-color: black;
+    font-family: sans-serif;    
     border: 2px solid cyan;
-    padding-top: 1em;
+    top: 1em;
     height: 50px;
 }

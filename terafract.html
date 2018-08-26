@@ -15,31 +15,31 @@
 	</h1>
 	<canvas id="root-canvas">
 	</canvas>
-	<button id = "zoom-in">
+	<button class = btn id = "zoom-in">
 		Zoom in
 	</button>
 	<br>
-	<button id = "zoom-out">
+	<button class = btn id = "zoom-out">
 		Zoom out
 	</button>
 	<br>
-	<button id = "move-left">
+	<button class = "btn" id = "move-left">
 		Move Left
 	</button>
 	<br>
-	<button id = "move-right">
+	<button class = "btn" id = "move-right">
 		Move Right
 	</button>
 	<br>
-	<button id = "move-up">
+	<button class = "btn" id = "move-up">
 		Move Up
 	</button>
 	<br>
-	<button id = "move-down">
+	<button class = "btn" id = "move-down">
 		Move Down
 	</button>
 	<br>
-	<button id = "reset">
+	<button class = "btn" id = "reset">
 		Reset
 	</button>
 	<br>
@@ -47,23 +47,23 @@
 		Iterate
 	</button>
 	<br>
-	<button id = "colour-shift">
+	<button class = "btn" id = "colour-shift">
 		Shift colours cyclically
 	</button>
 	<br>
 	<label>Max. iterations&nbsp;&nbsp;&nbsp;&nbsp;
-		<input id="max-iterations" name="max-iterations" type="number" placeholder="Iterations" min="8" max="1024" step="8" value="64">
+		<input id="max-iterations" name="max-iterations" type="number"max="1024" step="8" value="64">
 	</label>
 	<br>
 	<label>Exponent&nbsp;&nbsp;&nbsp;&nbsp;
-		<input id="exponent" type="number" placeholder="Exponent" min="1" max="16" step="1" value="2">
+		<input id="exponent" type="number" min="1" max="8" step="1" value="2">
 	</label>
 	<br>
 	<label>Function index&nbsp;&nbsp;&nbsp;&nbsp;
-		<input id="func-index" type="number" placeholder="Exponent" min="0" max="16" step="1" value="0">
+		<input id="func-index" type="number" min="0" step="1" value="0">
 	</label>
 	<label>Colour palette&nbsp;&nbsp;&nbsp;&nbsp;
-		<input id="palette-index" type="number" min="0" max="5" step="1" value="0">
+		<input id="palette-index" type="number" min="0" step="1" value="0">
 	</label>
 	
 <script type="text/javascript" src="scripts/complex.js"></script>
