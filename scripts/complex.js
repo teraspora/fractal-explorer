@@ -15,29 +15,29 @@ function toString(z) {
 
 // ======================================================================
 
-function bar(z) {
+function bar(z) {		// Complex conjugate
 	return {re: z.re, im: -z.im}
 }
 
-function flipXY(z) {
+function flipXY(z) {	// Switch the real and imaginary components
 	return {re: z.im, im: z.re}
 }
 
-function absRealAndImag(z) {
+function absRealAndImag(z) {		// used famously for the Burning Ship fractal
 	return {re: Math.abs(z.re), im: Math.abs(z.im)}
 }
 
-function mod(z) {			// Note: mod() returns a real value
+function mod(z) {			// Complex modulus or absolute value; note: mod() returns a real value
 	var x = z.re, y = z.im;
 	return Math.sqrt(x * x + y * y);
 }
 
-function mod2(z) {			// Note: mod2() returns a real value
+function mod2(z) {			// the square of the above; note: mod2() returns a real value
 	var x = z.re, y = z.im;
 	return x * x + y * y;
 }
 
-function arg(z) {			// Note: arg() returns a real value
+function arg(z) {			// The argument, or the angle to the X-axis; note: arg() returns a real value
 	return Math.atan2(z.im, z.re);
 }
 
@@ -51,7 +51,7 @@ function sub(z, w) {
 	return {re: z.re - w.re, im: z.im - w.im};
 }
 
-function mult(z, w) {
+function mult(z, w) {		// w can be real
 	return isNaN(w) ? {re: z.re * w.re - z.im * w.im, im: z.re * w.im + z.im * w.re}
 					: {re: z.re * w, im: z.im * w};
 }
@@ -65,7 +65,7 @@ function recip(z){
 	var denom = x * x + y * y;
 	return denom !== 0.0
 		? {re: x / denom, im: -y / denom}
-		: {re: Number.MAX_VALUE, im: Number.MAX_VALUE};
+		: {re: Number.MAX_VALUE, im: Number.MAX_VALUE};		// just make it big if we have a zero modulus
 }
 
 function div(z, w){
@@ -76,7 +76,7 @@ function div(z, w){
 
 function pow(z, n) {
 	if (n < 0) return recip(z.pow(-n));
-	if (n > 128) n= 128;			// else troppo cpu!
+	if (n > 128) n= 128;			// it's Javascript running in the browser so limit it somewhat!
 	switch(n) {
 		case 0:
 			return ONE;
@@ -92,7 +92,7 @@ function pow(z, n) {
 
 // ======================================================================
 
-function polar(r, theta) {
+function polar(r, theta) {		// make a standard Cartesian representation from a polar one
 		return {re: r * Math.cos(theta), im: r * Math.sin(theta)};
 }
 
@@ -100,12 +100,13 @@ function dot(z, w) {		// Note: vector dot product returns a real value
 	return z.re * w.re + z.im * w.im;
 }
 
-function rotate(z, phi) {
+function rotate(z, phi) {	// to rotate, multiply by the unit vector of the given angle
 		return mult(z, polar(1.0, phi));
 }
 
 // ======================================================================
 
+// boxFold() and ballFold() are used in the Mandelbox variants:
 function boxFold(z, fold) {
 	return {re:	z.re > fold ? 2.0 * fold - z.re : (z.re < -fold ? -2.0 * fold - z.re : z.re),
 			im: z.im > fold ? 2.0 * fold - z.im : (z.im < -fold ? -2.0 * fold - z.im : z.im)};

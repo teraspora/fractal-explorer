@@ -1,45 +1,17 @@
-const W = 800;
-const H = 800;
+/*
+Author:     John Lynch
+Date:       August 2018
+Language:   Javascript
+Contents:   A basic fractal image generator for escape-time fractal functions
+*/
+
+// Set some basic parameters:
+const W = 768;
+const H = 768;
 var aspectRatio = W / H;
-
-// Define parameters of the orthogonal rectangular subset of the Complex plane we're looking at
-
-var zMin = {re: -2, im: -2};
-var zMax = {re: 2, im: 2};
-
-// Set default values:
-var exponent = 2;
-var funcIndex = 0;
-var altFuncIndex = 0;
-var paletteIndex = 0;
-var composeFunctions = false;
-
-const escapeRadius = 6;
+const escapeRadius = 6;     // radius of the circle outside of which we say
+// a point has escaped and terminate the iteration loop, recording the iteration count at that time.
 var escapeRadiusSquared = escapeRadius * escapeRadius;
-
-var xSpan = zMax.re - zMin.re;
-var ySpan = zMax.im - zMin.im;
-var xIncr = xSpan / W;
-var yIncr = ySpan / H;
-
-// pixel coords for drag/zoom
-var topLeftX = 0;
-var topLeftY = 0;
-var bottomRightX = W;
-var bottomRightY = H;
-
-var dragging = false;
-var colourShift = 0;
-
-var zoomFactor = 1.4142135623730951;    // root 2
-var numPixelsToMove = 100;      // when we "Move left" etc.
-
-var mBoxScale = -1.5;   // used in Mandelbox function; may allow user to vary it in future
-
-// const colours = ["#000000", "#56cbff", "#000000",  
-//          "#ff7ccd", "#000000", "#f93457", "#000000",  "#305cff",                  
-//          "#000000", "#008aff", "#000000", "#000000", "#c33664", "#ffdcb0", "#000000"];
-
 
 const colours = [
 
@@ -61,14 +33,50 @@ const colours = [
 
                 ];
 
-/*          #ffdab9      
+var modifiedColours = true;     // different method of colour mapping;
+                                // will introduce a button to allow user to toggle this
 
-*/
+// Set some default values for user-settable parameters:
+var exponent = 2;
+var funcIndex = 0;
+var altFuncIndex = 0;
+var paletteIndex = 0;
+var composeFunctions = false;
+var maxIterations = 32;
 
+var isJulia = false;    // true if we're iterating Julia sets, false otherwise
+var juliaPoint = ZERO;  // This var holds the "c" as in "z squared plus c"
 
-var modifiedColours = true;
+// Define parameters of the orthogonal rectangular subset of the Complex plane we're looking at
 
+var zMin = {re: -2, im: -2};    // corners of the region of the Complex plane we're looking at
+var zMax = {re: 2, im: 2};
+var xSpan = zMax.re - zMin.re;  // size of the region of the Complex plane we're looking at
+var ySpan = zMax.im - zMin.im;
+var xIncr = xSpan / W;       // the distance in complex number terms between each point iterated
+var yIncr = ySpan / H;       
+
+// pixel coords for drag/zoom
+var topLeftX = 0;
+var topLeftY = 0;
+var bottomRightX = W;
+var bottomRightY = H;
+
+var dragging = false;   // true if user is dragging to zoom
+var colourShift = 0;    // user can shift the palette any number of steps cyclically in one direction
+
+var zoomFactor = 1.4142135623730951;    // root 2; a var because I might let user vary it
+var numPixelsToMove = 100;      // when we "Move left" etc.
+
+var mBoxScale = -1.5;   // used in Mandelbox function; may allow user to vary it in future
+
+// const colours = ["#000000", "#56cbff", "#000000",  
+//          "#ff7ccd", "#000000", "#f93457", "#000000",  "#305cff",                  
+//          "#000000", "#008aff", "#000000", "#000000", "#c33664", "#ffdcb0", "#000000"];
+
+// Now, our array of functions designed to produce pretty pictures:
 var funcs = [
+
     (z, c) => add(pow(z, exponent), c),     // standard Mandelbrot / Julia of "z -> z cubed plus c"
     (z, c) => add(pow(absRealAndImag(z), exponent), c),     // Burning Ship
     (z, c) => add(pow(polar(Math.sin(z.re) * Math.cos(z.im) * Math.PI, arg(z)), exponent), c),
@@ -80,30 +88,27 @@ var funcs = [
     
     ];
 
+// Now we know how many colour palettes and how many functions there are, we can update the UI:
 document.getElementById("func-index").max = funcs.length - 1;
 document.getElementById("palette-index").max = colours.length - 1;
 
-    
+// OK, so let's create a canvas to draw on:    
 const canv = document.getElementById("root-canvas");
 canv.width = W;
 canv.height = H;
-const gc = canv.getContext("2d");
-var imgData = gc.createImageData(W, H);
+const gc = canv.getContext("2d");   // get a graphics context
+var imgData = gc.createImageData(W, H); // create an ImageData object, which is an array-like thing
 
-var isJulia = false;
-var juliaPoint = ZERO;
-var maxIterations = 32;
-
+// Now everything's set up we can call the main draw() function; this draw-update loop pattern I learnt from making 
+// Iterated Function System (IFS) fractals in Clojure using the Quil library.
+// See my repo at https://github.com/teraspora/fractagons.
+// In this case, though, we don't just keep on iterating!
 draw();
 
 // ==============================================================================
 
-function compose(f1, f2, z, c) {
-    return f1(f2(z, c), c);
-}
-
 function draw() {
-    var numFirstColours = colours[paletteIndex].length - 1; 
+    var numFirstColours = colours[paletteIndex].length - 1; // the first colour must not be the last!
     var colourMappingFactor = (colours[paletteIndex].length - 2) / maxIterations; 
     for (i = 0; i < imgData.data.length; i += 4) {      // image data has 4 entries (RGBA) for each pixel, scanning L to R for each line
             // Why start at 1, not 0?  Well, had it at zero but a reddish pallette produced greenish colours; shifting one byte seemed
@@ -137,19 +142,9 @@ function draw() {
         imgData.data[i+1] = finalColour[1];
         imgData.data[i+2] = finalColour[2];
         imgData.data[i+3] = 255;    // alpha component, we'll always have it opaque for now
-        
-        // if (px === W / 2) console.log({
-        //     "iterationCount": iterationCount,
-        //     "firstColourIndex": firstColourIndex,
-        //     "interpolationFactor": interpolationFactor,
-        //     "finalColour": finalColour});
     }
-    gc.putImageData(imgData, 16, 16);
+    gc.putImageData(imgData, 16, 16);   // ok, we have our imgData object populated, so write it out
 }
-
-// function f(z, c) {      // standard Mandelbrot / Julia of "z -> z cubed plus c"
-//     return add(pow(z, exponent), c);
-// }
 
 function iterate(z) {
     var realIterations, numIterations = 0;
@@ -177,6 +172,12 @@ function iterate(z) {
     return ++realIterations;
 }
 
+// HELPER FUNCTIONS
+// ================
+function compose(f1, f2, z, c) {    // helper function to compose two f:(z, c) => z1 type functions
+    return f1(f2(z, c), c);
+}
+
 function pixelToComplex(px, py) {
     return {re: px * xIncr + zMin.re, im: py * yIncr + zMin.im};
 }
@@ -189,7 +190,6 @@ function clickHandler(e) {
         dragging = false;
         return;
     }
-    console.log("Should not get here after a drag!");
     if (isJulia) {
         isJulia = false;
         draw();
@@ -225,9 +225,8 @@ function dragFinishedHandler(e) {
         dragging = false;
         return;
     }
-
-    console.log("Drag finished at (" + bottomRightX + ", " + bottomRightY + ")");
     document.removeEventListener("mouseup", dragFinishedHandler);
+    // do some maths!
     var pixelSpanX = bottomRightX - topLeftX;
     var pixelSpanY = bottomRightY - topLeftY;
     var dragLength2 = pixelSpanX * pixelSpanX + pixelSpanY * pixelSpanY; // Pythagoras!
@@ -237,10 +236,10 @@ function dragFinishedHandler(e) {
     var yMin = zMin.im;
     var xMax = zMax.re;
     var yMax = zMax.im;
-
     zMin = pixelToComplex(topLeftX, topLeftY);
     zMax = {re: xMin + (topLeftX + newWidth) / W * xSpan, im: yMin + (topLeftY + newHeight) / H * ySpan};
     updateGeometryVars();
+
     draw();
 }
 
@@ -253,7 +252,6 @@ function getMousePos(c, e) {       // got from https://codepen.io/chrisjaime/pen
 }
 
 // attach handlers to click  and mousedown events
-// document.addEventListener('click', clickHandler);
 document.getElementById("root-canvas").addEventListener("mousedown", dragStartHandler);
 document.getElementById("root-canvas").addEventListener('click', clickHandler);
 document.getElementById("zoom-in").addEventListener('click', scale);
@@ -286,27 +284,24 @@ document.getElementById("palette-index").addEventListener('input', function() {
 
 document.getElementById("compose").addEventListener("change", function() {
     composeFunctions = this.checked;
-    // document.getElementById("alt-func-label").style.display = composeFunctions ? "normal" : "none";
 });
 
 // ====================
 
 // COLOUR STUFF
 // ====================
-// The following code I stole from https://codepen.io/njmcode/pen/axoyD and slightly modified...
 
-// Interpolates two [r,g,b] colors and returns an [r,g,b] of the result
-// Taken from the awesome ROT.js roguelike dev library at
-// https://github.com/ondras/rot.js
-
-function interpolateColour(colour1, colour2, factor) {
+function interpolateColour(colour1, colour2, factor) {  // factor should be between 0 and 1
   if (arguments.length < 3) { factor = 0.5; }
+  // hack 2018-08-27: need to further investigate why null passed
+  if (!colour1) colour1 = [0, 0, 0];
+  if (!colour2) colour2 = [0, 0, 0];  
+
   var rgb1 = colour1.slice();
   var rgb2 = colour2.slice();
   var result = [];
 
   for (var i=0;i<3;i++) {
-    // rgb[i] = Math.round(rgb[i] + factor*(colour2[i]-colour1[i]));
     result[i] = Math.round((1 - factor) * rgb1[i] + factor * rgb2[i]);
   }
   return result;
@@ -318,11 +313,6 @@ function hexrgb(hexColour) {
     return rgb ? [parseInt(rgb[1], 16), parseInt(rgb[2], 16), parseInt(rgb[3], 16)] : null;
 }
 
-/*
-=============================================================================================================
-                                                     {re: , im: }
-*/ 
-
 // UI FUNCTIONS
 // ============
 
@@ -330,6 +320,9 @@ function shiftColours() {
     colourShift = (colourShift + 1) % colours[paletteIndex].length;
     draw();
 }
+
+// GEOMETRY STUFF
+// ==============
 
 function scale() {
     var zoomRatio = this.id === "zoom-out" ? zoomFactor : 1.0 / zoomFactor;
@@ -364,9 +357,6 @@ function translate() {
     updateGeometryVars();
     draw();
 }
-
-// GEOMETRY STUFF
-// ==============
 
 function updateGeometryVars() {
     xSpan = zMax.re - zMin.re;
