@@ -62,6 +62,9 @@ var funcs = [
     
     ];
 
+document.getElementById("func-index").max = funcs.length - 1;
+document.getElementById("palette-index").max = colours.length - 1;
+
     
 const canv = document.getElementById("root-canvas");
 canv.width = W;

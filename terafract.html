@@ -10,6 +10,9 @@
 </head>
 
 <body>
+	<h1>
+		Fractal Explorer
+	</h1>
 	<canvas id="root-canvas">
 	</canvas>
 	<button id = "zoom-in">
@@ -40,6 +43,10 @@
 		Reset
 	</button>
 	<br>
+	<button id = "iterate">
+		Iterate
+	</button>
+	<br>
 	<button id = "colour-shift">
 		Shift colours cyclically
 	</button>
@@ -47,10 +54,6 @@
 	<label>Max. iterations&nbsp;&nbsp;&nbsp;&nbsp;
 		<input id="max-iterations" name="max-iterations" type="number" placeholder="Iterations" min="8" max="1024" step="8" value="64">
 	</label>
-	<br>
-	<button id = "iterate">
-		Iterate
-	</button>
 	<br>
 	<label>Exponent&nbsp;&nbsp;&nbsp;&nbsp;
 		<input id="exponent" type="number" placeholder="Exponent" min="1" max="16" step="1" value="2">
