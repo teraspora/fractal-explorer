@@ -1,34 +1,31 @@
-# Web Fractals
+# Fractal Explorer
 
-This is an initial stab at converting my Java fractal generator into Javascript.   Well, not all 6000 lines of it!
-Delighted that, after only one minor syntax error in my js, my initial attempt at generating a Mandelbrot set actually produced one, albeit in lurid tones and only two of them at that, rather than the 256 shades I was expecting.   OK, some more work needed!
+This little app allows the user to generate fractal images within the browser by iterating functions and plotting the results.
 
-So, now refactored code to get rid of hard-coded width and height, though at this stage setting as consts and my HTML canvas-wrapper has a fixed size at present.   Mainly it just meant changing the pixelToComplex() function and the draw() function.
+Over the past few years I have been developing a Java application which generates escape-time fractals and can make movies and animations of them too.   So I knew what I was doing when I started this app, in terms of the logic and algorithms required.   This is a far simpler app, being less than 700 lines of code including all the HTML, CSS and Javascript, whereas my Java program is now about 6000 lines!
 
-Got rid of canvas wrapper and just put an id on the canvas.   Need to minimize extra pixels creeping in!
+The basic idea is you iterate a function over the complex plane (f:Z->Z) and count the number of iterations until either you reach a certain predefined maximum iteration count, or the point escapes past a specified radius from the origin.   You then map these iteration counts to colours, but in order to obviate sharp colour bands, which purely integer values would give, you modify the count according to how far out a point escapes, or if it doesn't, then how far inside the escape radius it is on the last iteration.   This then results in gradations of shading when you interpolate the colours.
 
-Mostly sorted the geometry of zooming (stole code from my own Java program FracGenWX!).
+The controls are fairly self-explanatory.
 
-## TODO:
-========
+I currently have four colour palettes, the first of which is monochrome, just black and white alternately.
 
-- for me to understand how mouse events propagate and are or are not consumed, and
-- to improve the colour mapping
+Functions are:
+- 0				Standard Mandelbrot (z => z * z + c)
+- 1				Burning Ship fractal
+- 2 & 3			A couple of trig-based functions
+- 4, 5, 6 & 7	Mandelbox variants
 
-- Was looking at Math.js to provide Complex arithmetic.   Downloaded it opened it in Sublimetext and found it to be > 60k lines of code!!   So just decided to factor out core Complex functions to a separate file, complex.js.
+You can compose two functions by ticking the box and choosing an "alt function".
 
-- Now thinking of changing it into a class so I can method-chain the core functions.
+You can zoom in and out, move four ways, change or shift the colour palette, change the exponent (so for instance with exponent = 3, the Mandelbrot becomes z cubed + c) and vary the maximum iteration count.
 
-- Need to check carefully how the image data array works.
+The "Reset" button will reset the zoom levels back to initial default.
 
-- Also, introduce more functions, and composition. ?? Translate my Java function array with GWT??
+## To do:
 
-- Make mobile-friendly!
-
-- Add Iteration-value modifier function.
-
-
-
-
-
-
+- Make it responsive for mobile
+- Separate the colour mappiung from the iteration step.   Store the iteration counts in an array, then it will be snappier if the user just wants to change the colour as we won't need to repeat the iteration but just remap the counts to colours.
+- Make the controls neater
+- Introduce more functions
+- Add more colour palettes

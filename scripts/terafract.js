@@ -10,7 +10,9 @@ var zMax = {re: 2, im: 2};
 // Set default values:
 var exponent = 2;
 var funcIndex = 0;
+var altFuncIndex = 0;
 var paletteIndex = 0;
+var composeFunctions = false;
 
 const escapeRadius = 6;
 var escapeRadiusSquared = escapeRadius * escapeRadius;
@@ -96,6 +98,10 @@ draw();
 
 // ==============================================================================
 
+function compose(f1, f2, z, c) {
+    return f1(f2(z, c), c);
+}
+
 function draw() {
     var numFirstColours = colours[paletteIndex].length - 1; 
     var colourMappingFactor = (colours[paletteIndex].length - 2) / maxIterations; 
@@ -109,7 +115,7 @@ function draw() {
         var z = pixelToComplex(px, py);
 
         // The beating heart of this program!...
-        var iterationCount = iterate(funcs[funcIndex], z);     // iterate the function and get the iteration count 
+        var iterationCount = iterate(z);     // iterate the function and get the iteration count 
 
         var colourIndex = modifiedColours ? (iterationCount + colourShift) % numFirstColours : (iterationCount * colourMappingFactor + colourShift) % numFirstColours; // map iteration count to a colour
         var firstColourIndex = Math.floor(colourIndex);
@@ -145,13 +151,13 @@ function draw() {
 //     return add(pow(z, exponent), c);
 // }
 
-function iterate(func, z) {
+function iterate(z) {
     var realIterations, numIterations = 0;
     var z0 = isJulia ? juliaPoint : z;
     var zAbs = mod2(z), zAbsPrevious;
     while (numIterations < maxIterations && mod2(z) < escapeRadiusSquared) {
         numIterations++;
-        z = func(z, z0);
+        z = !composeFunctions ? funcs[funcIndex](z, z0) : compose(funcs[funcIndex], funcs[altFuncIndex], z, z0);
         zAbsPrevious = zAbs;
         zAbs = mod2(z);
     }
@@ -270,8 +276,17 @@ document.getElementById("func-index").addEventListener('input', function() {
     funcIndex = this.value;
 });
 
+document.getElementById("alt-func-index").addEventListener('input', function() {
+    altFuncIndex = this.value;
+});
+
 document.getElementById("palette-index").addEventListener('input', function() {
     paletteIndex = this.value;
+});
+
+document.getElementById("compose").addEventListener("change", function() {
+    composeFunctions = this.checked;
+    // document.getElementById("alt-func-label").style.display = composeFunctions ? "normal" : "none";
 });
 
 // ====================
