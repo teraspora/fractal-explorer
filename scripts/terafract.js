@@ -8,6 +8,7 @@ var zMin = {re: -2, im: -2};
 var zMax = {re: 2, im: 2};
 
 var exponent = 2;
+var funcIndex = 0;
 
 const escapeRadius = 6;
 var escapeRadiusSquared = escapeRadius * escapeRadius;
@@ -26,19 +27,42 @@ var bottomRightY = H;
 var dragging = false;
 var colourShift = 0;
 
-var zoomFactor = 2.0;
+var zoomFactor = 1.4142135623730951;
 var numPixelsToMove = 100;
+
+var mBoxScale = -1.5;
 
 // const colours = ["#000000", "#56cbff", "#000000",  
 //          "#ff7ccd", "#000000", "#f93457", "#000000",  "#305cff",                  
 //          "#000000", "#008aff", "#000000", "#000000", "#c33664", "#ffdcb0", "#000000"];
 
 
-const colours = ["#000000", "#4d5dff", "#000000", "#81002b", "#000000", "#2c95ff", "#000000",  
-                 "#ffe1ff", "#000000", "#ba1257", "#000000", "#051d78",                 
-                 "#000000", "#ffd2ff", "#000000", "#e30568", "#000000", "#010335", "#000000"];
+const colours = [
+                ["#000000", "#4d00ff", "#000000", "#81002b", "#000000", "#2c35ff", "#000000",  
+                "#ff11ff", "#000000", "#ba1257", "#000000", "#051d78",                 
+                "#000000", "#ff32ff", "#000000", "#e30568", "#000000", "#010335", "#000000"],
+
+                ["#000000", "#3aa5f5", "#000000", "#331a80", "#000000", "#ffd4b1", "#000000",  
+                "#3c6cc4", "#000000", "#ff7200", "#000000", "#12007b",                 
+                "#000000", "#ffffff", "#000000", "#41c4ff", "#000000", "#418eff", "#000000"]
+                ];
+var paletteIndex = 0;
+
 var modifiedColours = true;
 
+var funcs = [
+    (z, c) => add(pow(z, exponent), c),     // standard Mandelbrot / Julia of "z -> z cubed plus c"
+    (z, c) => add(pow(absRealAndImag(z), exponent), c),     // Burning Ship
+    (z, c) => add(pow(polar(Math.sin(z.re) * Math.cos(z.im) * Math.PI, arg(z)), exponent), c),
+    (z, c) => add(pow({re: Math.sin(z.re) * Math.cos(z.im) * Math.PI, im: arg(z)}, exponent), c),                                   
+    (z, c) => add(pow(mult(ballFold(boxFold(z, 1.0), 0.5, 1.0), mBoxScale), exponent), c),     // 87 Mandelbox from https://en.wikipedia.org/wiki/Mandelbox                                                                                                          
+    (z, c) => add(pow(mult(boxFold(ballFold(z, 0.5, 1.0), 1.0), mBoxScale), exponent), c),     // 88 Mandelbox with folds reversed      
+    (z, c) => add(pow(mult(ballFold(boxFold(z, 1.0), 0.5, 1.0), mBoxScale), exponent - 1), c), // 87 Mandelbox with exponent lowered
+    (z, c) => ballFold(boxFold(add(mult(z, mBoxScale), c), 0.5), 0.5, 1.0)                    // 103 Mandelbox shuffle functions                                                                                                                              
+    
+    ];
+
+    
 const canv = document.getElementById("root-canvas");
 canv.width = W;
 canv.height = H;
@@ -47,30 +71,31 @@ var imgData = gc.createImageData(W, H);
 
 var isJulia = false;
 var juliaPoint = ZERO;
-var maxIterations = 64;
+var maxIterations = 256;
 
 draw();
 
 // ==============================================================================
 
 function draw() {
-    var numFirstColours = colours.length - 1; 
-    var colourMappingFactor = (colours.length - 2) / maxIterations; 
-    for (i = 1; i < imgData.data.length; i += 4) {      // image data has 4 entries (RGBA) for each pixel, scanning L to R for each line
+    var numFirstColours = colours[paletteIndex].length - 1; 
+    var colourMappingFactor = (colours[paletteIndex].length - 2) / maxIterations; 
+    for (i = 0; i < imgData.data.length; i += 4) {      // image data has 4 entries (RGBA) for each pixel, scanning L to R for each line
             // Why start at 1, not 0?  Well, had it at zero but a reddish pallette produced greenish colours; shifting one byte seemed
             // to produce correct colours so maybe byte 0 is a header byte or magic number??   For now I'll just leave it at 1.
         var pixelNum = Math.floor(i / 4);
         // Get x and y coords of pixel
-        var px = Math.floor(pixelNum % W)
+        var px = Math.floor(pixelNum % W);
         var py = Math.floor(pixelNum / W);
         var z = pixelToComplex(px, py);
 
         // The beating heart of this program!...
-        var iterationCount = iterate(f, z);     // iterate the function and get the iteration count 
+        var iterationCount = iterate(funcs[funcIndex], z);     // iterate the function and get the iteration count 
 
-        var colourIndex = modifiedColours ? iterationCount % numFirstColours + colourShift : (iterationCount * colourMappingFactor + colourShift) % numFirstColours; // map iteration count to a colour
+        var colourIndex = modifiedColours ? (iterationCount + colourShift) % numFirstColours : (iterationCount * colourMappingFactor + colourShift) % numFirstColours; // map iteration count to a colour
         var firstColourIndex = Math.floor(colourIndex);
         var interpolationFactor = colourIndex % 1;
+        // if (firstColourIndex < 0 || firstColourIndex >= numFirstColours) console.log("FCI = " + firstColourIndex + ", lerp-factor = " + interpolationFactor);
 
         // slight hack here, in case iteration value is over max 
         // (may not actually need this...)
@@ -81,12 +106,12 @@ function draw() {
         // another hack!
         if (firstColourIndex < 0) firstColourIndex = 0;
 
-        var finalColour = interpolateColour(hexrgb(colours[firstColourIndex]), hexrgb(colours[(firstColourIndex + 1) % colours.length]), interpolationFactor);
+        var finalColour = interpolateColour(hexrgb(colours[paletteIndex][firstColourIndex]), hexrgb(colours[paletteIndex][(firstColourIndex + 1) % colours[paletteIndex].length]), interpolationFactor);
         
         imgData.data[i] = finalColour[0];
         imgData.data[i+1] = finalColour[1];
         imgData.data[i+2] = finalColour[2];
-        imgData.data[i+3] = 255;
+        imgData.data[i+3] = 255;    // alpha component, we'll always have it opaque for now
         
         // if (px === W / 2) console.log({
         //     "iterationCount": iterationCount,
@@ -97,9 +122,9 @@ function draw() {
     gc.putImageData(imgData, 16, 16);
 }
 
-function f(z, c) {      // standard Mandelbrot / Julia of "z -> z cubed plus c"
-    return add(pow(z, exponent), c);
-}
+// function f(z, c) {      // standard Mandelbrot / Julia of "z -> z cubed plus c"
+//     return add(pow(z, exponent), c);
+// }
 
 function iterate(func, z) {
     var realIterations, numIterations = 0;
@@ -222,6 +247,13 @@ document.getElementById("exponent").addEventListener('input', function() {
     exponent = this.value;
 });
 
+document.getElementById("func-index").addEventListener('input', function() {
+    funcIndex = this.value;
+});
+
+document.getElementById("palette-index").addEventListener('input', function() {
+    paletteIndex = this.value;
+});
 
 // ====================
 
@@ -235,17 +267,21 @@ document.getElementById("exponent").addEventListener('input', function() {
 
 function interpolateColour(colour1, colour2, factor) {
   if (arguments.length < 3) { factor = 0.5; }
-  var rgb = colour1.slice();
+  var rgb1 = colour1.slice();
+  var rgb2 = colour2.slice();
+  var result = [];
+
   for (var i=0;i<3;i++) {
-    rgb[i] = Math.round(rgb[i] + factor*(colour2[i]-colour1[i]));
+    // rgb[i] = Math.round(rgb[i] + factor*(colour2[i]-colour1[i]));
+    result[i] = Math.round((1 - factor) * rgb1[i] + factor * rgb2[i]);
   }
-  return rgb;
+  return result;
 }
 
 // Convert a #ffffff hex string into an [r,g,b] array
 function hexrgb(hexColour) {
-    var rgb = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hexColour);  // pull out 3 pairs of hex digits
-    return rgb ? [parseInt(rgb[0], 16), parseInt(rgb[1], 16), parseInt(rgb[2], 16)] : null;
+    var rgb = /^#([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hexColour);  // pull out 3 pairs of hex digits
+    return rgb ? [parseInt(rgb[1], 16), parseInt(rgb[2], 16), parseInt(rgb[3], 16)] : null;
 }
 
 /*
@@ -257,7 +293,7 @@ function hexrgb(hexColour) {
 // ============
 
 function shiftColours() {
-    colourShift = (colourShift + 1) % colours.length;
+    colourShift = (colourShift + 1) % colours[paletteIndex].length;
     draw();
 }
 

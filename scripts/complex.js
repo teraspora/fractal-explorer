@@ -19,6 +19,14 @@ function bar(z) {
 	return {re: z.re, im: -z.im}
 }
 
+function flipXY(z) {
+	return {re: z.im, im: z.re}
+}
+
+function absRealAndImag(z) {
+	return {re: Math.abs(z.re), im: Math.abs(z.im)}
+}
+
 function mod(z) {			// Note: mod() returns a real value
 	var x = z.re, y = z.im;
 	return Math.sqrt(x * x + y * y);
@@ -44,7 +52,8 @@ function sub(z, w) {
 }
 
 function mult(z, w) {
-	return {re: z.re * w.re - z.im * w.im, im: z.re * w.im + z.im * w.re};
+	return isNaN(w) ? {re: z.re * w.re - z.im * w.im, im: z.re * w.im + z.im * w.re}
+					: {re: z.re * w, im: z.im * w};
 }
 
 function sq(z) {    
@@ -97,4 +106,17 @@ function rotate(z, phi) {
 
 // ======================================================================
 
-	
+function boxFold(z, fold) {
+	return {re:	z.re > fold ? 2.0 * fold - z.re : (z.re < -fold ? -2.0 * fold - z.re : z.re),
+			im: z.im > fold ? 2.0 * fold - z.im : (z.im < -fold ? -2.0 * fold - z.im : z.im)};
+}
+
+function ballFold(z, r, bigR) {
+	var zAbs = mod(z);
+	r = Math.abs(r);
+	return zAbs < r ? {re: z.re / r * r, im: z.im / r * r}
+					: 
+		   (zAbs < Math.abs(bigR)
+						?{re: z.re / (zAbs * zAbs), im: z.im / (zAbs * zAbs)}
+						: z);
+}
