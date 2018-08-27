@@ -33,7 +33,11 @@ const colours = [
 
                 ["#000000", "#3aa5f5", "#000000", "#331a80", "#000000", "#ffd4b1", "#000000",  
                 "#3c6cc4", "#000000", "#ff7200", "#000000", "#12007b",                 
-                "#000000", "#ffffff", "#000000", "#41c4ff", "#000000", "#418eff", "#000000"]
+                "#000000", "#ffffff", "#000000", "#41c4ff", "#000000", "#418eff", "#000000"],
+
+                ["#000000", "#e6a60a", "#000000", "#83001b", "#000000", "#ffaab4", "#000000",
+                 "#020a4f", "#000000", "#ffc295", "#000000", "#ff7a00", "#000000", "#60000a",
+                 "#000000", "#0062a1", "#000000", "#dee0ec", "#000000"]
 
                 ];
 
@@ -85,15 +89,24 @@ var funcs = [
     (z, c) => add(pow(absRealAndImag(z), exponent), c),     // Burning Ship
     (z, c) => add(pow(polar(Math.sin(z.re) * Math.cos(z.im) * Math.PI, arg(z)), exponent), c),
     (z, c) => add(pow({re: Math.sin(z.re) * Math.cos(z.im) * Math.PI, im: arg(z)}, exponent), c),                                   
+    (z, c) => add(pow(polar((Math.sin(z.re) + Math.cos(z.im)) * Math.PI, arg(z)), exponent), c),
+    (z, c) => add(pow({re: (Math.sin(z.re) + Math.cos(z.im)) * Math.PI, im: (Math.sin(z.re) + Math.cos(z.im)) * Math.PI}, exponent), c),                                   
+    (z, c) => add(pow(polar(Math.cos(z.re) * Math.cos(z.im) * Math.PI, arg(z)), exponent), c),
+    (z, c) => add(pow({re: Math.cos(z.re) * Math.cos(z.im) * Math.PI, im: arg(z)}, exponent), c),                                   
+    (z, c) => add(pow(polar((Math.cos(z.re) + Math.cos(z.im)) * Math.PI, arg(z)), exponent), c),
+    (z, c) => add(pow({re: (Math.cos(z.re) + Math.cos(z.im)) * Math.PI, im: (Math.sin(z.re) + Math.cos(z.im)) * Math.PI}, exponent), c),                                   
     (z, c) => add(pow(mult(ballFold(boxFold(z, 1.0), 0.5, 1.0), mBoxScale), exponent), c),     // 87 Mandelbox from https://en.wikipedia.org/wiki/Mandelbox                                                                                                          
     (z, c) => add(pow(mult(boxFold(ballFold(z, 0.5, 1.0), 1.0), mBoxScale), exponent), c),     // 88 Mandelbox with folds reversed      
     (z, c) => add(pow(mult(ballFold(boxFold(z, 1.0), 0.5, 1.0), mBoxScale), exponent - 1), c), // 87 Mandelbox with exponent lowered
-    (z, c) => ballFold(boxFold(add(mult(z, mBoxScale), c), 0.5), 0.5, 1.0)                    // 103 Mandelbox shuffle functions                                                                                                                              
+    (z, c) => ballFold(boxFold(add(mult(z, mBoxScale), c), 0.5), 0.5, 1.0),                    // 103 Mandelbox shuffle functions                                                                                                                              
+    (z, c) => add(pow(polar(Math.log10(Math.abs(Math.cos(z.re) / Math.cos(z.im))), arg(z)), exponent), c), // 391 
+    (z, c) => add(pow(polar(arg(z) + z.re + z.im, arg(z)), exponent), c),
     
     ];
 
 // Now we know how many colour palettes and how many functions there are, we can update the UI:
 document.getElementById("func-index").max = funcs.length - 1;
+document.getElementById("alt-func-index").max = funcs.length - 1;
 document.getElementById("palette-index").max = colours.length - 1;
 
 // OK, so let's create a canvas to draw on:    
