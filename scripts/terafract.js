@@ -9,6 +9,10 @@ Contents:   A basic fractal image generator for escape-time fractal functions
 const W = 768;
 const H = 768;
 var aspectRatio = W / H;
+
+var numPixels = W * H;   // size of our iteration-count array iterationCounts
+var iterationCounts = [];
+
 const escapeRadius = 6;     // radius of the circle outside of which we say
 // a point has escaped and terminate the iteration loop, recording the iteration count at that time.
 var escapeRadiusSquared = escapeRadius * escapeRadius;
@@ -108,8 +112,6 @@ draw();
 // ==============================================================================
 
 function draw() {
-    var numFirstColours = colours[paletteIndex].length - 1; // the first colour must not be the last!
-    var colourMappingFactor = (colours[paletteIndex].length - 2) / maxIterations; 
     for (i = 0; i < imgData.data.length; i += 4) {      // image data has 4 entries (RGBA) for each pixel, scanning L to R for each line
             // Why start at 1, not 0?  Well, had it at zero but a reddish pallette produced greenish colours; shifting one byte seemed
             // to produce correct colours so maybe byte 0 is a header byte or magic number??   For now I'll just leave it at 1.
@@ -119,14 +121,20 @@ function draw() {
         var py = Math.floor(pixelNum / W);
         var z = pixelToComplex(px, py);
 
-        // The beating heart of this program!...
-        var iterationCount = iterate(z);     // iterate the function and get the iteration count 
+        iterationCounts[i / 4] = iterate(z);     // iterate the function and get the iteration count        
+    }
+    reallyDraw();
+}
 
+function reallyDraw() {
+    var numFirstColours = colours[paletteIndex].length - 1; // the first colour must not be the last!
+    var colourMappingFactor = (colours[paletteIndex].length - 2) / maxIterations; 
+    for (i = 0; i < numPixels; i++) {
+        var iterationCount = iterationCounts[i];
         var colourIndex = modifiedColours ? (iterationCount + colourShift) % numFirstColours : (iterationCount * colourMappingFactor + colourShift) % numFirstColours; // map iteration count to a colour
         var firstColourIndex = Math.floor(colourIndex);
         var interpolationFactor = colourIndex % 1;
-        // if (firstColourIndex < 0 || firstColourIndex >= numFirstColours) console.log("FCI = " + firstColourIndex + ", lerp-factor = " + interpolationFactor);
-
+        
         // slight hack here, in case iteration value is over max 
         // (may not actually need this...)
         if (firstColourIndex >= numFirstColours) {
@@ -138,11 +146,11 @@ function draw() {
 
         var finalColour = interpolateColour(hexrgb(colours[paletteIndex][firstColourIndex]), hexrgb(colours[paletteIndex][(firstColourIndex + 1) % colours[paletteIndex].length]), interpolationFactor);
         
-        imgData.data[i] = finalColour[0];
-        imgData.data[i+1] = finalColour[1];
-        imgData.data[i+2] = finalColour[2];
-        imgData.data[i+3] = 255;    // alpha component, we'll always have it opaque for now
-    }
+        imgData.data[i * 4] = finalColour[0];
+        imgData.data[i * 4 + 1] = finalColour[1];
+        imgData.data[i * 4 + 2] = finalColour[2];
+        imgData.data[i * 4 + 3] = 255;    // alpha component, we'll always have it opaque for now
+    }    
     gc.putImageData(imgData, 16, 16);   // ok, we have our imgData object populated, so write it out
 }
 
@@ -280,6 +288,7 @@ document.getElementById("alt-func-index").addEventListener('input', function() {
 
 document.getElementById("palette-index").addEventListener('input', function() {
     paletteIndex = this.value;
+    reallyDraw();
 });
 
 document.getElementById("compose").addEventListener("change", function() {
@@ -318,7 +327,7 @@ function hexrgb(hexColour) {
 
 function shiftColours() {
     colourShift = (colourShift + 1) % colours[paletteIndex].length;
-    draw();
+    reallyDraw();
 }
 
 // GEOMETRY STUFF
