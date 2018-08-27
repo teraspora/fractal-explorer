@@ -5,12 +5,16 @@ Language:   Javascript
 Contents:   A basic fractal image generator for escape-time fractal functions
 */
 
+
+// First off, the company of an old and much-needed friend will be required...
+const ROOT2 = Math.sqrt(2.0);
+
 // Set some basic parameters:
 const W = 768;
 const H = 768;
 var aspectRatio = W / H;
 
-var numPixels = W * H;   // size of our iteration-count array iterationCounts
+var numPixels = W * H;   // size of our array iterationCounts[]
 var iterationCounts = [];
 
 const escapeRadius = 6;     // radius of the circle outside of which we say
@@ -42,7 +46,17 @@ const colours = [
                 ];
 
 var modifiedColours = true;     // different method of colour mapping;
-                                // will introduce a button to allow user to toggle this
+                                // will introduce a button to allow user to toggle this.
+
+// =======================================================================================================
+
+// Couldn't find a good name for these vars!  trigify() is a function of my own devising which
+//  remaps the iteration counts.   Its effect may be varied with the parameter trigifyLevel
+var trigColours = false;
+var trigifyLevel = 1.0;
+var trigify = s => Math.sin(s / maxIterations * (Math.PI * Math.abs(trigifyLevel))) * maxIterations;
+
+// =======================================================================================================
 
 // Set some default values for user-settable parameters:
 var exponent = 2;
@@ -73,7 +87,7 @@ var bottomRightY = H;
 var dragging = false;   // true if user is dragging to zoom
 var colourShift = 0;    // user can shift the palette any number of steps cyclically in one direction
 
-var zoomFactor = 1.4142135623730951;    // root 2; a var because I might let user vary it
+var zoomFactor = ROOT2; // a var because I might let user vary it
 var numPixelsToMove = 100;      // when we "Move left" etc.
 
 var mBoxScale = -1.5;   // used in Mandelbox function; may allow user to vary it in future
@@ -143,7 +157,7 @@ function reallyDraw() {
     var numFirstColours = colours[paletteIndex].length - 1; // the first colour must not be the last!
     var colourMappingFactor = (colours[paletteIndex].length - 2) / maxIterations; 
     for (i = 0; i < numPixels; i++) {
-        var iterationCount = iterationCounts[i];
+        var iterationCount = !trigColours ? iterationCounts[i] : trigify(iterationCounts[i]);
         var colourIndex = modifiedColours ? (iterationCount + colourShift) % numFirstColours : (iterationCount * colourMappingFactor + colourShift) % numFirstColours; // map iteration count to a colour
         var firstColourIndex = Math.floor(colourIndex);
         var interpolationFactor = colourIndex % 1;
@@ -201,6 +215,14 @@ function compose(f1, f2, z, c) {    // helper function to compose two f:(z, c) =
 
 function pixelToComplex(px, py) {
     return {re: px * xIncr + zMin.re, im: py * yIncr + zMin.im};
+}
+
+function processKeys(e) {       // trap keyboard input; takes an event
+    var key = e.key || e.keyCode;   // keyCode is an older standard
+    if (key === "t") trigColours = !trigColours;
+    else if (key === "t") trigColours = !trigColours;
+    else if (key === "n") trigifyLevel /= ROOT2;
+    else if (key === "m") trigifyLevel *= ROOT2;
 }
 
 // MOUSE HANDLING
@@ -272,7 +294,7 @@ function getMousePos(c, e) {       // got from https://codepen.io/chrisjaime/pen
     }
 }
 
-// attach handlers to click  and mousedown events
+// attach handlers to click, mousedown and key events
 document.getElementById("root-canvas").addEventListener("mousedown", dragStartHandler);
 document.getElementById("root-canvas").addEventListener('click', clickHandler);
 document.getElementById("zoom-in").addEventListener('click', scale);
@@ -307,6 +329,8 @@ document.getElementById("palette-index").addEventListener('input', function() {
 document.getElementById("compose").addEventListener("change", function() {
     composeFunctions = this.checked;
 });
+
+document.addEventListener('keyup', processKeys);    // supposedly it's better to use keyup rather than keydown or keypress
 
 // ====================
 
