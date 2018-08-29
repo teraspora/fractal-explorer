@@ -6,8 +6,10 @@ Contents:   A basic fractal image generator for escape-time fractal functions
 */
 
 
-// First off, the company of an old and much-needed friend will be required...
+// First off, the company of acouple of old and much-needed friends will be required...
 const ROOT2 = Math.sqrt(2.0);
+const HALF_PI = Math.PI / 2.0;
+const TWO_PI = Math.PI * 2.0;
 
 // Set some basic parameters:
 const W = 768;
@@ -48,7 +50,8 @@ const colours = [
 var modifiedColours = true;     // different method of colour mapping;
                                 // will introduce a button to allow user to toggle this.
 
-// =======================================================================================================
+var modifyFraction = false;     // apply a simple function to the interpolation factor
+                                // to vary colour gradation
 
 // Couldn't find a good name for these vars!  trigify() is a function of my own devising which
 //  remaps the iteration counts.   Its effect may be varied with the parameter trigifyLevel
@@ -109,13 +112,18 @@ var funcs = [
     (z, c) => add(pow({re: Math.cos(z.re) * Math.cos(z.im) * Math.PI, im: arg(z)}, exponent), c),                                   
     (z, c) => add(pow(polar((Math.cos(z.re) + Math.cos(z.im)) * Math.PI, arg(z)), exponent), c),
     (z, c) => add(pow({re: (Math.cos(z.re) + Math.cos(z.im)) * Math.PI, im: (Math.sin(z.re) + Math.cos(z.im)) * Math.PI}, exponent), c),                                   
-    (z, c) => add(pow(mult(ballFold(boxFold(z, 1.0), 0.5, 1.0), mBoxScale), exponent), c),     // 87 Mandelbox from https://en.wikipedia.org/wiki/Mandelbox                                                                                                          
-    (z, c) => add(pow(mult(boxFold(ballFold(z, 0.5, 1.0), 1.0), mBoxScale), exponent), c),     // 88 Mandelbox with folds reversed      
-    (z, c) => add(pow(mult(ballFold(boxFold(z, 1.0), 0.5, 1.0), mBoxScale), exponent - 1), c), // 87 Mandelbox with exponent lowered
-    (z, c) => ballFold(boxFold(add(mult(z, mBoxScale), c), 0.5), 0.5, 1.0),                    // 103 Mandelbox shuffle functions                                                                                                                              
+    (z, c) => add(pow(mult(ballFold(boxFold(z, 1.0), 0.5, 1.0), mBoxScale), exponent), c),      // 87 Mandelbox from https://en.wikipedia.org/wiki/Mandelbox                                                                                                          
+    (z, c) => add(pow(mult(boxFold(ballFold(z, 0.5, 1.0), 1.0), mBoxScale), exponent), c),      // 88 Mandelbox with folds reversed      
+    (z, c) => add(pow(mult(ballFold(boxFold(z, 1.0), 0.5, 1.0), mBoxScale), exponent - 1), c),  // 87 Mandelbox with exponent lowered
+    (z, c) => ballFold(boxFold(add(mult(z, mBoxScale), c), 0.5), 0.5, 1.0),                     // 103 Mandelbox shuffle functions                                                                                                                              
     (z, c) => add(pow(polar(Math.log10(Math.abs(Math.cos(z.re) / Math.cos(z.im))), arg(z)), exponent), c), // 391 
     (z, c) => add(pow(polar(arg(z) + z.re + z.im, arg(z)), exponent), c),
-    
+    (z, c) => {var w = pow(z, exponent); return add(w, c, {re: Math.abs(w.re) - w.re, im: 0})}, // 207
+    (z, c) => add(pow(polar(recip(Math.sin(z.re) * Math.cos(z.im)), arg(z)), exponent), c),      // 277
+    (z, c) => {return {re: z.re * Math.cos(c.im), im: z.im * Math.sin(c.re)};},
+    (z, c) => {return {re: z.re + Math.cos(c.im), im: z.im + Math.sin(c.re)};},
+    (z, c) => {return {re: z.re + Math.cos(c.im), im: z.im + Math.cos(c.re)};},
+    (z, c) => pow({re: Math.cos(TWO_PI * z.re) + c.re, im: Math.cos(TWO_PI * z.im) + c.im}, exponent)
     ];
 
 // Now we know how many colour palettes and how many functions there are, we can update the UI:
@@ -161,6 +169,7 @@ function reallyDraw() {
         var colourIndex = modifiedColours ? (iterationCount + colourShift) % numFirstColours : (iterationCount * colourMappingFactor + colourShift) % numFirstColours; // map iteration count to a colour
         var firstColourIndex = Math.floor(colourIndex);
         var interpolationFactor = colourIndex % 1;
+        if (modifyFraction) interpolationFactor = Math.sin(HALF_PI * interpolationFactor);
         
         // slight hack here, in case iteration value is over max 
         // (may not actually need this...)
@@ -209,6 +218,13 @@ function iterate(z) {
 
 // HELPER FUNCTIONS
 // ================
+
+function recip(x) {
+    return x !== 0
+        ? 1.0 / x
+        : Number.MAX_VALUE;
+}
+
 function compose(f1, f2, z, c) {    // helper function to compose two f:(z, c) => z1 type functions
     return f1(f2(z, c), c);
 }
@@ -219,10 +235,20 @@ function pixelToComplex(px, py) {
 
 function processKeys(e) {       // trap keyboard input; takes an event
     var key = e.key || e.keyCode;   // keyCode is an older standard
-    if (key === "t") trigColours = !trigColours;
-    else if (key === "t") trigColours = !trigColours;
-    else if (key === "n") trigifyLevel /= ROOT2;
-    else if (key === "m") trigifyLevel *= ROOT2;
+    switch (key) {
+        case "t":
+            trigColours = !trigColours;
+            break;
+        case "n":
+            trigifyLevel /= ROOT2;
+            break;
+        case "m":
+            trigifyLevel *= ROOT2;
+            break;
+        case "b":
+            modifyFraction = !modifyFraction;
+            break;        
+    }
 }
 
 // MOUSE HANDLING
@@ -304,6 +330,7 @@ document.getElementById("move-right").addEventListener('click', translate);
 document.getElementById("move-up").addEventListener('click', translate);
 document.getElementById("move-down").addEventListener('click', translate);
 document.getElementById("reset").addEventListener('click', reset);
+document.getElementById("redraw").addEventListener('click', reallyDraw);
 document.getElementById("colour-shift").addEventListener('click', shiftColours);
 document.getElementById("max-iterations").addEventListener('input', function() {
     maxIterations = this.value;

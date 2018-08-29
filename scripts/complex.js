@@ -43,8 +43,14 @@ function arg(z) {			// The argument, or the angle to the X-axis; note: arg() ret
 
 // ======================================================================
 
-function add(z, w) {
+function _add2(z, w) {	// just used for add()
 	return {re: z.re + w.re, im: z.im + w.im};
+}
+
+function add(z, w) {
+	return arguments.length <= 2 
+		? _add2(z, w)
+		: [].slice.call(arguments).reduce(_add2);
 }
 
 function sub(z, w) {
@@ -70,6 +76,10 @@ function recip(z){
 
 function div(z, w){
 	return mult(z, recip(w));
+}
+
+function fromReal(x) {
+	return {re: x, im: 0};
 }
 
 // ======================================================================

@@ -54,11 +54,11 @@ button:hover {
     width: 30vw;
 }
 
-#zoom-in, #zoom-out, #colour-shift, input {
+#zoom-in, #zoom-out, #colour-shift {
     background-color: #14508d;
 }
 
-#zoom-in, #move-left, #move-up, #reset, #compose-label, #func-label {
+#zoom-in, #move-left, #move-up, #reset, #redraw, #compose-label, #func-label {
     float: left;
 }
 
@@ -69,12 +69,12 @@ button:hover {
     transform: scale(1.04);
 }
 
-#reset, #iterate {
+#reset, #iterate, #redraw {
     color: white;
     background-color: #00542c;
 }
 
-#reset:hover, #iterate:hover{
+#reset:hover, #iterate:hover, #redraw:hover {
     color: black;
     background-color: #e6580e;
 }
