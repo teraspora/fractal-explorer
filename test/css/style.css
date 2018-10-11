@@ -1,0 +1,34 @@
+* {
+        box-sizing: border-box;
+        font-size: 100%;
+        --bg-col: #010012;
+        --text-col: #fceae3;
+        --border-col: #00adff;
+        --light-text-col: #ffb700;
+        --alt-text-col: #0085f7;
+        --hover-col: #ff4b00;
+        --code-bg-col: #111;
+        --bg-pale-blue: #7bc2f7;
+        border-radius: 0.5vw;
+        text-decoration: none;
+}
+
+
+
+	
+	.grid {
+		display: grid;
+		grid-template-columns: 2fr 2fr 1fr;
+		grid-gap: 0.4vw;
+		grid-template-rows: 8vw auto 8vw;
+		grid-auto-rows: 100px;
+	}
+
+	.grid div {
+		border: 1px solid #067;
+		border-radius: 10px;
+		background-color: var(--bg-col);
+		padding: 0.2vw;
+		color: var(--light-text-col);
+		font-size: 120%;
+	}
