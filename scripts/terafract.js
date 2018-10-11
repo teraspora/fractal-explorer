@@ -102,28 +102,32 @@ var mBoxScale = -1.5;   // used in Mandelbox function; may allow user to vary it
 // Now, our array of functions designed to produce pretty pictures:
 var funcs = [
 
-    (z, c) => add(pow(z, exponent), c),     // standard Mandelbrot / Julia of "z -> z cubed plus c"
-    (z, c) => add(pow(absRealAndImag(z), exponent), c),     // Burning Ship
-    (z, c) => add(pow(polar(Math.sin(z.re) * Math.cos(z.im) * Math.PI, arg(z)), exponent), c),
-    (z, c) => add(pow({re: Math.sin(z.re) * Math.cos(z.im) * Math.PI, im: arg(z)}, exponent), c),                                   
-    (z, c) => add(pow(polar((Math.sin(z.re) + Math.cos(z.im)) * Math.PI, arg(z)), exponent), c),
-    (z, c) => add(pow({re: (Math.sin(z.re) + Math.cos(z.im)) * Math.PI, im: (Math.sin(z.re) + Math.cos(z.im)) * Math.PI}, exponent), c),                                   
-    (z, c) => add(pow(polar(Math.cos(z.re) * Math.cos(z.im) * Math.PI, arg(z)), exponent), c),
-    (z, c) => add(pow({re: Math.cos(z.re) * Math.cos(z.im) * Math.PI, im: arg(z)}, exponent), c),                                   
-    (z, c) => add(pow(polar((Math.cos(z.re) + Math.cos(z.im)) * Math.PI, arg(z)), exponent), c),
-    (z, c) => add(pow({re: (Math.cos(z.re) + Math.cos(z.im)) * Math.PI, im: (Math.sin(z.re) + Math.cos(z.im)) * Math.PI}, exponent), c),                                   
-    (z, c) => add(pow(mult(ballFold(boxFold(z, 1.0), 0.5, 1.0), mBoxScale), exponent), c),      // 87 Mandelbox from https://en.wikipedia.org/wiki/Mandelbox                                                                                                          
-    (z, c) => add(pow(mult(boxFold(ballFold(z, 0.5, 1.0), 1.0), mBoxScale), exponent), c),      // 88 Mandelbox with folds reversed      
-    (z, c) => add(pow(mult(ballFold(boxFold(z, 1.0), 0.5, 1.0), mBoxScale), exponent - 1), c),  // 87 Mandelbox with exponent lowered
-    (z, c) => ballFold(boxFold(add(mult(z, mBoxScale), c), 0.5), 0.5, 1.0),                     // 103 Mandelbox shuffle functions                                                                                                                              
-    (z, c) => add(pow(polar(Math.log10(Math.abs(Math.cos(z.re) / Math.cos(z.im))), arg(z)), exponent), c), // 391 
-    (z, c) => add(pow(polar(arg(z) + z.re + z.im, arg(z)), exponent), c),
-    (z, c) => {var w = pow(z, exponent); return add(w, c, {re: Math.abs(w.re) - w.re, im: 0})}, // 207
-    (z, c) => add(pow(polar(recip(Math.sin(z.re) * Math.cos(z.im)), arg(z)), exponent), c),      // 277
-    (z, c) => {return {re: z.re * Math.cos(c.im), im: z.im * Math.sin(c.re)};},
-    (z, c) => {return {re: z.re + Math.cos(c.im), im: z.im + Math.sin(c.re)};},
-    (z, c) => {return {re: z.re + Math.cos(c.im), im: z.im + Math.cos(c.re)};},
-    (z, c) => pow({re: Math.cos(TWO_PI * z.re) + c.re, im: Math.cos(TWO_PI * z.im) + c.im}, exponent)
+    (z, c) => add(pow(z, exponent), c),     // #0 standard Mandelbrot / Julia of "z -> z cubed plus c"
+    (z, c) => add(pow({re: z.re * z.re, im: z.im * z.im}, exponent), c),     // #1
+    (z, c) => add(pow(absRealAndImag(z), exponent), c),     // #2 Burning Ship
+    (z, c) => add(pow(polar(Math.sin(z.re) * Math.cos(z.im) * Math.PI, arg(z)), exponent), c),  // #3
+    (z, c) => add(pow({re: Math.sin(z.re) * Math.cos(z.im) * Math.PI, im: arg(z)}, exponent), c),  // #4                                  
+    (z, c) => add(pow(polar((Math.sin(z.re) + Math.cos(z.im)) * Math.PI, arg(z)), exponent), c),  // #5
+    (z, c) => add(pow({re: (Math.sin(z.re) + Math.cos(z.im)) * Math.PI, im: (Math.sin(z.re) + Math.cos(z.im)) * Math.PI}, exponent), c),  // #6                                   
+    (z, c) => add(pow(polar(Math.cos(z.re) * Math.cos(z.im) * Math.PI, arg(z)), exponent), c),  // #7
+    (z, c) => add(pow({re: Math.cos(z.re) * Math.cos(z.im) * Math.PI, im: arg(z)}, exponent), c),      // #8                               
+    (z, c) => add(pow(polar((Math.cos(z.re) + Math.cos(z.im)) * Math.PI, arg(z)), exponent), c),  // #9
+    (z, c) => add(pow({re: (Math.cos(z.re) + Math.cos(z.im)) * Math.PI, im: (Math.sin(z.re) + Math.cos(z.im)) * Math.PI}, exponent), c),  // #10                                   
+    (z, c) => add(pow(mult(ballFold(boxFold(z, 1.0), 0.5, 1.0), mBoxScale), exponent), c),      //  // #11 87 Mandelbox from https://en.wikipedia.org/wiki/Mandelbox                                                                                                          
+    (z, c) => add(pow(mult(boxFold(ballFold(z, 0.5, 1.0), 1.0), mBoxScale), exponent), c),      //  // #12 88 Mandelbox with folds reversed      
+    (z, c) => add(pow(mult(ballFold(boxFold(z, 1.0), 0.5, 1.0), mBoxScale), exponent - 1), c),  //  // #13 87 Mandelbox with exponent lowered
+    (z, c) => ballFold(boxFold(add(mult(z, mBoxScale), c), 0.5), 0.5, 1.0),                     //  // #14 103 Mandelbox shuffle functions                                                                                                                              
+    (z, c) => add(pow(polar(Math.log10(Math.abs(Math.cos(z.re) / Math.cos(z.im))), arg(z)), exponent), c), //  // #15 391 
+    (z, c) => add(pow(polar(arg(z) + z.re + z.im, arg(z)), exponent), c),  // #16
+    (z, c) => {var w = pow(z, exponent); return add(w, c, {re: Math.abs(w.re) - w.re, im: 0})}, //  // #17 207
+    (z, c) => add(pow(polar(recip(Math.sin(z.re) * Math.cos(z.im)), arg(z)), exponent), c),      //  // #18 277
+    (z, c) => {return {re: z.re * Math.cos(c.im), im: z.im * Math.sin(c.re)};},  // #19
+    (z, c) => {return {re: z.re + Math.cos(c.im), im: z.im + Math.sin(c.re)};},  // #20
+    (z, c) => {return {re: z.re + Math.cos(c.im), im: z.im + Math.cos(c.re)};},  // #21
+    (z, c) => pow({re: Math.cos(TWO_PI * z.re) + c.re, im: Math.cos(TWO_PI * z.im) + c.im}, exponent),  // #22
+    (z, c) => add(pow(polar(Math.sin(z.re) * Math.cos(z.im) * Math.PI, arg(z)), exponent), c),        //  // #23 216
+    (z, c) => add(pow({re: z.re * z.re - Math.sqrt(Math.abs(z.im)),
+                       im: z.im * z.im - Math.sqrt(Math.abs(z.re))}, exponent), c)  //  // #24 376 vf165 but2
     ];
 
 // Now we know how many colour palettes and how many functions there are, we can update the UI:

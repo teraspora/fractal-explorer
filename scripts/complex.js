@@ -125,7 +125,7 @@ function boxFold(z, fold) {
 function ballFold(z, r, bigR) {
 	var zAbs = mod(z);
 	r = Math.abs(r);
-	return zAbs < r ? {re: z.re / r * r, im: z.im / r * r}
+	return zAbs < r ? {re: z.re / (r * r), im: z.im / (r * r)}
 					: 
 		   (zAbs < Math.abs(bigR)
 						?{re: z.re / (zAbs * zAbs), im: z.im / (zAbs * zAbs)}

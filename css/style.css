@@ -2,19 +2,17 @@ body {
 	background: black;
 }
 #root-canvas {
-	position: absolute;
+    position: relative;
     margin: auto;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: -20em;
     width: 800px;
     height: 800px;
+    border: 2px solid #ffcc99;
+    border-radius: 10px;
     background-color: black;
+    padding: 0 0 0 0;
 }
 
 h1 {
-    float: left;
     font-size: 3em;
     color: #ffbc76;    
     background-color: black;
@@ -23,16 +21,15 @@ h1 {
     margin-top: 10px;
 }
 
-button, label, input {
+.btn, label, input {
     background-color: #ba1257;
     color: black;
-    padding: 6px 20px;
+    padding: 3px 3px;
     text-align: center;
     font-size: 20px;
+    box-shadow: 0 0 1px 1px;
     cursor: pointer;
-    float: right;
-    clear: right;
-    margin: 10px 10px 10px 0px;
+    margin: 1px 1px 1px 1px;
     border-radius: 10px;
     transition: transform 0.05s;
 }
@@ -46,23 +43,26 @@ button:hover {
 
 #control-panel {
     float: right;
-    clear: right;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: repeat(6, 1fr);
+    grid-gap: 20px;
+    grid-auto-flow: column;
+    align-items: center;
+    justify-content: center;
     padding: 20px 20px 20px 20px;
-    margin-top: 100px;
     border: 2px solid #ffbc76;
     border-radius: 10px;
-    width: 30vw;
+    width: 34vw;
+    height: 800px;
 }
 
 #zoom-in, #zoom-out, #colour-shift {
     background-color: #14508d;
 }
 
-#zoom-in, #move-left, #move-up, #reset, #redraw, #compose-label, #func-label {
-    float: left;
-}
 
-#zoom-in:hover, #zoom-out:hover, input:hover {
+#zoom-in:hover, #zoom-out:hover, #colour-shift:hover, input:hover {
     background-color: #81002b;
     color: white;
     border: 2px solid white;    
@@ -92,6 +92,12 @@ label {
     border: 2px solid cyan;
     top: 1em;
     height: 50px;
+}
+
+label:hover {
+    transform: scale(1.04);
+    color: #000;
+    background-color: #fed;
 }
 
 #alt-func-label {
