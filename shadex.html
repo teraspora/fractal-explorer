@@ -3,70 +3,27 @@
 
 <head>
 	<meta charset="utf-8">
-	<title>Fractal Explorer</title>
-    <meta name="description" content="A simple ragment shader editor targeting the HTML5 canvas">
+	<title>Shader Explorer</title>
+    <meta name="description" content="A simple fragment shader editor targeting the HTML5 canvas">
     <meta name="author" content="John Lynch">
     <link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 
 <body>
-	<h1>
-		Shader Explorer
-	</h1>
-	<canvas id="root-canvas">
-	</canvas>
-	<div id="control-panel">
-		<button class = btn id = "zoom-in">
-			Zoom in
-		</button>
-		<button class = btn id = "zoom-out">
-			Zoom out
-		</button>
-		<button class = "btn" id = "move-left">
-			Move Left
-		</button>
-		<button class = "btn" id = "move-right">
-			Move Right
-		</button>
-		<button class = "btn" id = "move-up">
-			Move Up
-		</button>
-		<button class = "btn" id = "move-down">
-			Move Down
-		</button>
-		<button class = "btn" id = "reset">
-			Reset
-		</button>
-		<button class = "btn" id = "redraw">
-			Redraw
-		</button>
-		<button class = "btn" id = "iterate">
-			Iterate
-		</button>
-		<label id="compose-label">Compose&nbsp;&nbsp;&nbsp;&nbsp;
-			<input type="checkbox" id="compose" value="compose"/>
-		</label>
-		<button class = "btn" id = "colour-shift">
-			Shift colours cyclically
-		</button>
-		<label>Max. iterations&nbsp;&nbsp;&nbsp;&nbsp;
-			<input id="max-iterations" name="max-iterations" type="number"max="1024" step="8" value="32"/>
-		</label>
-		<label>Exponent&nbsp;&nbsp;&nbsp;&nbsp;
-			<input id="exponent" type="number" min="1" max="8" step="1" value="2"/>
-		</label>
-		<label id="func-label">Function&nbsp;&nbsp;&nbsp;&nbsp;<input id="func-index" type="number" min="0" step="1" value="0"/>
-		</label>
-		<label id="alt-func-label">Alt Function&nbsp;&nbsp;&nbsp;&nbsp;<input id="alt-func-index" type="number" min="0" step="1" value="0"/>
-		</label>
-		<label>Colour palette&nbsp;&nbsp;&nbsp;&nbsp;
-			<input id="palette-index" type="number" min="0" step="1" value="0"/>
-		</label>
-	</div>
-	
-<script type="text/javascript" src="scripts/complex.js"></script>
-<script type="text/javascript" src="scripts/terafract.js"></script>
-
+	<header class="navbar">
+		<a class="site-name" href="www.teraspora.net/index.html">teraspora</a> 
+		<nav class = "nav">
+			<ul class="main-nav">
+				<li><a href="index.html">Home</a></li>
+				<li><a href="fractex.html">Fractal Explorer</a></li>
+				<li><a href="shadex.html">Shader Explorer</a></li>
+			</ul>
+		</nav>
+	</header>
+	<main>
+		<p>Will have canvas displaying running shader,</p>
+	<p>code window and controls</p>
+	</main>
 </body>
 
 </html>
