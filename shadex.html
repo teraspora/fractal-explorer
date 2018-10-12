@@ -1,57 +1,57 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" >
 
 <head>
-	<meta charset="utf-8">
-	<title>Fractal Explorer </title>
-    <meta name="description" content="A simple Javascript fractal image generator targeting the HTML5 canvas">
-    <meta name="author" content="John Lynch">
+  <meta charset="UTF-8">
+  <title>Shader Explorer</title>
     <link href="https://fonts.googleapis.com/css?family=Mali|Rubik" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-	<link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">  
+  <link rel="stylesheet" href="css/style-sh.css">
 </head>
 
 <body>
-	<main class="grid">
-		<header class="navbar">
-			<a class="site-name" href="www.teraspora.net/index.html">teraspora</a> 
-			<ul class="nav main-nav">
-				<li><a href="index.html">Home</a></li>
-				<li><a href="fractex.html">Fractal Explorer</a></li>
-				<li><a href="shadex.html">Shader Explorer</a></li>
-			</ul>
-		</header>
-			
-			<canvas id="canv" width="800" height="600"></canvas>
-		
-		<section id="code" contenteditable="true"></section>
-		
-		<section id="controls">      
-		    <p>Select shader...</p>
-		    <input type="file" id="scode" name="shader"/>
-		    <button class="btn" id="btn-pause">Pause</button>
-		    <button class="btn" id="btn-load">Load</button>   
-		</section>
 
-		<footer class = "footer">
-			<div class="social-wrapper">
-				<ul class="social-icons">
-				    <li><a target="_blank"
-				    	href="https://twitter.com/teraspora" class="social-icon"> <i class="fa fa-twitter"></i></a></li>
-				    <li><a target="_blank"
-				    	href="https://github.com/teraspora" class="social-icon"> <i class="fa fa-github"></i></a></li>
-				    <li><a target="_blank"
-				    	href="https://www.linkedin.com/in/john-lynch-ballydehob/" class="social-icon"> <i class="fa fa-linkedin"></i></a></li>
-				    <li><a target="_blank"
-				    	href="https://www.shadertoy.com/user/teraspora" class="social-icon"> <i class="icon icon-st"><img src="media/shadert.jpg" alt=""></i></a></li>
-				</ul>	
-			</div>
-		</footer>
+  <main id="sh-grid">
+    
+    <header id="sh-header">
+      <a class="site-name" href="www.teraspora.net/index.html">teraspora digital art playground</a> 
+      <ul class="nav main-nav">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="fractex.html">Fractal Explorer</a></li>
+        <li><a href="shadex.html">Shader Explorer</a></li>
+      </ul>
+    </header>
 
-	</main>
+    <canvas id="shcanv"></canvas>
+    
+    <section id="sh-code" contenteditable="true"></section>
+    
+    <section id="sh-controls">      
+        <p>Select shader...</p>
+        <input type="file" id="sh-code-input" name="shader"/>
+        <button class="sh-btn" id="sh-btn-pause">Pause</button>
+        <button class="sh-btn" id="sh-btn-load">Load</button>   
+    </section>
+<footer id="sh-footer">
+  <div class="social-wrapper">
+    <ul class="social-icons">
+        <li><a target="_blank"
+          href="https://twitter.com/teraspora" class="social-icon"> <i class="fa fa-twitter"></i></a></li>
+        <li><a target="_blank"
+          href="https://github.com/teraspora" class="social-icon"> <i class="fa fa-github"></i></a></li>
+        <li><a target="_blank"
+          href="https://www.linkedin.com/in/john-lynch-ballydehob/" class="social-icon"> <i class="fa fa-linkedin"></i></a></li>
+        <li><a target="_blank"
+          href="https://www.shadertoy.com/user/teraspora" class="social-icon"> <i class="icon icon-st"><img src="media/shadert.jpg" alt=""></i></a></li>
+    </ul> 
+  </div>
+</footer>
 
-<script type="text/javascript" src="scripts/complex.js"></script>
-<script type="text/javascript" src="scripts/terafract.js"></script>
+
+  </main>
+
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/three.js/r71/three.min.js'></script>
+  <script  src="js/index.js"></script>
 
 </body>
 
