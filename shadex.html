@@ -3,27 +3,56 @@
 
 <head>
 	<meta charset="utf-8">
-	<title>Shader Explorer</title>
-    <meta name="description" content="A simple fragment shader editor targeting the HTML5 canvas">
+	<title>Fractal Explorer </title>
+    <meta name="description" content="A simple Javascript fractal image generator targeting the HTML5 canvas">
     <meta name="author" content="John Lynch">
-    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css?family=Mali|Rubik" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 
 <body>
-	<header class="navbar">
-		<a class="site-name" href="www.teraspora.net/index.html">teraspora</a> 
-		<nav class = "nav">
-			<ul class="main-nav">
+	<main class="grid">
+		<header class="navbar">
+			<a class="site-name" href="www.teraspora.net/index.html">teraspora</a> 
+			<ul class="nav main-nav">
 				<li><a href="index.html">Home</a></li>
 				<li><a href="fractex.html">Fractal Explorer</a></li>
 				<li><a href="shadex.html">Shader Explorer</a></li>
 			</ul>
-		</nav>
-	</header>
-	<main>
-		<p>Will have canvas displaying running shader,</p>
-	<p>code window and controls</p>
+		</header>
+			
+			<canvas id="canv" width="800" height="600"></canvas>
+		
+		<section id="code" contenteditable="true"></section>
+		
+		<section id="controls">      
+		    <p>Select shader...</p>
+		    <input type="file" id="scode" name="shader"/>
+		    <button class="btn" id="btn-pause">Pause</button>
+		    <button class="btn" id="btn-load">Load</button>   
+		</section>
+
+		<footer class = "footer">
+			<div class="social-wrapper">
+				<ul class="social-icons">
+				    <li><a target="_blank"
+				    	href="https://twitter.com/teraspora" class="social-icon"> <i class="fa fa-twitter"></i></a></li>
+				    <li><a target="_blank"
+				    	href="https://github.com/teraspora" class="social-icon"> <i class="fa fa-github"></i></a></li>
+				    <li><a target="_blank"
+				    	href="https://www.linkedin.com/in/john-lynch-ballydehob/" class="social-icon"> <i class="fa fa-linkedin"></i></a></li>
+				    <li><a target="_blank"
+				    	href="https://www.shadertoy.com/user/teraspora" class="social-icon"> <i class="icon icon-st"><img src="media/shadert.jpg" alt=""></i></a></li>
+				</ul>	
+			</div>
+		</footer>
+
 	</main>
+
+<script type="text/javascript" src="scripts/complex.js"></script>
+<script type="text/javascript" src="scripts/terafract.js"></script>
+
 </body>
 
 </html>
