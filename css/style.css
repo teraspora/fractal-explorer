@@ -6,6 +6,7 @@ body, html {
 * {
         box-sizing: border-box;
         --bg-col: #010012;
+        --august-col: #ffb381;
         --text-col: #fceae3;
         --border-col: #00adff;
         --light-text-col: #ffb700;
@@ -21,9 +22,15 @@ body, html {
 	border: 1px solid var(--border-col);
 	border-radius: 10px;
 	background-color: var(--bg-col);
-	color: var(--light-text-col);
     padding: 1vh 1vw 1vh 1vw;
 }
+
+header, aside {
+    color: var(--august-col);
+}
+
+
+
 
 /*=========================================
 for mobile: */
