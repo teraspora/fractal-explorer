@@ -1,62 +1,117 @@
-body {
-	background: black;
-}
-#root-canvas {
-    position: relative;
-    margin: auto;
-    width: 800px;
-    height: 800px;
-    border: 2px solid #ffcc99;
-    border-radius: 10px;
-    background-color: black;
-    padding: 0 0 0 0;
+body, html {
+    margin: 0;
+    padding: 0;
 }
 
-h1 {
-    font-size: 3em;
-    color: #ffbc76;    
-    background-color: black;
-    border: 2px solid #ffbc76;
-    border-radius: 10px;
-    margin-top: 10px;
+* {
+        box-sizing: border-box;
+        --bg-col: #010012;
+        --text-col: #fceae3;
+        --border-col: #00adff;
+        --light-text-col: #ffb700;
+        --alt-text-col: #0085f7;
+        --hover-col: #ff4b00;
+        --code-bg-col: #111;
+        --bg-pale-blue: #7bc2f7;
+        border-radius: 0.5vw;
+        text-decoration: none;
 }
 
-.btn, label, input {
-    background-color: #ba1257;
-    color: black;
-    padding: 3px 3px;
-    text-align: center;
-    font-size: 20px;
-    box-shadow: 0 0 1px 1px;
-    cursor: pointer;
-    margin: 1px 1px 1px 1px;
-    border-radius: 10px;
-    transition: transform 0.05s;
+.grid > * {
+	border: 1px solid var(--border-col);
+	border-radius: 10px;
+	background-color: var(--bg-col);
+	color: var(--light-text-col);
+    padding: 1vh 1vw 1vh 1vw;
 }
 
-button:hover {
-    background-color: #00125c;
-    color: white;
-    border: 2px solid white;
-    transform: scale(1.04);
+/*=========================================
+for mobile: */
+@media only screen and (max-width: 767px) {
+.grid {
+
 }
 
-#control-panel {
-    float: right;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    grid-template-rows: repeat(6, 1fr);
-    grid-gap: 20px;
-    grid-auto-flow: column;
-    align-items: center;
-    justify-content: center;
-    padding: 20px 20px 20px 20px;
-    border: 2px solid #ffbc76;
-    border-radius: 10px;
-    width: 34vw;
-    height: 800px;
+header {
+    grid-column: 1/-1;
+    grid-row: 1/2;
 }
 
+.canv {
+    grid-column: 1/-1;
+    grid-row: 2/3;
+}
+
+.controls {
+    grid-column: 1/-1
+    grid-row: 3/4;
+}
+
+aside {
+    grid-column: 1/-1;
+    grid-row: 4/5;
+}
+
+footer {
+    grid-column: 1/-1;
+    grid-row: 5/6;
+}
+
+}
+/*=========================================
+for desktop:                                 */
+@media only screen and (min-width: 768px) {
+.grid {
+            
+	display: grid;
+	grid-template-columns: 84vh 33vw auto;
+	grid-gap: 0.8vmin;
+	grid-template-rows: 8vh 84vh 8vh;
+	grid-auto-rows: 100px;
+	justify-items: stretch;
+	align-items: stretch;
+}
+
+header {
+    grid-column: 1/-1;
+    grid-row: 1/2;
+    align-self: stretch;
+    font-size: 2.4vw;
+    /*align-self: center;*/
+}
+
+.canv {
+    grid-column: 1  /2;
+    grid-row: 2/3;
+    align-self: center;
+    width: 80vh;
+    height: 80vh;
+    border: 1.5px solid var(--hover-col);
+}
+
+.controls {
+    grid-column: 2/3
+    grid-row: 2/3;
+    align-self: center;
+    font-size: 1.4vw;
+    height: 80vh;
+}
+
+aside {
+    grid-column: 3/-1 ;
+    grid-row: 2/3;
+    height: 80vh;
+    align-self: center;
+}
+
+footer {
+    grid-column: 1/-1;
+    grid-row: 3/4;
+    align-self: stretch;
+    font-size: 1.4vw;
+}
+}
+/*=========================================*/
 #zoom-in, #zoom-out, #colour-shift {
     background-color: #14508d;
 }
@@ -99,7 +154,84 @@ label:hover {
     color: #000;
     background-color: #fed;
 }
+/*======================================
+=======================================*/
 
-#alt-func-label {
-    /*display: none;*/
+h1 {
+    font-size: 3em;
+    color: #ffbc76;    
+    background-color: black;
+    border: 2px solid #ffbc76;
+    border-radius: 10px;
+    margin-top: 10px;
+}
+
+.btn, label, input {
+    background-color: #ba1257;
+    color: black;
+    padding: 3px 3px;
+    text-align: center;
+    font-size: 20px;
+    box-shadow: 0 0 1px 1px;
+    cursor: pointer;
+    margin: 1px 1px 1px 1px;
+    border-radius: 10px;
+    transition: transform 0.05s;
+}
+
+button:hover {
+    background-color: #00125c;
+    color: white;
+    border: 2px solid white;
+    transform: scale(1.04);
+}
+
+/*
+Font Awsome styling for social icons:
+*/
+/* social media links in footer */
+.social-icon {
+    color: #fff;
+}
+ul.social-icons {
+    margin-top: 1vh;
+}
+.social-icons li {
+    vertical-align: top;
+    display: inline;
+    height: 100px;
+}
+.social-icons a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.fa, .icon {
+    display: inline;
+    padding: 2px 2px;
+    background-color: var(--bg-col);
+}
+.fa-twitter:hover {
+    background-color: #00B6F1;
+    -webkit-transition: 0.6s;
+    -o-transition: 0.6s;
+    transition: 0.6s;    
+}
+.fa-github:hover {
+    color: #9840d9;
+    -webkit-transition: 0.6s;
+    -o-transition: 0.6s;
+    transition: 0.6s;    
+}
+.fa-linkedin:hover {
+    background-color: #04669A;
+    -webkit-transition: 0.6s;
+    -o-transition: 0.6s;
+    transition: 0.6s;    
+}
+.icon-st:hover {
+    background-color: #f321b7;
+    -webkit-transition: 0.6s;
+    -o-transition: 0.6s;
+    transition: 0.6s;    
 }

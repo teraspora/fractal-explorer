@@ -12,8 +12,8 @@ const HALF_PI = Math.PI / 2.0;
 const TWO_PI = Math.PI * 2.0;
 
 // Set some basic parameters:
-const W = 768;
-const H = 768;
+const W = 800;
+const H = 800;
 var aspectRatio = W / H;
 
 var numPixels = W * H;   // size of our array iterationCounts[]
