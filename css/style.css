@@ -65,7 +65,6 @@ header *, aside, li a {
     display: inline;
     float: left;
     color: var(--august-col);
-    font-size: 2vw;
 }
 
 /*=========================================
