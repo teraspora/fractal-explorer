@@ -13,6 +13,7 @@ body, html {
         --light-text-col: #ffb700;
         --alt-text-col: #0085f7;
         --hover-col: #ff4b00;
+        --code-col: #00cfff;
         --code-bg-col: #111;
         --bg-pale-blue: #7bc2f7;
         border-radius: 0.5vw;
@@ -29,9 +30,27 @@ body, html {
 header *, aside, li a {
     color: var(--august-col);
 }
+
+#home-panel * {
+    color: var(--august-col);
+    text-align: center;
+    font-size: 1vw;
+}
+
+#home-panel a {    
+    font-size: 2.2vw;
+}
+
+#home-panel a:hover {
+    color: var(--hover-col);
+    transform: scale(1.04);
+}
+
+
+
 .navbar {
     position: relative;
-    text-align: top;        
+    text-align: center;        
 }
 .main-nav {
     float: right;
@@ -65,6 +84,7 @@ header *, aside, li a {
     display: inline;
     float: left;
     color: var(--august-col);
+    font-size: 2vw;
 }
 
 /*=========================================
@@ -76,21 +96,6 @@ header {
     grid-row: 1/2;
 }
 
-.shcanv {
-    grid-column: 1/-1;
-    grid-row: 2/3;
-}
-
-.sh-code {
-    grid-column: 1/-1;
-    grid-row: 2/3;
-}
-
-.sh-controls {
-    grid-column: 1/-1;
-    grid-row: 3/4;
-}
-
 aside {
     grid-column: 1/-1;
     grid-row: 4/5;
@@ -99,11 +104,6 @@ aside {
 #fr-footer {
     grid-column: 1/-1;
     grid-row: 3/4;
-}
-
-#sh-footer {
-    grid-column: 1/-1;
-    grid-row: 5/6;
 }
 
 .main-nav { 
@@ -134,7 +134,7 @@ header {
 }
 
 .controls {
-    grid-column: 2/3
+    grid-column: 2/3;
     grid-row: 2/3;
     align-self: center;
     font-size: 1.4vw;
@@ -164,78 +164,10 @@ aside {
     border: 1.5px solid var(--hover-col);
 }
 
-
-#sh-grid {
-    height: 100vh;
-    background-color: var(--bg-col);
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 8fr 72fr 12fr 8fr;
-    grid-column-gap: 1vw;
-    grid-row-gap: 1vh;
-}
-
-#sh-grid > * {
-    border: 2px solid #fff;
-    margin: 2vw;
-    border-radius: 6px;
-}
-
-#sh-header {
-    grid-column: 1/-1;
-    grid-row: 1/2;
-}
-
-#shcanv {   
-    grid-column: 1/2;
-    grid-row: 2/3;
-
-}
-
-#sh-code {
-    overflow: scroll;
-    color: var(--code-col);
-    font-family: 'Source Code Pro', monospace;
-    font-size: 20px;
-    grid-column: 2/3;
-    grid-row: 2/3;
-    white-space: pre-wrap;
-    padding-left: 1vw;
-    padding-right: 1vw;
-}
-
-#sh-controls {
-    grid-column: 1/2;
-    grid-row: 3/4;
-}
-
-.sh-btn {
-    width: 5vw;
-    height: 5vh;
-    font-weight: bold;
-    border-radius: 10%;
-    font-size: 1.5vw;   
-}
-
-#sh-btn-load {
-    color: var(--bg-col);
-    background-color:var(--btn-col);
-    float: right;
-}
-
-#sh-btn-pause {
-    color: var(--bg-col);
-    background-color:var(--btn-col);
-}
-.sh-btn:hover {
-    background-color: var(--light-text-col);
-    transform: scale(1.05);
-}
 /*=========================================*/
 #zoom-in, #zoom-out, #colour-shift {
     background-color: #14508d;
 }
-
 
 #zoom-in:hover, #zoom-out:hover, #colour-shift:hover, input:hover {
     background-color: #81002b;
@@ -307,66 +239,26 @@ button:hover {
 }
 /* ==================================== */
 
-.sh-grid {
-    height: 100vh;
-    background-color: var(--bg-col);
+#home-grid {             
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 8vh 72vh 12vh 8vh;
-    grid-column-gap: 1vw;
-    grid-row-gap: 1vh;
-    border: 2px solid #fff;
-    margin: 2vw;
-    border-radius: 6px;
+    grid-template-columns: 1fr;
+    grid-template-rows: 8vh 84vh 8vh;
+    grid-column-gap: 0.3vw;
+    grid-row-gap: 0.3vh;
+    justify-items: stretch;
+    align-items: stretch;
 }
 
-#shcanv {  
-    grid-row: 1/-1;
-    grid-column: 1/2;
 
-}
-
-#sh-code {
-    overflow: scroll;
-    color: var(--code-col);
-    font-family: 'Source Code Pro', monospace;
-    font-size: 20px;
-    grid-row: 1/span 2;
-    grid-column: 2/-1;
-    white-space: pre-wrap;
-    padding-left: 1vw;
-    padding-right: 1vw;
-}
-
-#sh-controls {
-    grid-column: 1/2;
+#home-panel {
+    grid-column: 1/-1;
     grid-row: 2/3;
 }
 
-.sh-btn {
-    width: 5vw;
-    height: 5vh;
-    font-weight: bold;
-    border-radius: 10%;
-    font-size: 1.5vw;   
+#home-footer {
+    grid-column: 1/-1;
+    grid-row: 3/4;
 }
-
-#sh-btn-load {
-    color: var(--bg-col);
-    background-color:var(--btn-col);
-    float: right;
-}
-
-#sh-btn-pause {
-    color: var(--bg-col);
-    background-color:var(--btn-col);
-}
-.sh-btn:hover {
-    background-color: var(--light-text-col);
-    transform: scale(1.05);
-}
-
-
 
 
 

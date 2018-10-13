@@ -1,35 +1,39 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    background-color: var(--bg-pale-blue);
+}
+
 * {
-        /*box-sizing: border-box;
-        */font-size: 100%;
+        box-sizing: border-box;
         --bg-col: #010012;
+        --august-col: #ffb381;
         --text-col: #fceae3;
         --border-col: #00adff;
         --light-text-col: #ffb700;
         --alt-text-col: #0085f7;
         --hover-col: #ff4b00;
+        --code-col: #00cfff;
         --code-bg-col: #111;
         --bg-pale-blue: #7bc2f7;
-        --code-col: #00cfff;
-        --august-col: #ffb381;
         --btn-col: #ff0057;
         border-radius: 0.5vw;
         text-decoration: none;
 }
 
-body {
-    background-color: var(--bg-pale-blue);
-    padding: 0;
+.grid > * {
+    border: 1px solid var(--border-col);
+    border-radius: 10px;
+    background-color: var(--bg-col);
+    padding: 1vh 1vw 1vh 1vw;
 }
-section * {
-	color: var(--august-col);
-}
+
 
 header *, aside, li a {
     color: var(--august-col);
 }
 .navbar {
-    position: relative;
-    text-align: top;        
+    position: relative;  
 }
 .main-nav {
     float: right;
@@ -67,16 +71,14 @@ header *, aside, li a {
 }
 
 #sh-grid {
-	height: 100vh;
-    background-color: var(--bg-col);
     display: grid;
-	grid-template-columns: 1fr 1fr;
-    grid-template-rows: 8fr 72fr 12fr 8fr;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 8vh 72vh 12vh 8vh;
+    align-items: space-between;
+    background-color: var(--bg-col);
 }
 
 #sh-grid > * {
-	border: 2px solid #fff;
-	margin: 2vw;
 	border-radius: 6px;
 }
 
@@ -85,7 +87,8 @@ header *, aside, li a {
 	grid-row: 1/2;
 }
 
-#shcanv {	
+#shcanv {
+    background-color: black;	
 	grid-column: 1/2;
 	grid-row: 2/3;
 
@@ -118,23 +121,25 @@ header *, aside, li a {
 	height: 5vh;
 	font-weight: bold;
 	border-radius: 10%;
-	font-size: 1.5vw;	
+	font-size: 1.5vw;
+    float: right;
+    margin: 0.5vw;
 }
 
 #sh-btn-load {
 	color: var(--bg-col);
-	background-color:var(--btn-col);
-	float: right;
+	background-color:var(--august-col);
 }
 
 #sh-btn-pause {
 	color: var(--bg-col);
-	background-color:var(--btn-col);
+	background-color:var(--august-col);
 }
 .sh-btn:hover {
 	background-color: var(--light-text-col);
 	transform: scale(1.05);
 }
+
 
 
 /*
