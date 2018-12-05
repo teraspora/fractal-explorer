@@ -31,6 +31,10 @@ header *, aside, li a {
     color: var(--august-col);
 }
 
+h1 {
+    font-size: 1vw;
+}
+
 #home-panel * {
     color: var(--august-col);
     text-align: center;
@@ -46,45 +50,12 @@ header *, aside, li a {
     transform: scale(1.04);
 }
 
-
-
-.navbar {
+.title {
     position: relative;
-    text-align: center;        
-}
-.main-nav {
-    float: right;
-    list-style-type: none;
-    font-size: 2.2vw;
-}
-.main-nav li{
-    display: inline;
-    padding-left: 1vw;
-    padding-right: 1vw;
-}
-
-.main-nav li a {
-    color: var(--august-col);
-    font-size: 1.6vw;
-    text-decoration: none;  
-}
-
-.main-nav li a:hover {
-    color: var(--hover-col);
-    -webkit-transform: scale(1.04);
-        -ms-transform: scale(1.04);
-            transform: scale(1.04);
-}
-
-.nav {
-    font-size: 1vw;
-}
-
-.site-name {
     display: inline;
     float: left;
     color: var(--august-col);
-    font-size: 2vw;
+    font-size: 0.6vw;
 }
 
 /*=========================================
@@ -104,11 +75,6 @@ aside {
 #fr-footer {
     grid-column: 1/-1;
     grid-row: 3/4;
-}
-
-.main-nav { 
-    display: inline;
-    color: var(--august-col);
 }
 
 }
