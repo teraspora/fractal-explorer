@@ -136,7 +136,7 @@ document.getElementById("alt-func-index").max = funcs.length - 1;
 document.getElementById("palette-index").max = colours.length - 1;
 
 // OK, so let's create a canvas to draw on:    
-const canv = document.getElementById("root-canvas");
+const canv = document.getElementById("canv");
 canv.width = W;
 canv.height = H;
 const gc = canv.getContext("2d");   // get a graphics context

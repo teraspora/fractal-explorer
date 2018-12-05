@@ -7,7 +7,7 @@ body, html {
 * {
         box-sizing: border-box;
         --bg-col: #010012;
-        --august-col: #ffb381;
+        --august-col: #ff9371;
         --text-col: #fceae3;
         --border-col: #00adff;
         --light-text-col: #ffb700;
@@ -21,13 +21,13 @@ body, html {
 }
 
 .grid > * {
-	border: 1px solid var(--border-col);
+	border: 3px ridge var(--august-col);
 	border-radius: 10px;
 	background-color: var(--bg-col);
     padding: 1vh 1vw 1vh 1vw;
 }
 
-header *, aside, li a {
+header *, aside {
     color: var(--august-col);
 }
 
@@ -35,20 +35,7 @@ h1 {
     font-size: 1vw;
 }
 
-#home-panel * {
-    color: var(--august-col);
-    text-align: center;
-    font-size: 1vw;
-}
 
-#home-panel a {    
-    font-size: 2.2vw;
-}
-
-#home-panel a:hover {
-    color: var(--hover-col);
-    transform: scale(1.04);
-}
 
 .title {
     position: relative;
@@ -111,9 +98,7 @@ header {
     grid-auto-flow: column;
     align-items: center;
     justify-content: center;
-    padding: 20px 20px 20px 20px;
-    border: 2px solid #ffbc76;
-    border-radius: 10px
+    padding: 10px 10px 20px 30px;
     width: 34vw;
     height: 80vh;
 }
@@ -121,8 +106,18 @@ header {
 aside {
     grid-column: 3/-1 ;
     grid-row: 2/3;
-    height: 80vh;
     align-self: center;
+    justify-content: center;
+    height: 80vh;
+}
+
+.canv {
+    grid-column: 1/2;
+    grid-row: 2/3;
+    align-self: center;
+    justify-content: center;
+    width: 80vh;
+    height: 80vh;
 }
 
 #fr-footer {
@@ -130,15 +125,6 @@ aside {
     grid-row: 3/4;
     align-self: stretch;
     font-size: 1.4vw;
-}
-
-.canv {
-    grid-column: 1/2;
-    grid-row: 2/3;
-    align-self: center;
-    width: 80vh;
-    height: 80vh;
-    border: 1.5px solid var(--hover-col);
 }
 
 /*=========================================*/
@@ -187,12 +173,10 @@ label:hover {
 =======================================*/
 
 h1 {
-    font-size: 3em;
-    color: #ffbc76;    
+    font-size: 2vw;
     background-color: black;
-    border: 2px solid #ffbc76;
+    border: 2px solid var(--august-col);
     border-radius: 10px;
-    margin-top: 10px;
 }
 
 .btn, label, input {
@@ -214,32 +198,6 @@ button:hover {
     border: 2px solid white;
     transform: scale(1.04);
 }
-/* ==================================== */
-
-#home-grid {             
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: 8vh 84vh 8vh;
-    grid-column-gap: 0.3vw;
-    grid-row-gap: 0.3vh;
-    justify-items: stretch;
-    align-items: stretch;
-}
-
-
-#home-panel {
-    grid-column: 1/-1;
-    grid-row: 2/3;
-}
-
-#home-footer {
-    grid-column: 1/-1;
-    grid-row: 3/4;
-}
-
-
-
-
 
 /*
 Font Awsome styling for social icons:
