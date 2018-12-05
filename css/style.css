@@ -104,6 +104,17 @@ header {
     grid-row: 2/3;
     align-self: center;
     font-size: 1.4vw;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: repeat(6, 1fr);
+    grid-gap: 10px;
+    grid-auto-flow: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px 20px 20px 20px;
+    border: 2px solid #ffbc76;
+    border-radius: 10px
+    width: 34vw;
     height: 80vh;
 }
 
