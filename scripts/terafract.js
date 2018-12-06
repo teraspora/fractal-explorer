@@ -347,7 +347,7 @@ document.getElementById("max-iterations").addEventListener('input', function() {
 
 document.getElementById("trigify").addEventListener('click', function() {
     trigColours = !trigColours;
-    this.value = trigColours ? "Untrigify" : "Trigify";
+    this.innerText = trigColours ? "Untrigify" : "Trigify";
     reallyDraw();
 });
 
