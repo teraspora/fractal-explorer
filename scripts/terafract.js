@@ -6,12 +6,13 @@ Contents:   A basic fractal image generator for escape-time fractal functions
 */
 
 
-// First off, the company of acouple of old and much-needed friends will be required...
+// First off, the company of a couple of old and much-needed friends will be required...
 const ROOT2 = Math.sqrt(2.0);
 const HALF_PI = Math.PI / 2.0;
 const TWO_PI = Math.PI * 2.0;
 
-// Set some basic parameters:
+// Set some basic parameters; keep canvas square for simplicity but use 2 vars for 
+// width and height to allow future generalisation to cases where W != H
 const W = 800;
 const H = 800;
 var aspectRatio = W / H;
@@ -95,13 +96,8 @@ var numPixelsToMove = 100;      // when we "Move left" etc.
 
 var mBoxScale = -1.5;   // used in Mandelbox function; may allow user to vary it in future
 
-// const colours = ["#000000", "#56cbff", "#000000",  
-//          "#ff7ccd", "#000000", "#f93457", "#000000",  "#305cff",                  
-//          "#000000", "#008aff", "#000000", "#000000", "#c33664", "#ffdcb0", "#000000"];
-
 // Now, our array of functions designed to produce pretty pictures:
 var funcs = [
-
     (z, c) => add(pow(z, exponent), c),     // #0 standard Mandelbrot / Julia of "z -> z cubed plus c"
     (z, c) => add(pow({re: z.re * z.re, im: z.im * z.im}, exponent), c),     // #1
     (z, c) => add(pow(absRealAndImag(z), exponent), c),     // #2 Burning Ship
@@ -128,7 +124,7 @@ var funcs = [
     (z, c) => add(pow(polar(Math.sin(z.re) * Math.cos(z.im) * Math.PI, arg(z)), exponent), c),        //  // #23 216
     (z, c) => add(pow({re: z.re * z.re - Math.sqrt(Math.abs(z.im)),
                        im: z.im * z.im - Math.sqrt(Math.abs(z.re))}, exponent), c)  //  // #24 376 vf165 but2
-    ];
+];
 
 // Now we know how many colour palettes and how many functions there are, we can update the UI:
 document.getElementById("func-index").max = funcs.length - 1;
@@ -146,8 +142,17 @@ var imgData = gc.createImageData(W, H); // create an ImageData object, which is 
 // Iterated Function System (IFS) fractals in Clojure using the Quil library.
 // See my repo at https://github.com/teraspora/fractagons.
 // In this case, though, we don't just keep on iterating!
+
+// Note: draw() doesn't actually do the drawing; it calls iterate() for every pixel
+// and stores its return value, a modified iteration count, in the iterationCounts[] array.
+// Then it calls reallyDraw() which actually determines the colour for each pixel based on its
+// iteration count and user-set parameters such as paletteIndex, colourShift, modifyFraction etc.,
+// then writes its R, G, B and alpha values to the ImageData object.   Finally it tells
+// the graphics context to send these values to the GPU to be written to the framebuffer.
+
 draw();
 
+// *** End of main code block ***
 // ==============================================================================
 
 function draw() {
@@ -220,8 +225,9 @@ function iterate(z) {
     return ++realIterations;
 }
 
+// ==============================================================================
+
 // HELPER FUNCTIONS
-// ================
 
 function recip(x) {
     return x !== 0
@@ -256,7 +262,6 @@ function processKeys(e) {       // trap keyboard input; takes an event
 }
 
 // MOUSE HANDLING
-// ==============
 
 function clickHandler(e) {
     if (dragging) {
@@ -325,8 +330,8 @@ function getMousePos(c, e) {       // got from https://codepen.io/chrisjaime/pen
 }
 
 // attach handlers to click, mousedown and key events
-document.getElementById("root-canvas").addEventListener("mousedown", dragStartHandler);
-document.getElementById("root-canvas").addEventListener('click', clickHandler);
+document.getElementById("canv").addEventListener("mousedown", dragStartHandler);
+document.getElementById("canv").addEventListener('click', clickHandler);
 document.getElementById("zoom-in").addEventListener('click', scale);
 document.getElementById("zoom-out").addEventListener('click', scale);
 document.getElementById("move-left").addEventListener('click', translate);
@@ -363,10 +368,9 @@ document.getElementById("compose").addEventListener("change", function() {
 
 document.addEventListener('keyup', processKeys);    // supposedly it's better to use keyup rather than keydown or keypress
 
-// ====================
+// ==============================================================================
 
 // COLOUR STUFF
-// ====================
 
 function interpolateColour(colour1, colour2, factor) {  // factor should be between 0 and 1
   if (arguments.length < 3) { factor = 0.5; }
@@ -378,7 +382,7 @@ function interpolateColour(colour1, colour2, factor) {  // factor should be betw
   var rgb2 = colour2.slice();
   var result = [];
 
-  for (var i=0;i<3;i++) {
+  for (var i = 0; i < 3; i++) {
     result[i] = Math.round((1 - factor) * rgb1[i] + factor * rgb2[i]);
   }
   return result;
@@ -390,16 +394,12 @@ function hexrgb(hexColour) {
     return rgb ? [parseInt(rgb[1], 16), parseInt(rgb[2], 16), parseInt(rgb[3], 16)] : null;
 }
 
-// UI FUNCTIONS
-// ============
-
 function shiftColours() {
     colourShift = (colourShift + 1) % colours[paletteIndex].length;
     reallyDraw();
 }
 
 // GEOMETRY STUFF
-// ==============
 
 function scale() {
     var zoomRatio = this.id === "zoom-out" ? zoomFactor : 1.0 / zoomFactor;
@@ -443,8 +443,13 @@ function updateGeometryVars() {
 }
 
 function reset() {
+    // Reset to initial 4x4 square centred at origin
     zMin = {re: -2, im: -2};
     zMax = {re: 2, im: 2};
     updateGeometryVars();
     draw();
 }
+
+// ==============================================================================
+// End of terafract.js
+// ==============================================================================

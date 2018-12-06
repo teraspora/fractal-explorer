@@ -1,29 +1,23 @@
-body, html {
-    margin: 0;
-    padding: 0;
-    background-color: var(--bg-pale-blue);
-}
-
 * {
         box-sizing: border-box;
-        --bg-col: #010012;
+        --bg-dark-col: #010012;
         --august-col: #ff9371;
-        --text-col: #fceae3;
-        --border-col: #00adff;
-        --light-text-col: #ffb700;
-        --alt-text-col: #0085f7;
         --hover-col: #ff4b00;
-        --code-col: #00cfff;
-        --code-bg-col: #111;
-        --bg-pale-blue: #7bc2f7;
+        --body-bg-col: #010000;
         border-radius: 0.5vw;
         text-decoration: none;
 }
 
-.grid > * {
+body, html {
+    margin: 0;
+    padding: 0;
+    background-color: var(--body-bg-col);
+}
+
+#fr-grid > * {
 	border: 3px ridge var(--august-col);
 	border-radius: 10px;
-	background-color: var(--bg-col);
+	background-color: var(--bg-dark-col);
     padding: 1vh 1vw 1vh 1vw;
 }
 
@@ -176,7 +170,6 @@ h1 {
     font-size: 2vw;
     background-color: black;
     border: 2px solid var(--august-col);
-    border-radius: 10px;
 }
 
 .btn, label, input {
