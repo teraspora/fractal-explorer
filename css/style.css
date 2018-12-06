@@ -20,9 +20,12 @@ body, html {
     background-color: var(--body-bg-col);
 }
 
+
+
 #fr-grid {            
     align-content: center;
     align-self: center;
+    justify-self: center;
     justify-items: center;
 }
 
@@ -34,21 +37,19 @@ body, html {
     justify-items: center;
 }
 
-header *, aside {
+aside {
     color: var(--august-col);
 }
 
-h1 {
+#site-name {
     font-size: 1vw;
     font-weight: normal;
+    color: var(--august-col);
+    font-size: 2vw;
+    background-color: black;
+    border: 2px solid var(--august-col);
 }
 
-.title {
-    display: inline;
-    float: left;
-    color: var(--august-col);
-    font-size: 0.6vw;
-}
 
 /*=========================================
 for mobile: */
@@ -201,12 +202,6 @@ label:hover {
 }
 /*======================================
 =======================================*/
-
-h1 {
-    font-size: 2vw;
-    background-color: black;
-    border: 2px solid var(--august-col);
-}
 
 .btn, label, input {
     background-color: var(--btn-col-E);
