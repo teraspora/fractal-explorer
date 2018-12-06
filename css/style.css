@@ -54,6 +54,14 @@ header {
     grid-row: 1/2;
 }
 
+#canv {
+
+}
+
+#controls {
+
+}
+
 aside {
     grid-column: 1/-1;
     grid-row: 4/5;
@@ -86,7 +94,7 @@ header {
     font-size: 2.0vw;
 }
 
-.controls {
+#controls {
     grid-column: 2/3;
     grid-row: 2/3;
     align-self: center;
@@ -111,7 +119,7 @@ aside {
     height: 80vh;
 }
 
-.canv {
+#canv {
     grid-column: 1/2;
     grid-row: 2/3;
     align-self: center;
@@ -125,6 +133,8 @@ aside {
     grid-row: 3/4;
     align-self: stretch;
     font-size: 1.4vw;
+}
+
 }
 
 /*=========================================*/
