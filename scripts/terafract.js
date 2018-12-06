@@ -344,6 +344,12 @@ document.getElementById("colour-shift").addEventListener('click', shiftColours);
 document.getElementById("max-iterations").addEventListener('input', function() {
     maxIterations = this.value;
 });
+
+document.getElementById("trigify").addEventListener('click', function() {
+    trigColours = !trigColours;
+    reallyDraw();
+});
+
 document.getElementById("iterate").addEventListener('click', draw);
 document.getElementById("exponent").addEventListener('input', function() {
     exponent = this.value;
@@ -388,7 +394,7 @@ function interpolateColour(colour1, colour2, factor) {  // factor should be betw
   return result;
 }
 
-// Convert a #ffffff hex string into an [r,g,b] array
+// Convert a #xxxxxx hex colour string into an [r,g,b] array
 function hexrgb(hexColour) {
     var rgb = /^#([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hexColour);  // pull out 3 pairs of hex digits
     return rgb ? [parseInt(rgb[1], 16), parseInt(rgb[2], 16), parseInt(rgb[3], 16)] : null;

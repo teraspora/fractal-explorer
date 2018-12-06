@@ -4,6 +4,12 @@
         --august-col: #ff9371;
         --hover-col: #ff4b00;
         --body-bg-col: #010000;
+        --btn-col-A: #14508d;
+        --btn-col-B: #81002b;
+        --btn-col-C: #00542c;
+        --btn-col-D: #e6580e;
+        --btn-col-E: #ba1257;
+        --btn-col-F: #00125c;
         border-radius: 0.5vw;
         text-decoration: none;
 }
@@ -123,11 +129,11 @@ aside {
 
 /*=========================================*/
 #zoom-in, #zoom-out, #colour-shift {
-    background-color: #14508d;
+    background-color: var(--btn-col-A);
 }
 
 #zoom-in:hover, #zoom-out:hover, #colour-shift:hover, input:hover {
-    background-color: #81002b;
+    background-color: var(--btn-col-B);
     color: white;
     border: 2px solid white;    
     transform: scale(1.04);
@@ -135,16 +141,16 @@ aside {
 
 #reset, #iterate, #redraw {
     color: white;
-    background-color: #00542c;
+    background-color: var(--btn-col-C);
 }
 
 #reset:hover, #iterate:hover, #redraw:hover {
     color: black;
-    background-color: #e6580e;
+    background-color: var(--btn-col-C);
 }
 
 input {
-    background-color: #14508d;
+    background-color: var(--btn-col-A);
     padding: 0px 0px;
     width: 3em;
 }
@@ -173,7 +179,7 @@ h1 {
 }
 
 .btn, label, input {
-    background-color: #ba1257;
+    background-color: var(--btn-col-E);
     color: black;
     padding: 3px 3px;
     text-align: center;
@@ -185,8 +191,8 @@ h1 {
     transition: transform 0.05s;
 }
 
-button:hover {
-    background-color: #00125c;
+.btn:hover {
+    background-color: var(--btn-col-F);
     color: white;
     border: 2px solid white;
     transform: scale(1.04);
