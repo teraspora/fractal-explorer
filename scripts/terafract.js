@@ -18,6 +18,12 @@ const H = 800;
 var aspectRatio = W / H;
 
 var numPixels = W * H;   // size of our array iterationCounts[]
+
+// Some CSS variables for button colours
+const styles = getComputedStyle(document.documentElement);
+const ButtonOffColour = styles.getPropertyValue('--btn-col-E');
+const ButtonOnColour = styles.getPropertyValue('--btn-col-F');
+
 var iterationCounts = [];
 
 const escapeRadius = 6;     // radius of the circle outside of which we say
@@ -348,6 +354,8 @@ document.getElementById("max-iterations").addEventListener('input', function() {
 document.getElementById("trigify").addEventListener('click', function() {
     trigColours = !trigColours;
     this.innerText = trigColours ? "Untrigify" : "Trigify";
+    this.style.backgroundColor = trigColours ? ButtonOnColour : ButtonOffColour;
+    this.style.color = trigColours ? "white" : "black";
     reallyDraw();
 });
 
