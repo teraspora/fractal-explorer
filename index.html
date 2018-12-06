@@ -17,13 +17,13 @@
 		<h1>teraspora fractal explorer</h1> 
 	</header>
 		
-		<canvas class="canv" id="canv"></canvas>
+		<canvas id="canv"></canvas>
 
 		<aside>
 			This will have an overview and Help.
 		</aside>
 		
-		<section class="controls">
+		<section id="controls">
 			<button class = btn id = "zoom-in">
 				Zoom in
 			</button>
@@ -70,8 +70,11 @@
 			<label>Colour palette&nbsp;&nbsp;&nbsp;&nbsp;
 				<input id="palette-index" type="number" min="0" step="1" value="0"/>
 			</label>
-			<button class = btn id = "trigify">
+			<button class = "btn" id = "trigify">
 				Trigify
+			</button>
+			<button class = "btn" id = "mod-fraction">
+				Modify Fraction
 			</button>
 			
 		</section>
