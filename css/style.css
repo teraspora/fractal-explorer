@@ -20,11 +20,18 @@ body, html {
     background-color: var(--body-bg-col);
 }
 
+#fr-grid {            
+    align-content: center;
+    align-self: center;
+    justify-items: center;
+}
+
 #fr-grid > * {
 	border: 3px ridge var(--august-col);
 	border-radius: 10px;
 	background-color: var(--bg-dark-col);
     padding: 1vh 1vw 1vh 1vw;
+    justify-items: center;
 }
 
 header *, aside {
@@ -33,12 +40,10 @@ header *, aside {
 
 h1 {
     font-size: 1vw;
+    font-weight: normal;
 }
 
-
-
 .title {
-    position: relative;
     display: inline;
     float: left;
     color: var(--august-col);
@@ -78,9 +83,9 @@ for desktop:                                 */
 @media only screen and (min-width: 768px) {
 #fr-grid {            
 	display: grid;
-	grid-template-columns: 84vh 33vw auto;
-    grid-template-rows: 8vh 84vh 8vh;
-    grid-column-gap: 0.3vw;
+	grid-template-columns: 36vw 32vw 20vw;
+    grid-template-rows: 8vh 84vh 6vh;
+    grid-column-gap: 2vw;
     grid-row-gap: 0.3vh;
 	grid-auto-rows: 100px;
 	justify-items: stretch;
@@ -91,7 +96,6 @@ header {
     grid-column: 1/-1;
     grid-row: 1/2;
     align-self: stretch;
-    font-size: 2.0vw;
 }
 
 #controls {
@@ -100,14 +104,14 @@ header {
     align-self: center;
     font-size: 1.4vw;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-columns: repeat(4, 1fr);
     grid-template-rows: repeat(6, 1fr);
     grid-gap: 10px;
     grid-auto-flow: column;
     align-items: center;
+    justify-self:center;
     justify-content: center;
     padding: 10px 10px 20px 30px;
-    width: 34vw;
     height: 80vh;
 }
 
@@ -138,6 +142,22 @@ aside {
 }
 
 /*=========================================*/
+
+#controls > * {
+    width: 7vw;
+    height: 5vh;
+    font-size: 0.8vw;
+    font-weight: bold;
+}
+
+input {
+    /*width: 7vw;
+    height: 5vh;
+    */font-size: 1vw;
+}
+
+
+
 #zoom-in, #zoom-out, #colour-shift {
     background-color: var(--btn-col-A);
 }
