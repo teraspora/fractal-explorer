@@ -390,6 +390,13 @@ document.getElementById("compose").addEventListener("change", function() {
     composeFunctions = this.checked;
 });
 
+document.getElementById("trigify-level").addEventListener('input', function() {
+    trigifyLevel = this.value;
+    reallyDraw();
+});
+
+
+
 document.addEventListener('keyup', processKeys);    // supposedly it's better to use keyup rather than keydown or keypress
 
 // ==============================================================================
