@@ -250,6 +250,8 @@ function pixelToComplex(px, py) {
     return {re: px * xIncr + zMin.re, im: py * yIncr + zMin.im};
 }
 
+// KEYBOARD HANDLING
+
 function processKeys(e) {       // trap keyboard input; takes an event
     var key = e.key || e.keyCode;   // keyCode is an older standard
     switch (key) {
@@ -336,7 +338,7 @@ function getMousePos(c, e) {       // got from https://codepen.io/chrisjaime/pen
     }
 }
 
-// attach handlers to click, mousedown and key events
+// Handlers for click, mousedown and key events on canvas, buttons and input elements
 document.getElementById("canv").addEventListener("mousedown", dragStartHandler);
 document.getElementById("canv").addEventListener('click', clickHandler);
 document.getElementById("zoom-in").addEventListener('click', scale);
@@ -351,6 +353,7 @@ document.getElementById("colour-shift").addEventListener('click', shiftColours);
 document.getElementById("max-iterations").addEventListener('input', function() {
     maxIterations = this.value;
 });
+document.getElementById("iterate").addEventListener('click', draw);
 
 document.getElementById("trigify").addEventListener('click', function() {
     trigColours = !trigColours;
@@ -368,8 +371,6 @@ document.getElementById("mod-fraction").addEventListener('click', function() {
     reallyDraw();
 });
 
-
-document.getElementById("iterate").addEventListener('click', draw);
 document.getElementById("exponent").addEventListener('input', function() {
     exponent = this.value;
 });
@@ -384,7 +385,6 @@ document.getElementById("alt-func-index").addEventListener('input', function() {
 
 document.getElementById("palette-index").addEventListener('input', function() {
     paletteIndex = this.value;
-    reallyDraw();
 });
 
 document.getElementById("compose").addEventListener("change", function() {
@@ -393,7 +393,6 @@ document.getElementById("compose").addEventListener("change", function() {
 
 document.getElementById("trigify-level").addEventListener('input', function() {
     trigifyLevel = this.value;
-    reallyDraw();
 });
 
 
