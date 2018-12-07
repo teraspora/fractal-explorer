@@ -190,7 +190,7 @@ function reallyDraw() {
         // (may not actually need this...)
         if (firstColourIndex >= numFirstColours) {
             firstColourIndex = numFirstColours - 1;
-            fraction = 1.0;
+            interpolationFactor = 1.0;
         }
         // another hack!
         if (firstColourIndex < 0) firstColourIndex = 0;
@@ -202,7 +202,9 @@ function reallyDraw() {
         imgData.data[i * 4 + 2] = finalColour[2];
         imgData.data[i * 4 + 3] = 255;    // alpha component, we'll always have it opaque for now
     }    
-    gc.putImageData(imgData, 16, 16);   // ok, we have our imgData object populated, so write it out
+    
+    // ok, we have our imgData object populated, so write it out to the graphics context, which is linked to the canvas
+    gc.putImageData(imgData, 16, 16);   
 }
 
 function iterate(z) {
@@ -225,7 +227,6 @@ function iterate(z) {
     }
     else {
         var far = Math.max(exponent, Math.log(zAbs) / Math.log(zAbsPrevious));
-        // escapeRadius2 = Math.pow(escapeRadius, far);
         realIterations = numIterations - ((Math.log(Math.log(zAbs)) - Math.log(Math.log(escapeRadius))) / Math.log(far));
     }
     return ++realIterations;
