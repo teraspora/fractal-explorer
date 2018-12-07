@@ -16,15 +16,15 @@ function toString(z) {
 // ======================================================================
 
 function bar(z) {		// Complex conjugate
-	return {re: z.re, im: -z.im}
+	return {re: z.re, im: -z.im};
 }
 
 function flipXY(z) {	// Switch the real and imaginary components
-	return {re: z.im, im: z.re}
+	return {re: z.im, im: z.re};
 }
 
 function absRealAndImag(z) {		// used famously for the Burning Ship fractal
-	return {re: Math.abs(z.re), im: Math.abs(z.im)}
+	return {re: Math.abs(z.re), im: Math.abs(z.im)};
 }
 
 function mod(z) {			// Complex modulus or absolute value; note: mod() returns a real value
@@ -48,9 +48,7 @@ function _add2(z, w) {	// just used for add()
 }
 
 function add(z, w) {
-	return arguments.length <= 2 
-		? _add2(z, w)
-		: [].slice.call(arguments).reduce(_add2);
+	return arguments.length <= 2 	? _add2(z, w)	: [].slice.call(arguments).reduce(_add2);
 }
 
 function sub(z, w) {
@@ -69,8 +67,7 @@ function sq(z) {
 function recip(z){
 	var x = z.re, y = z.im;
 	var denom = x * x + y * y;
-	return denom !== 0.0
-		? {re: x / denom, im: -y / denom}
+	return denom !== 0.0 ? {re: x / denom, im: -y / denom}
 		: {re: Number.MAX_VALUE, im: Number.MAX_VALUE};		// just make it big if we have a zero modulus
 }
 
@@ -127,7 +124,6 @@ function ballFold(z, r, bigR) {
 	r = Math.abs(r);
 	return zAbs < r ? {re: z.re / (r * r), im: z.im / (r * r)}
 					: 
-		   (zAbs < Math.abs(bigR)
-						?{re: z.re / (zAbs * zAbs), im: z.im / (zAbs * zAbs)}
+		   (zAbs < Math.abs(bigR) ? {re: z.re / (zAbs * zAbs), im: z.im / (zAbs * zAbs)}
 						: z);
 }
