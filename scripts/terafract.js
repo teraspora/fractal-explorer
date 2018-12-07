@@ -24,6 +24,24 @@ const styles = getComputedStyle(document.documentElement);
 const ButtonOffColour = styles.getPropertyValue('--btn-col-E');
 const ButtonOnColour = styles.getPropertyValue('--btn-col-F');
 
+// const statusBar = document.getElementById("status-bar");
+
+// Load help; (copied and modified code from https://www.w3schools.com/js/tryit.asp?filename=tryjs_ajax_first)
+function loadHelp() {
+  let xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = () => {
+    if (this.readyState == 4 && this.status == 200) {
+      document.getElementById("side-pane").innerHTML =
+      this.responseText;
+    }
+  };
+  xhttp.open("GET", "help.html", true);
+  xhttp.send();
+}
+
+loadHelp();
+
+
 var iterationCounts = [];
 
 const escapeRadius = 6;     // radius of the circle outside of which we say
@@ -67,6 +85,12 @@ var trigifyLevel = 1.0;
 var trigify = s => Math.sin(s / maxIterations * (Math.PI * Math.abs(trigifyLevel))) * maxIterations;
 
 // =======================================================================================================
+
+// Status bar
+// let populateStatusBar = () => {
+//     let status = `Iterating ${funcs[funcIndex].toString()} ${composeFunctions ? `composed with ${funcs[altFuncIndex]}` : ``}`;
+//     statusBar.innerHTML = status;
+// }
 
 // Set some default values for user-settable parameters:
 var exponent = 2;
@@ -162,6 +186,7 @@ draw();
 // ==============================================================================
 
 function draw() {
+    // populateStatusBar();
     for (i = 0; i < imgData.data.length; i += 4) {      // image data has 4 entries (RGBA) for each pixel, scanning L to R for each line
             // Why start at 1, not 0?  Well, had it at zero but a reddish pallette produced greenish colours; shifting one byte seemed
             // to produce correct colours so maybe byte 0 is a header byte or magic number??   For now I'll just leave it at 1.
@@ -255,14 +280,26 @@ function pixelToComplex(px, py) {
 function processKeys(e) {       // trap keyboard input; takes an event
     var key = e.key || e.keyCode;   // keyCode is an older standard
     switch (key) {
+        case " ":
+            draw();
+            break;
+        case "+":
+            scale();
+            break;
+        case "-":
+            scale();
+            break;
+        case "/":
+            reallyDraw();
+            break;
+        case "z":
+            reset();
+            break;
+        case "c":
+            composeFunctions = !composeFunctions;
+            break;
         case "t":
             trigColours = !trigColours;
-            break;
-        case "n":
-            trigifyLevel /= ROOT2;
-            break;
-        case "m":
-            trigifyLevel *= ROOT2;
             break;
         case "b":
             modifyFraction = !modifyFraction;
@@ -400,6 +437,7 @@ document.getElementById("trigify-level").addEventListener('input', function() {
 document.addEventListener('keyup', processKeys);    // supposedly it's better to use keyup rather than keydown or keypress
 
 // ==============================================================================
+
 
 // COLOUR STUFF
 
