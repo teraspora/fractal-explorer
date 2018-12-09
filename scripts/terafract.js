@@ -402,7 +402,7 @@ document.getElementById("trigify").addEventListener('click', function() {
 
 document.getElementById("mod-fraction").addEventListener('click', function() {
     modifyFraction = !modifyFraction;
-    this.innerText = modifyFraction ? "Don't Modify Fraction" : "Modify Fraction";
+    this.innerText = modifyFraction ? "Unmod. Frac." : "Mod. Frac.";
     this.style.backgroundColor = modifyFraction ? ButtonOnColour : ButtonOffColour;
     this.style.color = modifyFraction ? "white" : "black";
     reallyDraw();

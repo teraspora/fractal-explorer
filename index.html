@@ -54,7 +54,7 @@
 				Colourshift
 			</button>
 			<label>Max. iterations
-				<input id="max-iterations" name="max-iterations" type="number"max="1024" step="8" value="32"/>
+				<input id="max-iterations" name="max-iterations" type="number" min="8" max="256" step="8" value="32"/>
 			</label>
 			<label>Exponent
 				<input id="exponent" type="number" min="1" max="8" step="1" value="2"/>
@@ -107,6 +107,7 @@ Various parameters may be adjusted via buttons, input elements or keyboard short
 <li>Change the exponent to see higher-order Mandelbrot sets.</li>
 <li>Experiment with colour palettes, trigification, fraction modification and palette shifting.</li>
 <li>Change the exponent back to 2 and the function index to 2 and you will get the famous <a target="_blank" href="https://en.wikipedia.org/wiki/Burning_Ship_fractal">Burning Ship Fractal</a>.</li>
+<li>Change the function index to 11, 12, 13 or 14 and you will get a version of the <a target="_blank" href="https://en.wikipedia.org/wiki/Mandelbox">Mandelbox fractal</a>.</li>
 <li>Zoom in to see more detail or zoom out to see more of the extent of the image.</li>
 <li>Note that the <strong>&quot;Left&quot;</strong>, <strong>&quot;Right&quot;</strong>, <strong>&quot;Up&quot;</strong> and <strong>&quot;Down&quot;</strong> buttons move the image, not the window.</li>
 <li>Set the alt-function and tick the <strong>&quot;Compose&quot;</strong> checkbox.   Then click <strong>&quot;Iterate&quot;</strong> or <strong>&quot;Reset&quot;</strong>.   You are now seeing the effect of iterating two composed functions.</li>

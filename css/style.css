@@ -82,9 +82,9 @@ for desktop:                                 */
 @media only screen and (min-width: 768px) {
 #fr-grid {            
 	display: grid;
-	grid-template-columns: 32vw 24vw 32vw;
+	grid-template-columns: 36vw 24vw 32vw;
     grid-template-rows: 8vh 84vh 6vh;
-    grid-column-gap: 2vw;
+    grid-column-gap: 3vw;
     grid-row-gap: 0.3vh;
 	grid-auto-rows: 100px;
 	justify-items: stretch;
@@ -101,7 +101,7 @@ header {
     grid-column: 2/3;
     grid-row: 2/3;
     align-self: center;
-    font-size: 1vw;
+    font-size: 0.8vw;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(10, 1fr);
@@ -123,6 +123,19 @@ header {
     overflow-y: scroll;
     color: var(--light-text-col);
     font-family: 'Rubik', sans-serif;        
+}
+
+#side-pane h1 {
+    color: var(--btn-col-A);
+}
+
+#side-pane h2 {
+    color: var(--august-col);
+    font-weight: normal;
+}
+
+#side-pane strong {
+    color: var(--btn-col-E);
 }
 
 #canv {
