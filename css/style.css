@@ -4,6 +4,8 @@
         --august-col: #ff9371;
         --hover-col: #ff4b00;
         --body-bg-col: #010000;
+        --light-text-col: #fff6e5;
+        --pale-blue-col: #b4eaff;
         --btn-col-A: #14508d;
         --btn-col-B: #81002b;
         --btn-col-C: #00542c;
@@ -37,10 +39,6 @@ body, html {
     justify-items: center;
 }
 
-aside {
-    color: var(--august-col);
-}
-
 #site-name {
     font-size: 1vw;
     font-weight: normal;
@@ -68,7 +66,7 @@ header {
 
 }
 
-aside {
+#side-pane {
     grid-column: 1/-1;
     grid-row: 4/5;
 }
@@ -84,7 +82,7 @@ for desktop:                                 */
 @media only screen and (min-width: 768px) {
 #fr-grid {            
 	display: grid;
-	grid-template-columns: 36vw 32vw 20vw;
+	grid-template-columns: 32vw 24vw 32vw;
     grid-template-rows: 8vh 84vh 6vh;
     grid-column-gap: 2vw;
     grid-row-gap: 0.3vh;
@@ -103,10 +101,10 @@ header {
     grid-column: 2/3;
     grid-row: 2/3;
     align-self: center;
-    font-size: 1.4vw;
+    font-size: 1vw;
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: repeat(6, 1fr);
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(10, 1fr);
     grid-gap: 10px;
     grid-auto-flow: column;
     align-items: center;
@@ -116,12 +114,15 @@ header {
     height: 80vh;
 }
 
-aside {
+#side-pane {
     grid-column: 3/-1 ;
     grid-row: 2/3;
     align-self: center;
     justify-content: center;
     height: 80vh;
+    overflow-y: scroll;
+    color: var(--light-text-col);
+    font-family: 'Rubik', sans-serif;        
 }
 
 #canv {
@@ -145,19 +146,23 @@ aside {
 /*=========================================*/
 
 #controls > * {
-    width: 7vw;
-    height: 5vh;
+    width: 5vw;
+    height: 4vh;
     font-size: 0.8vw;
     font-weight: bold;
 }
 
 input {
-    /*width: 7vw;
-    height: 5vh;
-    */font-size: 1vw;
+    font-size: 1vw;
 }
 
+#side-pane a {
+    color: var(--pale-blue-col);
+}
 
+#controls > *:hover {  
+    transform: scale(1.04);    
+}
 
 #zoom-in, #zoom-out, #colour-shift {
     background-color: var(--btn-col-A);
@@ -166,8 +171,7 @@ input {
 #zoom-in:hover, #zoom-out:hover, #colour-shift:hover, input:hover {
     background-color: var(--btn-col-B);
     color: white;
-    border: 2px solid white;    
-    transform: scale(1.04);
+    border: 2px solid white;  
 }
 
 #reset, #iterate, #redraw {
@@ -212,7 +216,7 @@ label:hover {
     box-shadow: 0 0 1px 1px;
     cursor: pointer;
     margin: 1px 1px 1px 1px;
-    border-radius: 10px;
+    border-radius: 5px;
     transition: transform 0.05s;
 }
 
