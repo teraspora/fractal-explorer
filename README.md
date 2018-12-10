@@ -115,15 +115,14 @@ Click again to go back to the Mandelbrot (or its generalisation).</p>
 <p>Enjoy!</p>
 
 <p>
-	I use CSS Grid to style the app.   Between a Title Bar and a footer bar are three panels, containing the canvas to draw upon, the control panel with buttons and input elements, and a histogram of the colours in the image, for which ???????????????? is used.
+	I use CSS Grid to style the app.   Between a Title Bar and a footer bar are three panels, containing the canvas to draw upon, the control panel with buttons and input elements, and a <strong>&quot;Help&quot;</strong> panel.
+</p>
+<p>
+	The <strong>&quot;Control Panel&quot;</strong> itself also uses CSS Grid to lay out the buttons and input elements.
 </p>
 
 ### Features Left to Implement
-- Make it responsive for mobile
-- Make the controls neater
-- Introduce more functions
-- Add more colour palettes
-- Document mouse zooming, trigify etc.
+- Make it respond better on mobile
 
 ## Technologies Used
 
@@ -132,25 +131,17 @@ Click again to go back to the Mandelbrot (or its generalisation).</p>
 - [HTML5](https://www.w3.org/TR/html52/)
 	- The project uses **HTML5** for its structure.
 - [CSS3](https://www.w3.org/Style/CSS/Overview.en.html)
-	- The project uses **HTML5** for its styling.
-- [](????????????????????????????????)
-	-The project uses **????** for displaying histograms.
+	- The project uses **CSS3** for its styling.
 
 ## Testing
 
-"In this section, you need to convince the assessor that you have conducted enough testing to legitimately believe that the site works well. Essentially, in this part you will want to go over all of your user stories from the UX section and ensure that they all work as intended, with the project providing an easy and straightforward way for the users to achieve their goals.
+It was tested continually as I developed it, in Firefox Developer Edition(64-bit) and Chromium, using both Firefox and Chromium developer tools, and nearing the conclusion of the project also on other physical devices.
 
-Whenever it is feasible, prefer to automate your tests, and if you've done so, provide a brief explanation of your approach, link to the test file(s) and explain how to run them.
+I used responsive mode in the dev tools and resizing the viewport to find unwanted behaviour so as to correct it. I also periodically checked the appearance on both my phone and tablet (both Android) in Chrome and Dolphin browsers.
 
-For any scenarios that have not been automated, test the user stories manually and provide as much detail as is relevant. A particularly useful form for describing your testing process is via scenarios, such as:
+Testing in the W3C HTML Validator:
 
-1. Contact form:
-    1. Go to the "Contact Us" page
-    2. Try to submit the empty form and verify that an error message about the required fields appears
-    3. Try to submit the form with an invalid email address and verify that a relevant error message appears
-    4. Try to submit the form with all inputs valid and verify that a success message appears."
-
-**Mention in this section how your project looks and works on different browsers and screen sizes.**
+Testing my CSS in the Jigsaw validator:
 
 ### Interesting Bugs
 
@@ -158,21 +149,13 @@ If I refresh the page, the browser retains previously input values in input elem
 
 ## Deployment
 
-This section should describe the process you went through to deploy the project to a hosting platform (e.g. GitHub Pages or Heroku).
+I pushed my local git repo of code, images and media to a Github repository, and enabled Github Pages for it. There is only one branch, master. URL of Home Page is <a target="_blank href="https://teraspora.github.io/fractal-explorer/">here</a>.
 
-In particular, you should provide all details of the differences between the deployed version and the development version, if any, including:
-- Different values for environment variables (Heroku Config Vars)?
-- Different configuration files?
-- Separate git branch?
-
-In addition, if it is not obvious, you should also describe how to run your code locally.
-
-
-## Credits
+## Acknowledgements
 
 ### Algorithms
-- jussi, benoit, ff
 
-### Acknowledgements
-
-- I received inspiration for this project from X
+- Mandelbox definition / algorithm from <a href="https://en.wikipedia.org/wiki/Mandelbox">here</a>
+- My algorithm for the fractional part of the colour index (based on how far
+the final value of z is from the bailout circle) modified from
+<a href="http://jussiharkonen.com/gallery/coloring-techniques">"On Smooth Fractal Coloring Techniques" by Jussi H¨ark¨onen</a> (Master’s Thesis, Dept. of Mathematics, °Abo Akademi University), available as .pdf.
