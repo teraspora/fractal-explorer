@@ -45,30 +45,25 @@
 			<button class = "btn" id = "iterate">
 				Iterate
 			</button>
-			<label id="compose-label">Compose
-				<input type="checkbox" id="compose" value="compose"/>
-			</label>
-			<label>Max. iterations
-				<input id="max-iterations" name="max-iterations" type="number" min="8" max="256" step="8" value="32"/>
-			</label>
-			<label>Exponent
-				<input id="exponent" type="number" min="1" max="8" step="1" value="2"/>
-			</label>
-			<label id="func-label">Function<input id="func-index" type="number" min="0" step="1" value="0"/>
-			</label>
-			<label id="alt-func-label">Alt Func.<input id="alt-func-index" type="number" min="0" step="1" value="0"/>
-			</label>
-			<label id="palette-label">Palette
-				<input id="palette-index" type="number" min="0" step="1" value="0"/>
-			</label>
+			
+			<div id="compose"><input type="checkbox" value="compose"/><span>Compose</span></div>
+			
+			<div id="max-iterations"><input name="max-iterations" type="number" min="8" max="256" step="8" value="32"/><span>Max. iterations</span></div>
+			
+			<div id="exponent"><input type="number" min="1" max="8" step="1" value="2"/><span>Exponent</span></div>
+			<div id="func-index"><input type="number" min="0" step="1" value="0"/><span>Function</span></div>
+			<div id="alt-func-index"><input type="number" min="0" step="1" value="0"/><span>Alt Func.</span></div>
+			<div id="palette-index"><input type="number" min="0" step="1" value="0"/><span>Palette</span></div>
+			
 			<button class = "btn" id = "colour-shift">
 				Colourshift
 			</button>
 			<button class = "btn" id = "trigify">
 				Trigify
 			</button>
-			<label id="tl-label">Trig. Level<input id="trigify-level" type="number" min="0" max="256"step="1" value="1"/>
-			</label>
+			
+			<div id="trigify-level"><input type="number" min="0" max="256"step="1" value="1"/><span>Trig. Level</span></div>
+			
 			<button class = "btn" id = "mod-fraction">
 				Mod. Frac.
 			</button>
