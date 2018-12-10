@@ -149,13 +149,13 @@ If I refresh the page, the browser retains previously input values in input elem
 
 ## Deployment
 
-I pushed my local git repo of code, images and media to a Github repository, and enabled Github Pages for it. There is only one branch, master. URL of Home Page is <a target="_blank" href="https://teraspora.github.io/fractal-explorer/">here</a>.
+I pushed my local git repo of code and media to a Github repository, and enabled Github Pages for it. There is only one branch, master. URL of Home Page is <a target="_blank" href="https://teraspora.github.io/fractal-explorer/">here</a>.
 
 ## Acknowledgements
 
 ### Algorithms
 
-- Mandelbox definition / algorithm from <a href="https://en.wikipedia.org/wiki/Mandelbox">here</a>
+- Mandelbox definition / algorithm from <a target="_blank" href="https://en.wikipedia.org/wiki/Mandelbox">here</a>
 - My algorithm for the fractional part of the colour index (based on how far
 the final value of z is from the bailout circle) modified from
-<a href="http://jussiharkonen.com/gallery/coloring-techniques">"On Smooth Fractal Coloring Techniques" by Jussi H¨ark¨onen</a> (Master’s Thesis, Dept. of Mathematics, °Abo Akademi University), available as .pdf.
+<a target="_blank" href="http://jussiharkonen.com/gallery/coloring-techniques">"On Smooth Fractal Coloring Techniques" by Jussi H¨ark¨onen</a> (Master’s Thesis, Dept. of Mathematics, °Abo Akademi University), available as .pdf.
