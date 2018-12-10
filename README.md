@@ -66,7 +66,7 @@ Various parameters may be adjusted via buttons, input elements or keyboard short
 </ul>
 <h3>Mouse zooming</h3>
 <p>You can also zoom by using the mouse:  just drag with the primary mouse button on from the top-left corner to the bottom-right corner of the square you&#39;d like to enlarge.</p>
-<h2>Julia Sets</h2>
+<h3>Julia Sets</h3>
 <p>Each point of the Mandelbrot set (or of any set thus created with the escape-time method) corresponds to a <a target="_blank" href="https://en.wikipedia.org/wiki/Julia_set">Julia Set</a>, and by clicking on a point you can view its Julia Set.
 Click again to go back to the Mandelbrot (or its generalisation).</p>
 <h3>Keyboard Shortcuts</h3>
