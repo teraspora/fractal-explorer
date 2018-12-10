@@ -12,16 +12,16 @@
 </head>
 
 <body>
-	<main id="fr-grid">
-		<header class="title" id="site-name">teraspora fractal explorer</header>
+	<main id="main-grid">
+		<header id="app-name">teraspora fractal explorer</header>
 		
 		<canvas id="canv"></canvas>
 
 		<section id="controls">
-			<button class = btn id = "zoom-in">
+			<button class = "btn" id = "zoom-in">
 				Zoom in
 			</button>
-			<button class = btn id = "zoom-out">
+			<button class = "btn" id = "zoom-out">
 				Zoom out
 			</button>
 			<button class = "btn" id = "move-left">
@@ -48,9 +48,6 @@
 			<label id="compose-label">Compose
 				<input type="checkbox" id="compose" value="compose"/>
 			</label>
-			<button class = "btn" id = "colour-shift">
-				Colourshift
-			</button>
 			<label>Max. iterations
 				<input id="max-iterations" name="max-iterations" type="number" min="8" max="256" step="8" value="32"/>
 			</label>
@@ -61,13 +58,16 @@
 			</label>
 			<label id="alt-func-label">Alt Func.<input id="alt-func-index" type="number" min="0" step="1" value="0"/>
 			</label>
-			<label>Palette
+			<label id="palette-label">Palette
 				<input id="palette-index" type="number" min="0" step="1" value="0"/>
 			</label>
+			<button class = "btn" id = "colour-shift">
+				Colourshift
+			</button>
 			<button class = "btn" id = "trigify">
 				Trigify
 			</button>
-			<label id="alt-func-label">Trig. Level<input id="trigify-level" type="number" min="0" max="256"step="1" value="1"/>
+			<label id="tl-label">Trig. Level<input id="trigify-level" type="number" min="0" max="256"step="1" value="1"/>
 			</label>
 			<button class = "btn" id = "mod-fraction">
 				Mod. Frac.

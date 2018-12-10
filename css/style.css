@@ -11,7 +11,7 @@
         --btn-col-C: #00542c;
         --btn-col-D: #e6580e;
         --btn-col-E: #ba1257;
-        --btn-col-F: #00125c;
+        --btn-col-F: #0099c8;
         border-radius: 0.5vw;
         text-decoration: none;
 }
@@ -24,7 +24,7 @@ body, html {
 
 
 
-#fr-grid {            
+#main-grid {            
     align-content: center;
     align-self: center;
     justify-self: center;
@@ -32,21 +32,21 @@ body, html {
     padding: 1em;
 }
 
-#fr-grid > * {
+#main-grid > * {
 	border: 3px ridge var(--august-col);
 	border-radius: 10px;
 	background-color: var(--bg-dark-col);
-    padding: 1vh 1vw 1vh 1vw;
+    padding: 1vh 1vw;
     margin:  0 1vw;
     justify-items: center;
 }
 
-#site-name {
-    font-size: 1vw;
-    font-weight: normal;
+#app-name {
     color: var(--august-col);
-    font-size: 2vw;
-    border: 2px solid var(--august-col);
+    font-weight: normal;
+    font-size: 2.4vw;
+    padding: 0;
+    padding-left: 1em;
 }
 
 
@@ -81,7 +81,7 @@ header {
 /*=========================================
 for desktop:                                 */
 @media only screen and (min-width: 768px) {
-#fr-grid {            
+#main-grid {            
 	display: grid;
 	grid-template-columns: 2fr 1fr 2fr;
     grid-template-rows: 6vh 84vh 6vh;
@@ -132,6 +132,7 @@ header {
     overflow-y: scroll;
     padding: 1em;
     color: var(--light-text-col);
+    font-size: 1vw;
     font-family: 'Rubik', sans-serif;        
 }
 
@@ -148,11 +149,16 @@ header {
     color: var(--btn-col-E);
 }
 
+#side-pane a {
+    color: var(--pale-blue-col);
+}
+
 #fr-footer {
     grid-column: 1/-1;
     grid-row: 3/4;
     align-self: stretch;
     font-size: 1.4vw;
+    padding: 0;
 }
 
 }
@@ -166,23 +172,26 @@ header {
     font-weight: bold;
 }
 
-input {
-    font-size: 1vw;
-}
+#controls .btn:hover {
+    background-color: var(--btn-col-F);
+} 
 
-#side-pane a {
-    color: var(--pale-blue-col);
+input {
 }
 
 #controls > *:hover {  
     transform: scale(1.04);    
 }
 
-#zoom-in, #zoom-out, #colour-shift {
+#controls > .btn {
+    
+}
+
+#zoom-in, #zoom-out, #colour-shift, #trigify, #mod-fraction, #palette-label, #tl-label {
     background-color: var(--btn-col-A);
 }
 
-#zoom-in:hover, #zoom-out:hover, #colour-shift:hover, input:hover {
+#zoom-in:hover, #zoom-out:hover, #colour-shift:hover, #trigify:hover, #mod-fraction:hover, input:hover {
     background-color: var(--btn-col-B);
     color: white;
     border: 2px solid white;  
@@ -195,15 +204,15 @@ input {
 
 #reset:hover, #iterate:hover, #redraw:hover {
     color: black;
-    background-color: var(--btn-col-C);
+    background-color: var(--btn-col-D);
 }
 
-input {
+/*input {
     background-color: var(--btn-col-A);
     padding: 0px 0px;
     width: 3em;
 }
-
+*/
 label {
     color: white;    
     background-color: black;
@@ -235,8 +244,6 @@ label:hover {
 }
 
 .btn:hover {
-    background-color: var(--btn-col-F);
-    color: white;
     border: 2px solid white;
     transform: scale(1.04);
 }

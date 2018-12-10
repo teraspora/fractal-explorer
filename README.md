@@ -31,24 +31,88 @@ The typical user will use the app for destressing, relaxing for a few minutes, e
 
 ## Features
 
-The controls are fairly self-explanatory.
-
-I currently have four colour palettes, the first of which is monochrome, just black and white alternately.
-
-Functions are:
-- 0				Standard Mandelbrot (z => z * z + c)
-- 1				Burning Ship fractal
-- 2 & 3			A couple of trig-based functions
-- 4, 5, 6 & 7	Mandelbox variants
-- 8...          More trig-based functions
-
-You can compose two functions by ticking the box and choosing an "alt function".
-
-You can zoom in and out, move four ways, change or shift the colour palette, change the exponent (so for instance with exponent = 3, the Mandelbrot becomes z cubed + c) and vary the maximum iteration count.
-
-The "Reset" button will reset the zoom levels back to initial default.
-
-Full docs and instructions are accessible from the app itself.
+<p>The aim of the app is to have fun with images.   It allows you to experiment with producing fractal images by iterating a variety of functions over the Complex plane.</p>
+<p>On startup, the standard function <code>f(z, c) = z*z + c</code> is iterated to produce the well-known order 2 <a target="_blank" href="https://en.wikipedia.org/wiki/Mandelbrot_set">Mandelbrot Set</a>.
+Various parameters may be adjusted via buttons, input elements or keyboard shortcuts.   </p>
+<p>Two buttons cause re-iteration (and automatically redraw), whilst one just redraws:</p>
+<ul>
+<li><strong>&quot;Iterate&quot;</strong> just reiterates the function(s) and redraws based on current values of parameters.</li>
+<li><strong>&quot;Reset&quot;</strong> also resets the zoom levels and the x and y offsets.</li>
+<li><strong>&quot;Redraw&quot;</strong> causes a redraw based on the currently stored iteration count array with any newly altered colour settings.</li>
+</ul>
+<p>Some parameters, i.e. the index/indices of the function(s) being iterated, the order (exponent), the maximum number of iterations per pixel, the zoom level and the x and y offsets, affect the iteration.   Any change in these and you&#39;ll need to hit <strong>&quot;Iterate&quot;</strong> or <strong>&quot;Reset&quot;</strong> to see the changes.</p>
+<p>Others, i.e. the colour palette in use, the amount the palette is shifted, the level of <em>trigification</em>, and a parameter which modifies the fractional part of the iteration count for a subtle effect, just affect the mapping of colours to iteration counts, and so only require a <strong>&quot;Redraw&quot;</strong> to see the results.</p>
+<p><strong>&quot;Mod. Frac&quot;</strong> and <strong>&quot;Trigify&quot;</strong> are Boolean switches, either on or off.   The text will always indicate the result of clicking, not the current state.</p>
+<p><strong>&quot;Trigify&quot;</strong> applies a function of my own devising which remaps the iteration counts.   Its effect may be varied with the <strong>&quot;Trigify Level&quot;</strong> selector.  Some images look better with this function applied.   Experimentation is the best guide.</p>
+<p><strong>&quot;Mod. Frac.&quot;</strong> remaps the fractional part of the iteration count (determined in the iteration phase by the distance inside or outside the escape radius on the last iteration) using the function <code>f(x) = sin(πx/2)</code>, which maps the unit interval to itself.   This can have subtle effects on how one colour blends into the next.   Again, please experiment!   In a future release I may introduce Hermite interpolation as an option. </p>
+<h3>Functions</h3>
+<p>A number of functions are provided for the user to experiment with, including the standard Mandelbrot, the Burning Ship fractal, a version of the 2D <a target="_blank" href="https://en.wikipedia.org/wiki/Mandelbox">Mandelbox fractal</a> and a bunch of largely trigonometric functions of my own devising.   Note that I take sines and cosines of the real and imaginary components separately:  I don&#39;t use the Complex versions of these functions as in my experience they tend to produce fractured images.</p>
+<p>More functions will be included in a future version.</p>
+<p>When <strong>&quot;Compose&quot;</strong> is ticked, functions are composed, thus, if <strong>&quot;Function&quot;</strong> is <code>f(z, c)</code> and <strong>&quot;Alt Func.&quot;</strong> is <code>g(z, c)</code> then composing functions results in <code>f(g(z, c), c)</code> being iterated. </p>
+<p>Note that the user can also vary the associated exponent to see the effects higher-order functions have upon the image.</p>
+<h3>Colour palettes</h3>
+<p>All palettes consist of colours alternating with black, which can result in nice shading that gives a quasi-3D effect.</p>
+<h3>Get started</h3>
+<p><strong>Just play!</strong></p>
+<ul>
+<li>Change the exponent to see higher-order Mandelbrot sets.</li>
+<li>Experiment with colour palettes, trigification, fraction modification and palette shifting.</li>
+<li>Change the exponent back to 2 and the function index to 2 and you will get the famous <a target="_blank" href="https://en.wikipedia.org/wiki/Burning_Ship_fractal">Burning Ship Fractal</a>.</li>
+<li>Change the function index to 11, 12, 13 or 14 and you will get a version of the <a target="_blank" href="https://en.wikipedia.org/wiki/Mandelbox">Mandelbox fractal</a>.</li>
+<li>Zoom in to see more detail or zoom out to see more of the extent of the image.</li>
+<li>Note that the <strong>&quot;Left&quot;</strong>, <strong>&quot;Right&quot;</strong>, <strong>&quot;Up&quot;</strong> and <strong>&quot;Down&quot;</strong> buttons move the image, not the window.</li>
+<li>Set the alt-function and tick the <strong>&quot;Compose&quot;</strong> checkbox.   Then click <strong>&quot;Iterate&quot;</strong> or <strong>&quot;Reset&quot;</strong>.   You are now seeing the effect of iterating two composed functions.</li>
+<li>Setting the maximum iteration count to high values can in some cases give you more detail but will take longer.   Don&#39;t go wild unless you have a super-fast CPU!</li>
+</ul>
+<h3>Mouse zooming</h3>
+<p>You can also zoom by using the mouse:  just drag with the primary mouse button on from the top-left corner to the bottom-right corner of the square you&#39;d like to enlarge.</p>
+<h2>Julia Sets</h2>
+<p>Each point of the Mandelbrot set (or of any set thus created with the escape-time method) corresponds to a <a target="_blank" href="https://en.wikipedia.org/wiki/Julia_set">Julia Set</a>, and by clicking on a point you can view its Julia Set.
+Click again to go back to the Mandelbrot (or its generalisation).</p>
+<h3>Keyboard Shortcuts</h3>
+<table>
+<thead>
+<tr>
+<th>Shortcut</th>
+<th>Button equivalent</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SPACE</td>
+<td>Iterate</td>
+</tr>
+<tr>
+<td>/</td>
+<td>Redraw</td>
+</tr>
+<tr>
+<td>+  or =</td>
+<td>Zoom in</td>
+</tr>
+<tr>
+<td>-</td>
+<td>Zoom out</td>
+</tr>
+<tr>
+<td>z</td>
+<td>Reset</td>
+</tr>
+<tr>
+<td>c</td>
+<td>Toggle Compose</td>
+</tr>
+<tr>
+<td>t</td>
+<td>Toggle Trigify</td>
+</tr>
+<tr>
+<td>m</td>
+<td>Toggle Modify Fraction</td>
+</tr>
+</tbody>
+</table>
+<p>Enjoy!</p>
 
 <p>
 	I use CSS Grid to style the app.   Between a Title Bar and a footer bar are three panels, containing the canvas to draw upon, the control panel with buttons and input elements, and a histogram of the colours in the image, for which ???????????????? is used.
