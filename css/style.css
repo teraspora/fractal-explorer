@@ -29,6 +29,7 @@ body, html {
     align-self: center;
     justify-self: center;
     justify-items: center;
+    padding: 1em;
 }
 
 #fr-grid > * {
@@ -36,6 +37,7 @@ body, html {
 	border-radius: 10px;
 	background-color: var(--bg-dark-col);
     padding: 1vh 1vw 1vh 1vw;
+    margin:  0 1vw;
     justify-items: center;
 }
 
@@ -44,7 +46,6 @@ body, html {
     font-weight: normal;
     color: var(--august-col);
     font-size: 2vw;
-    background-color: black;
     border: 2px solid var(--august-col);
 }
 
@@ -82,11 +83,10 @@ for desktop:                                 */
 @media only screen and (min-width: 768px) {
 #fr-grid {            
 	display: grid;
-	grid-template-columns: 36vw 24vw 32vw;
-    grid-template-rows: 8vh 84vh 6vh;
-    grid-column-gap: 3vw;
+	grid-template-columns: 2fr 1fr 2fr;
+    grid-template-rows: 6vh 84vh 6vh;
+    grid-column-gap: 1vw;
     grid-row-gap: 0.3vh;
-	grid-auto-rows: 100px;
 	justify-items: stretch;
 	align-items: stretch;
 }
@@ -95,6 +95,15 @@ header {
     grid-column: 1/-1;
     grid-row: 1/2;
     align-self: stretch;
+}
+
+#canv {
+    grid-column: 1/2;
+    grid-row: 2/3;
+    align-self: center;
+    justify-content: center;
+    width: 80vh;
+    height: 80vh;
 }
 
 #controls {
@@ -121,6 +130,7 @@ header {
     justify-content: center;
     height: 80vh;
     overflow-y: scroll;
+    padding: 1em;
     color: var(--light-text-col);
     font-family: 'Rubik', sans-serif;        
 }
@@ -136,15 +146,6 @@ header {
 
 #side-pane strong {
     color: var(--btn-col-E);
-}
-
-#canv {
-    grid-column: 1/2;
-    grid-row: 2/3;
-    align-self: center;
-    justify-content: center;
-    width: 80vh;
-    height: 80vh;
 }
 
 #fr-footer {
