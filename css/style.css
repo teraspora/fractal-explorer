@@ -26,8 +26,8 @@ body, html {
 #main-grid {            
     display: grid;
     grid-gap: 1vmax;
-    justify-self: center;
-    align-self: center;
+    justify-content: stretch;
+    align-content: stretch;
     justify-items: stretch;
     align-items: stretch;
     padding: 1em;
@@ -71,7 +71,7 @@ body, html {
 /* for desktop: */
 @media only screen and (min-width: 768px) {
     #main-grid {            
-        grid-template-columns: 4fr 3fr 2fr;
+        grid-template-columns: 4fr 3fr minmax(300px, 2fr);
         grid-template-rows: 6vh 80vh 6vh;
     }
 
@@ -104,15 +104,24 @@ body, html {
 
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 
+#app-name {
+    color: var(--august-col);
+}
+
 #app-name, #canv, #controls, #side-pane, #fr-footer {
     border: 3px ridge var(--august-col);
-    border-radius: 10px;
     background-color: var(--bg-dark-col);
     padding: 0;
     margin:  0;
     justify-items: center;
-    color: var(--august-col);
     font-weight: normal;
+}
+
+#app-name {
+    font-size: 2vw;
+    padding-left: 1.6vw;
+    align-self: center;
+    color: var(--august-col);
 }
 
 #controls {
@@ -123,7 +132,7 @@ body, html {
     grid-auto-flow: column;
     padding: 1vw;
     justify-items: stretch;
-    align-content: stretch;    
+    align-items: stretch;    
 }
 
 #side-pane {
@@ -164,8 +173,22 @@ input + span {
     box-shadow: 0 0 1px 1px;
     cursor: pointer;
     margin: 1px 1px 1px 1px;
-    border-radius: 5px;
-    transition: transform 0.05s;
+    transition: transform 0.5s;
+}
+
+.btn:hover {
+    transform: scale(1.04);
+    filter: invert(100%);   /* switch black and white text */
+    background-color: var(--btn-col-C); /*default, overridden below */    
+    border: 2px solid white;  
+}
+
+#zoom-in, #zoom-out {
+    background-color: var(--btn-col-F);
+}
+
+#reset, #iterate, #redraw {
+    background-color: var(--btn-col-C);
 }
 
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
@@ -183,7 +206,7 @@ ul.social-icons {
 .social-icons li {
     vertical-align: top;
     display: inline;
-    height: 100px;
+    height: 150px;
 }
 .social-icons a {
     color: #fff;
