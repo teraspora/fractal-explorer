@@ -168,18 +168,22 @@ input + span {
     color: black;
     padding: 3px 3px;
     text-align: center;
-    font-size: 1vw;
+    font-size: 1em;
     font-weight: bold;
     box-shadow: 0 0 1px 1px;
     cursor: pointer;
     margin: 1px 1px 1px 1px;
     transition: transform 0.5s;
+    border: 4px groove var(--light-text-col);
+}
+
+.btn {
+    background-color: var(--btn-col-A);
 }
 
 .btn:hover {
     transform: scale(1.04);
     filter: invert(100%);   /* switch black and white text */
-    background-color: var(--btn-col-C); /*default, overridden below */    
     border: 2px solid white;  
 }
 
@@ -189,6 +193,10 @@ input + span {
 
 #reset, #iterate, #redraw {
     background-color: var(--btn-col-C);
+}
+
+#move-left, #move-right, #move-up, #move-down {
+    background-color: var(--btn-col-B);
 }
 
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
