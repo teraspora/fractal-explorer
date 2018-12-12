@@ -26,7 +26,7 @@ const ButtonOnColour = styles.getPropertyValue('--btn-col-F');
 
 var iterationCounts = [];
 
-const escapeRadius = 6;     // of bailout circle; radius of the circle outside of which we say
+const escapeRadius = 6;     // radius of the circle outside of which we say
 // a point has escaped and terminate the iteration loop, recording the iteration count at that time.
 var escapeRadiusSquared = escapeRadius * escapeRadius;
 
@@ -44,7 +44,7 @@ const colours = [
                  "#ffd9e7", "#000000", "#00c9ff", "#000000", "#ffc389", "#000000", "#9ccbff",
                  "#000000", "#4d001a", "#000000", "#e6e9ff", "#000000"],
 
-                ["#000000", "#3aa5f5", "#000000", "#b10061", "#000000", "#ffd4b1", "#000000",  
+                ["#000000", "#3aa5f5", "#000000", "#331a80", "#000000", "#ffd4b1", "#000000",  
                 "#3c6cc4", "#000000", "#ff7200", "#000000", "#12007b",                 
                 "#000000", "#ffffff", "#000000", "#41c4ff", "#000000", "#418eff", "#000000"],
 
@@ -67,6 +67,12 @@ var trigifyLevel = 1.0;
 var trigify = s => Math.sin(s / maxIterations * (Math.PI * Math.abs(trigifyLevel))) * maxIterations;
 
 // =======================================================================================================
+
+// Status bar
+// let populateStatusBar = () => {
+//     let status = `Iterating ${funcs[funcIndex].toString()} ${composeFunctions ? `composed with ${funcs[altFuncIndex]}` : ``}`;
+//     statusBar.innerHTML = status;
+// }
 
 // Set some default values for user-settable parameters:
 var exponent = 2;
@@ -162,6 +168,7 @@ draw();
 // ==============================================================================
 
 function draw() {
+    // populateStatusBar();
     for (i = 0; i < imgData.data.length; i += 4) {      // image data has 4 entries (RGBA) for each pixel, scanning L to R for each line
             // Why start at 1, not 0?  Well, had it at zero but a reddish pallette produced greenish colours; shifting one byte seemed
             // to produce correct colours so maybe byte 0 is a header byte or magic number??   For now I'll just leave it at 1.
@@ -299,6 +306,7 @@ function clickHandler(e) {
     var x = pixel.x;
     var y = pixel.y;
     juliaPoint = pixelToComplex(x, y);
+    console.log("Clicked at (" + x + ", " + y + ")");
     isJulia = true;
     draw();
 }
@@ -309,7 +317,6 @@ function dragStartHandler(e) {
     topLeftX = pixel.x;
     topLeftY = pixel.y;
     dragging = true;
-    console.log("Drag started at (" + topLeftX + ", " + topLeftY + ")");
     document.addEventListener("mouseup", dragFinishedHandler);
 }
 
@@ -337,6 +344,7 @@ function dragFinishedHandler(e) {
     zMin = pixelToComplex(topLeftX, topLeftY);
     zMax = {re: xMin + (topLeftX + newWidth) / W * xSpan, im: yMin + (topLeftY + newHeight) / H * ySpan};
     updateGeometryVars();
+
     draw();
 }
 
@@ -405,9 +413,12 @@ document.getElementById("trigify-level").addEventListener('input', function() {
     trigifyLevel = this.value;
 });
 
+
+
 document.addEventListener('keyup', processKeys);    // supposedly it's better to use keyup rather than keydown or keypress
 
 // ==============================================================================
+
 
 // COLOUR STUFF
 
