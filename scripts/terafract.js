@@ -143,6 +143,9 @@ document.getElementById("func-index").max = funcs.length - 1;
 document.getElementById("alt-func-index").max = funcs.length - 1;
 document.getElementById("palette-index").max = colours.length - 1;
 
+// Set up progress bar, to be displayed when iterating / drawing:
+const pbar = document.getElementById("progress-bar");
+
 // OK, so let's create a canvas to draw on:    
 const canv = document.getElementById("canv");
 canv.width = W;
