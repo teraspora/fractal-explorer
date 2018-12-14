@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Teraspora Fractal Explorer </title>
+	<title>Fractal Explorer </title>
     <meta name="description" content="A simple Javascript fractal image generator targeting the HTML5 canvas">
     <meta name="author" content="John Lynch">
     <link href="https://fonts.googleapis.com/css?family=Rubik" rel="stylesheet">
@@ -14,9 +14,13 @@
 
 <body>
 	<main id="main-grid">
-		<header id="app-name">teraspora fractal explorer</header>
+		<header id="app-name">teraspora fractal explorer
+
+		</header>
 		
-		<canvas id="canv"></canvas>
+		<canvas id="canv">
+			
+		</canvas>
 
 		<section id="controls">
 			<button class = "btn" id = "zoom-in">
@@ -46,30 +50,46 @@
 			<button class = "btn" id = "iterate">
 				Iterate
 			</button>
-			<label id="compose-label">Compose
-				<input type="checkbox" id="compose" value="compose"/>
-			</label>
-			<label>Max. iterations
+			
+			<div class="btn" id="compose">
+				<input type="checkbox" value="compose"/>
+				<span>Compose</span>
+			</div>
+			
+			<div class="btn">
 				<input id="max-iterations" name="max-iterations" type="number" min="8" max="256" step="8" value="32"/>
-			</label>
-			<label>Exponent
+				<span>Max. iterations</span>
+			</div>
+			
+			<div class="btn">
 				<input id="exponent" type="number" min="1" max="8" step="1" value="2"/>
-			</label>
-			<label id="func-label">Function<input id="func-index" type="number" min="0" step="1" value="0"/>
-			</label>
-			<label id="alt-func-label">Alt Func.<input id="alt-func-index" type="number" min="0" step="1" value="0"/>
-			</label>
-			<label id="palette-label">Palette
+				<span>Exponent</span>
+			</div>
+			<div class="btn">
+				<input id="func-index" type="number" min="0" step="1" value="0"/>
+				<span>Function</span>
+			</div>
+			<div class="btn">
+				<input id="alt-func-index" type="number" min="0" step="1" value="0"/>
+				<span>Alt Func.</span>
+			</div>
+			<div class="btn">
 				<input id="palette-index" type="number" min="0" step="1" value="0"/>
-			</label>
+				<span>Palette</span>
+			</div>
+			
 			<button class = "btn" id = "colour-shift">
 				Colourshift
 			</button>
 			<button class = "btn" id = "trigify">
 				Trigify
 			</button>
-			<label id="tl-label">Trig. Level<input id="trigify-level" type="number" min="0" max="256"step="1" value="1"/>
-			</label>
+			
+			<div class="btn">
+				<input id="trigify-level" type="number" min="0" max="256"step="1" value="1"/>
+				<span>Trig. Level</span>
+			</div>
+			
 			<button class = "btn" id = "mod-fraction">
 				Mod. Frac.
 			</button>
@@ -84,9 +104,9 @@
 			Various parameters may be adjusted via buttons, input elements or keyboard shortcuts.   </p>
 			<p>Two buttons cause re-iteration (and automatically redraw), whilst one just redraws:</p>
 			<ul>
-				<li><strong>&quot;Iterate&quot;</strong> just reiterates the function(s) and redraws based on current values of parameters.</li>
-				<li><strong>&quot;Reset&quot;</strong> also resets the zoom levels and the x and y offsets.</li>
-				<li><strong>&quot;Redraw&quot;</strong> causes a redraw based on the currently stored iteration count array with any newly altered colour settings.</li>
+			<li><strong>&quot;Iterate&quot;</strong> just reiterates the function(s) and redraws based on current values of parameters.</li>
+			<li><strong>&quot;Reset&quot;</strong> also resets the zoom levels and the x and y offsets.</li>
+			<li><strong>&quot;Redraw&quot;</strong> causes a redraw based on the currently stored iteration count array with any newly altered colour settings.</li>
 			</ul>
 			<p>Some parameters, i.e. the index/indices of the function(s) being iterated, the order (exponent), the maximum number of iterations per pixel, the zoom level and the x and y offsets, affect the iteration.   Any change in these and you&#39;ll need to hit <strong>&quot;Iterate&quot;</strong> or <strong>&quot;Reset&quot;</strong> to see the changes.</p>
 			<p>Others, i.e. the colour palette in use, the amount the palette is shifted, the level of <em>trigification</em>, and a parameter which modifies the fractional part of the iteration count for a subtle effect, just affect the mapping of colours to iteration counts, and so only require a <strong>&quot;Redraw&quot;</strong> to see the results.</p>
@@ -103,14 +123,14 @@
 			<h2>Get started</h2>
 			<p><strong>Just play!</strong></p>
 			<ul>
-				<li>Change the exponent to see higher-order Mandelbrot sets.</li>
-				<li>Experiment with colour palettes, trigification, fraction modification and palette shifting.</li>
-				<li>Change the exponent back to 2 and the function index to 2 and you will get the famous <a target="_blank" href="https://en.wikipedia.org/wiki/Burning_Ship_fractal">Burning Ship Fractal</a>.</li>
-				<li>Change the function index to 11, 12, 13 or 14 and you will get a version of the <a target="_blank" href="https://en.wikipedia.org/wiki/Mandelbox">Mandelbox fractal</a>.</li>
-				<li>Zoom in to see more detail or zoom out to see more of the extent of the image.</li>
-				<li>Note that the <strong>&quot;Left&quot;</strong>, <strong>&quot;Right&quot;</strong>, <strong>&quot;Up&quot;</strong> and <strong>&quot;Down&quot;</strong> buttons move the image, not the window.</li>
-				<li>Set the alt-function and tick the <strong>&quot;Compose&quot;</strong> checkbox.   Then click <strong>&quot;Iterate&quot;</strong> or <strong>&quot;Reset&quot;</strong>.   You are now seeing the effect of iterating two composed functions.</li>
-				<li>Setting the maximum iteration count to high values can in some cases give you more detail but will take longer.   Don&#39;t go wild unless you have a super-fast CPU!</li>
+			<li>Change the exponent to see higher-order Mandelbrot sets.</li>
+			<li>Experiment with colour palettes, trigification, fraction modification and palette shifting.</li>
+			<li>Change the exponent back to 2 and the function index to 2 and you will get the famous <a target="_blank" href="https://en.wikipedia.org/wiki/Burning_Ship_fractal">Burning Ship Fractal</a>.</li>
+			<li>Change the function index to 11, 12, 13 or 14 and you will get a version of the <a target="_blank" href="https://en.wikipedia.org/wiki/Mandelbox">Mandelbox fractal</a>.</li>
+			<li>Zoom in to see more detail or zoom out to see more of the extent of the image.</li>
+			<li>Note that the <strong>&quot;Left&quot;</strong>, <strong>&quot;Right&quot;</strong>, <strong>&quot;Up&quot;</strong> and <strong>&quot;Down&quot;</strong> buttons move the image, not the window.</li>
+			<li>Set the alt-function and tick the <strong>&quot;Compose&quot;</strong> checkbox.   Then click <strong>&quot;Iterate&quot;</strong> or <strong>&quot;Reset&quot;</strong>.   You are now seeing the effect of iterating two composed functions.</li>
+			<li>Setting the maximum iteration count to high values can in some cases give you more detail but will take longer.   Don&#39;t go wild unless you have a super-fast CPU!</li>
 			</ul>
 			<h2>Mouse zooming</h2>
 			<p>You can also zoom by using the mouse:  just drag with the primary mouse button on from the top-left corner to the bottom-right corner of the square you&#39;d like to enlarge.</p>

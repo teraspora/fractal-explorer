@@ -37,8 +37,8 @@ body, html {
 /* for mobile: */
 @media only screen and (max-width: 767px) {
     #main-grid {            
-        grid-template-columns: 1fr;
-        grid-template-rows: 1fr 20fr 15fr 15fr 1fr;
+        grid-template-columns: 100%;
+        grid-template-rows: 1fr 15fr 12fr 12fr 1fr;
     }
 
     header {
@@ -71,7 +71,7 @@ body, html {
 /* for desktop: */
 @media only screen and (min-width: 768px) {
     #main-grid {            
-        grid-template-columns: 4fr 3fr minmax(300px, 2fr);
+        grid-template-columns: 5fr 3fr 2fr;
         grid-template-rows: 6vh 80vh 6vh;
     }
 
@@ -109,36 +109,60 @@ body, html {
 }
 
 #app-name, #canv, #controls, #side-pane, #fr-footer {
+    position: relative;
     border: 3px ridge var(--august-col);
     background-color: var(--bg-dark-col);
     padding: 0;
     margin:  0;
-    justify-items: center;
     font-weight: normal;
+    object-fit: cover;
+    height: auto;
+    max-width: 100%;
+    /*display: inline-block;*/ /*overridden below for #controls */
+}
+
+#canv {
+    display: block;
+    margin: 0 auto;
 }
 
 #app-name {
-    font-size: 2vw;
+    font-size: 4vh;
     padding-left: 1.6vw;
     align-self: center;
     color: var(--august-col);
 }
 
+#fr-footer {
+    font-size: 3vh;
+    
+}
+
 #controls {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: repeat(7, 1fr);
     grid-gap: 1vw;
     grid-auto-flow: column;
     padding: 1vw;
     justify-items: stretch;
-    align-items: stretch;    
+    align-items: stretch; 
+    max-width: 100%;
+    height: auto;   
+}
+
+#controls > * {
+    position: relative;
+    object-fit: cover;
+    height: auto;
+    width: 11vw;
+    height: 10vh%;
 }
 
 #side-pane {
     overflow-y: scroll;
     color: var(--light-text-col);
-    font-size: 1vw;
+    font-size: 2vh;
     padding: 1vw;
 }
 
