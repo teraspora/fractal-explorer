@@ -60,6 +60,9 @@ Various parameters may be adjusted via buttons, input elements or keyboard short
 <p>All palettes consist of colours alternating with black, which can result in nice shading that gives a quasi-3D effect.</p>
 <h3>Get started</h3>
 <p><strong>Just play!</strong></p>
+
+![](screenshots/Screenshot_2018-12-14_18-18-08.png)
+
 <ul>
 <li>Change the exponent to see higher-order Mandelbrot sets.</li>
 <li>Experiment with colour palettes, trigification, fraction modification and palette shifting.</li>
@@ -165,3 +168,6 @@ I pushed my local git repo of code, images and media to a Github repository, and
 - My algorithm for the fractional part of the colour index (based on how far
 the final value of z is from the bailout circle) modified from
 <a href="http://jussiharkonen.com/gallery/coloring-techniques">"On Smooth Fractal Coloring Techniques" by Jussi H¨ark¨onen</a> (Master’s Thesis, Dept. of Mathematics, °Abo Akademi University), available as .pdf.
+
+![](screenshots/Screenshot_2018-12-14_18-25-08.png)
+
