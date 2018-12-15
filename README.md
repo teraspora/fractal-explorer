@@ -1,5 +1,7 @@
 # Teraspora Fractal Explorer
 
+![](screenshots/Screenshot_2018-12-14_18-11-05.png)
+
 ## Introduction
 
 This little Javascript app allows the user to generate interesting images by iterating functions over the complex plane, stopping iteration if the magnitude of the number or the number of iterations exceed pre-defined values.   In order to obviate sharp colour bands, which purely integer iteration counts would give, the count is modified according to how far out a point escapes, or if it doesn't, then how far inside the escape radius it is on the last iteration. This then results in gradations of shading when the colours are interpolated.
@@ -31,7 +33,9 @@ The typical user will use the app for destressing, relaxing for a few minutes, e
 
 ## Features
 
-<p>The aim of the app is to have fun with images.   It allows you to experiment with producing fractal images by iterating a variety of functions over the Complex plane.</p>
+<p>The aim of the app is to have fun with images. </p>
+![](screenshots/Screenshot_2018-12-14_18-21-15.png)
+<p>It allows you to experiment with producing fractal images by iterating a variety of functions over the Complex plane.</p>
 <p>On startup, the standard function <code>f(z, c) = z*z + c</code> is iterated to produce the well-known order 2 <a target="_blank" href="https://en.wikipedia.org/wiki/Mandelbrot_set">Mandelbrot Set</a>.
 Various parameters may be adjusted via buttons, input elements or keyboard shortcuts.   </p>
 <p>Two buttons cause re-iteration (and automatically redraw), whilst one just redraws:</p>
