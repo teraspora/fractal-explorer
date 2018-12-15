@@ -170,11 +170,24 @@ draw();
 // *** End of main code block ***
 // ==============================================================================
 
+// function updateProgressBar(text) {
+//     if (text == "Done") {
+//         pbar.classList.add("hide");
+//     }
+//     else {
+//         if (text == "Iterating") {
+//             pbar.classList.remove("hide");
+//         }
+//         pbar.innerText = text;
+//     }
+// }
+
 function draw() {
-    // populateStatusBar();
-    for (i = 0; i < imgData.data.length; i += 4) {      // image data has 4 entries (RGBA) for each pixel, scanning L to R for each line
-            // Why start at 1, not 0?  Well, had it at zero but a reddish pallette produced greenish colours; shifting one byte seemed
-            // to produce correct colours so maybe byte 0 is a header byte or magic number??   For now I'll just leave it at 1.
+    // setTimeout(updateProgressBar, 0, "Iterating");
+    // gc.font = "80px Arial";
+    // gc.fillText("Hello World", 200, 300);
+    let imgSize = imgData.data.length;
+    for (i = 0; i < imgSize; i += 4) {      // image data has 4 entries (RGBA) for each pixel, scanning L to R for each line
         var pixelNum = Math.floor(i / 4);
         // Get x and y coords of pixel
         var px = Math.floor(pixelNum % W);
@@ -187,8 +200,11 @@ function draw() {
 }
 
 function reallyDraw() {
+    //setTimeout(updateProgressBar, 0, "Drawing");  
+
     var numFirstColours = colours[paletteIndex].length - 1; // the first colour must not be the last!
     var colourMappingFactor = (colours[paletteIndex].length - 2) / maxIterations; 
+    
     for (i = 0; i < numPixels; i++) {
         var iterationCount = !trigColours ? iterationCounts[i] : trigify(iterationCounts[i]);
         var colourIndex = modifiedColours ? (iterationCount + colourShift) % numFirstColours : (iterationCount * colourMappingFactor + colourShift) % numFirstColours; // map iteration count to a colour
@@ -213,7 +229,12 @@ function reallyDraw() {
         imgData.data[i * 4 + 3] = 255;    // alpha component, we'll always have it opaque for now
     }    
     
-    // ok, we have our imgData object populated, so write it out to the graphics context, which is linked to the canvas
+    // ok, we have our imgData object populated, so (after ditching the progress bar) 
+    // write it out to the graphics context, which is linked to the canvas
+    
+    // setTimeout(updateProgressBar, 0, "Done");
+    
+    
     gc.putImageData(imgData, 16, 16);   
 }
 

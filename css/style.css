@@ -23,18 +23,21 @@ body, html {
     font-family:  'Rubik', sans-serif;
 }
 
+/*.hide {
+    display: none;
+}
+
 #progress-bar {
     position: absolute;
     z-index: 32;
-    /*display:none;
-    */width: 15vw;
+    width: 15vw;
     height: 50px;
     top: 400px;
-    left: 300px;
+    left: 500px;
     background-color: black;
     color: white;
     font-size: 2vw;
-}
+}*/
 
 #main-grid {            
     display: grid;
