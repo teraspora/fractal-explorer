@@ -99,7 +99,7 @@
 		<aside id="side-pane">
 			<h1>Teraspora Fractal Explorer - An Introduction</h1>
 			<h2>Overview</h2>
-			<p>The aim of the app is to have fun with images.   It allows you to experiment with producing fractal images by iterating a variety of functions over the Complex plane.</p>
+			<p>The aim of the app is to have fun generating fractal images.   It allows you to experiment with producing fractal images by iterating a variety of functions over the Complex plane.</p>
 			<p>On startup, the standard function <code>f(z, c) = z*z + c</code> is iterated to produce the well-known order 2 <a target="_blank" href="https://en.wikipedia.org/wiki/Mandelbrot_set">Mandelbrot Set</a>.
 			Various parameters may be adjusted via buttons, input elements or keyboard shortcuts.   </p>
 			<p>Two buttons cause re-iteration (and automatically redraw), whilst one just redraws:</p>
@@ -110,11 +110,11 @@
 			</ul>
 			<p>Some parameters, i.e. the index/indices of the function(s) being iterated, the order (exponent), the maximum number of iterations per pixel, the zoom level and the x and y offsets, affect the iteration.   Any change in these and you&#39;ll need to hit <strong>&quot;Iterate&quot;</strong> or <strong>&quot;Reset&quot;</strong> to see the changes.</p>
 			<p>Others, i.e. the colour palette in use, the amount the palette is shifted, the level of <em>trigification</em>, and a parameter which modifies the fractional part of the iteration count for a subtle effect, just affect the mapping of colours to iteration counts, and so only require a <strong>&quot;Redraw&quot;</strong> to see the results.</p>
-			<p><strong>&quot;Mod. Frac&quot;</strong> and <strong>&quot;Trigify&quot;</strong> are Boolean switches, either on or off.   The text will always indicate the result of clicking, not the current state.</p>
+			<p><strong>&quot;Mod. Frac&quot;</strong> and <strong>&quot;Trigify&quot;</strong> are Boolean switches, either on or off.   The text will always indicate what the button will do if clicked, not the current state.</p>
 			<p><strong>&quot;Trigify&quot;</strong> applies a function of my own devising which remaps the iteration counts.   Its effect may be varied with the <strong>&quot;Trigify Level&quot;</strong> selector.  Some images look better with this function applied.   Experimentation is the best guide.</p>
 			<p><strong>&quot;Mod. Frac.&quot;</strong> remaps the fractional part of the iteration count (determined in the iteration phase by the distance inside or outside the escape radius on the last iteration) using the function <code>f(x) = sin(πx/2)</code>, which maps the unit interval to itself.   This can have subtle effects on how one colour blends into the next.   Again, please experiment!   In a future release I may introduce Hermite interpolation as an option. </p>
 			<h2>Functions</h2>
-			<p>A number of functions are provided for the user to experiment with, including the standard Mandelbrot, the Burning Ship fractal, a version of the 2D <a target="_blank" href="https://en.wikipedia.org/wiki/Mandelbox">Mandelbox fractal</a> and a bunch of largely trigonometric functions of my own devising.   Note that I take sines and cosines of the real and imaginary components separately:  I don&#39;t use the Complex versions of these functions as in my experience they tend to produce fractured images.</p>
+			<p>A number of functions are provided for the user to experiment with, including the standard Mandelbrot, the Burning Ship fractal, a version of the 2D <a target="_blank" href="https://en.wikipedia.org/wiki/Mandelbox">Mandelbox fractal</a> and a bunch of largely trigonometric functions of my own devising.   Note that I take real sines and cosines of the real and imaginary components separately:  I don&#39;t use the Complex versions of these functions as in my experience they tend to produce fractured images.</p>
 			<p>More functions will be included in a future version.</p>
 			<p>When <strong>&quot;Compose&quot;</strong> is ticked, functions are composed, thus, if <strong>&quot;Function&quot;</strong> is <code>f(z, c)</code> and <strong>&quot;Alt Func.&quot;</strong> is <code>g(z, c)</code> then composing functions results in <code>f(g(z, c), c)</code> being iterated. </p>
 			<p>Note that the user can also vary the associated exponent to see the effects higher-order functions have upon the image.</p>
@@ -155,7 +155,7 @@
 			<td>Redraw</td>
 			</tr>
 			<tr>
-			<td>+  or =</td>
+			<td>+&nbsp;  or&nbsp; =</td>
 			<td>Zoom in</td>
 			</tr>
 			<tr>
