@@ -4,6 +4,7 @@ Date: 		August 2018
 Language: 	Javascript
 Contents: 	A collection of basic complex number functions
 */
+/* jshint esversion: 6 */
 
 const ZERO = {re: 0, im: 0};
 const ONE = {re: 1, im: 0};
