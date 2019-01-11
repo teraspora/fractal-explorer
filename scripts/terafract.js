@@ -167,18 +167,6 @@ draw();
 // *** End of main code block ***
 // ==============================================================================
 
-// function updateProgressBar(text) {
-//     if (text == "Done") {
-//         pbar.classList.add("hide");
-//     }
-//     else {
-//         if (text == "Iterating") {
-//             pbar.classList.remove("hide");
-//         }
-//         pbar.innerText = text;
-//     }
-// }
-
 function draw() {
     // setTimeout(updateProgressBar, 0, "Iterating");
     // gc.font = "80px Arial";
@@ -358,8 +346,6 @@ function dragFinishedHandler(e) {
     var newWidth = newHeight * aspectRatio;
     var xMin = zMin.re;
     var yMin = zMin.im;
-    // var xMax = zMax.re;
-    // var yMax = zMax.im;
     zMin = pixelToComplex(topLeftX, topLeftY);
     zMax = {re: xMin + (topLeftX + newWidth) / W * xSpan, im: yMin + (topLeftY + newHeight) / H * ySpan};
     updateGeometryVars();
