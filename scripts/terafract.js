@@ -4,7 +4,7 @@ Date:       August 2018
 Language:   Javascript
 Contents:   A basic fractal image generator for escape-time fractal functions
 */
-
+/* jshint esversion: 6 */
 
 // First off, the company of a couple of old and much-needed friends will be required...
 const ROOT2 = Math.sqrt(2.0);
@@ -127,7 +127,7 @@ var funcs = [
     (z, c) => ballFold(boxFold(add(mult(z, mBoxScale), c), 0.5), 0.5, 1.0),                     //  // #14 103 Mandelbox shuffle functions                                                                                                                              
     (z, c) => add(pow(polar(Math.log10(Math.abs(Math.cos(z.re) / Math.cos(z.im))), arg(z)), exponent), c), //  // #15 391 
     (z, c) => add(pow(polar(arg(z) + z.re + z.im, arg(z)), exponent), c),  // #16
-    (z, c) => {var w = pow(z, exponent); return add(w, c, {re: Math.abs(w.re) - w.re, im: 0})}, //  // #17 207
+    (z, c) => {var w = pow(z, exponent); return add(w, c, {re: Math.abs(w.re) - w.re, im: 0});}, //  // #17 207
     (z, c) => add(pow(polar(recip(Math.sin(z.re) * Math.cos(z.im)), arg(z)), exponent), c),      //  // #18 277
     (z, c) => {return {re: z.re * Math.cos(c.im), im: z.im * Math.sin(c.re)};},  // #19
     (z, c) => {return {re: z.re + Math.cos(c.im), im: z.im + Math.sin(c.re)};},  // #20
@@ -142,9 +142,6 @@ var funcs = [
 document.getElementById("func-index").max = funcs.length - 1;
 document.getElementById("alt-func-index").max = funcs.length - 1;
 document.getElementById("palette-index").max = colours.length - 1;
-
-// Set up progress bar, to be displayed when iterating / drawing:
-const pbar = document.getElementById("progress-bar");
 
 // OK, so let's create a canvas to draw on:    
 const canv = document.getElementById("canv");
@@ -268,9 +265,7 @@ function iterate(z) {
 // HELPER FUNCTIONS
 
 function recip(x) {
-    return x !== 0
-        ? 1.0 / x
-        : Number.MAX_VALUE;
+    return x !== 0 ? 1.0 / x : Number.MAX_VALUE;
 }
 
 function compose(f1, f2, z, c) {    // helper function to compose two f:(z, c) => z1 type functions
@@ -363,8 +358,8 @@ function dragFinishedHandler(e) {
     var newWidth = newHeight * aspectRatio;
     var xMin = zMin.re;
     var yMin = zMin.im;
-    var xMax = zMax.re;
-    var yMax = zMax.im;
+    // var xMax = zMax.re;
+    // var yMax = zMax.im;
     zMin = pixelToComplex(topLeftX, topLeftY);
     zMax = {re: xMin + (topLeftX + newWidth) / W * xSpan, im: yMin + (topLeftY + newHeight) / H * ySpan};
     updateGeometryVars();
@@ -377,7 +372,7 @@ function getMousePos(c, e) {       // got from https://codepen.io/chrisjaime/pen
     return {
         x: e.clientX - bounds.left,
         y: e.clientY - bounds.top
-    }
+    };
 }
 
 // Handlers for click, mousedown and key events on canvas, buttons and input elements
