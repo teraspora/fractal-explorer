@@ -167,7 +167,7 @@ I have had quite some difficulty with the CSS layout.   The Javascript code, tho
 
 This is compounded by the fact that Chrome and Firefox lay out my control panel a little differently.   The `<input>` elements in the button divs are too wide in Firefox, but display nice and compactly in Chrome.
 
-At the time of writing I have not completely solved the issue of these elements breaking out of their container divs in portrait mode below my breakpoint.   I realise this may lose me some marks but I feel I have spent enough time trying to solve it by myself, and may submit it without having completely solved this.   I really could do with help from a CSS Grid expert!
+<del>At the time of writing I have not completely solved the issue of these elements breaking out of their container divs in portrait mode below my breakpoint.   I realise this may lose me some marks but I feel I have spent enough time trying to solve it by myself, and may submit it without having completely solved this.   I really could do with help from a CSS Grid expert!</del>
 
 On a practical level, though, I am less concerned, as I really intend the app to be run on a PC rather than a phone, as it is seriously CPU-intensive and certainly does not run properly on my old phone, 
 
