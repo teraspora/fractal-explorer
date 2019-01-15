@@ -2,14 +2,12 @@
         box-sizing: border-box;
         --bg-dark-col: #010012;
         --august-col: #ff9371;
-        --hover-col: #ff4b00;
         --body-bg-col: #010000; 
         --light-text-col: #fff6e5;
         --pale-blue-col: #b4eaff;
         --btn-col-A: #14508d;
         --btn-col-B: #81002b;
         --btn-col-C: #00542c;
-        --btn-col-D: #e6580e;
         --btn-col-E: #ba1257;
         --btn-col-F: #0099c8;
         border-radius: 0.5vw;
@@ -23,22 +21,6 @@ body, html {
     font-family:  'Rubik', sans-serif;
 }
 
-/*.hide {
-    display: none;
-}
-
-#progress-bar {
-    position: absolute;
-    z-index: 32;
-    width: 15vw;
-    height: 50px;
-    top: 400px;
-    left: 500px;
-    background-color: black;
-    color: white;
-    font-size: 2vw;
-}*/
-
 #main-grid {            
     display: grid;
     grid-gap: 1vmax;
@@ -49,76 +31,6 @@ body, html {
     padding: 1em;
 }
 
-/* ===================================== */
-/* for mobile: */
-@media only screen and (max-width: 767px) {
-    #main-grid {            
-        grid-template-columns: 100%;
-        grid-template-rows: 1fr 15fr 12fr 12fr 1fr;
-    }
-
-    header {
-        grid-column: 1/2;
-        grid-row: 1/2;
-    }
-
-    #canv {
-        grid-column: 1/2;
-        grid-row: 2/3;        
-    }
-
-    #controls {
-        grid-column: 1/2;
-        grid-row: 3/4;        
-    }
-
-    #side-pane {
-        grid-column: 1/2;
-        grid-row: 4/5;
-    }
-
-    #fr-footer {
-        grid-column: 1/2;
-        grid-row: 5/6;
-    }
-}
-/* === end mobile (<768px) media query === */
-
-/* for desktop: */
-@media only screen and (min-width: 768px) {
-    #main-grid {            
-        grid-template-columns: 5fr 3fr 2fr;
-        grid-template-rows: 6vh 80vh 6vh;
-    }
-
-    header {
-        grid-column: 1/-1;
-        grid-row: 1/2;
-    }
-
-    #canv {
-        grid-column: 1/2;
-        grid-row: 2/3;
-    }
-
-    #controls {
-        grid-column: 2/3;
-        grid-row: 2/3;    
-    }
-
-    #side-pane {
-        grid-column: 3/4 ;
-        grid-row: 2/3;           
-    }
-
-    #fr-footer {
-        grid-column: 1/-1;
-        grid-row: 3/4;
-    }
-}
-/* === end desktop (>767px) media query === */
-
-/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 
 #app-name {
     color: var(--august-col);
@@ -134,12 +46,13 @@ body, html {
     object-fit: cover;
     height: auto;
     max-width: 100%;
-    /*display: inline-block;*/ /*overridden below for #controls */
 }
 
 #canv {
     display: block;
     margin: 0 auto;
+    max-width: 100%;
+    height: auto;
 }
 
 #app-name {
@@ -156,23 +69,17 @@ body, html {
 
 #controls {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
     grid-template-rows: repeat(7, 1fr);
-    grid-gap: 1vw;
+    grid-gap: 10px;
     grid-auto-flow: column;
     padding: 1vw;
-    justify-items: stretch;
-    align-items: stretch; 
-    max-width: 100%;
-    height: auto;   
+    justify-content: space-around;
 }
 
 #controls > * {
     position: relative;
-    object-fit: cover;
     height: auto;
-    width: 11vw;
-    height: 10vh%;
 }
 
 #side-pane {
@@ -242,7 +149,7 @@ input + span {
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 
 /*
-Font Awsome styling for social icons:
+Font Awesome styling for social icons:
 */
 /* social media links in footer */
 .social-icon {
@@ -290,3 +197,41 @@ ul.social-icons {
     -o-transition: 0.6s;
     transition: 0.6s;    
 }
+
+/* ===================================== */
+
+/* for desktop: */
+@media only screen and (min-width: 1025px) {
+    #main-grid {            
+        grid-template-columns: 5fr 3fr 2fr;
+        grid-template-rows: 6vh 80vh 6vh;
+    }
+
+    header {
+        grid-column: 1/-1;
+        grid-row: 1/2;
+    }
+
+    #canv {
+        grid-column: 1/2;
+        grid-row: 2/3;
+    }
+
+    #controls {
+        grid-column: 2/3;
+        grid-row: 2/3;    
+    }
+
+    #side-pane {
+        grid-column: 3/4 ;
+        grid-row: 2/3;           
+    }
+
+    #fr-footer {
+        grid-column: 1/-1;
+        grid-row: 3/4;
+    }
+}
+/* === end desktop (>1025px - to include iPads) media query === */
+
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
