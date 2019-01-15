@@ -9,13 +9,13 @@ This little Javascript app allows the user to generate interesting images by ite
 Such images are known as "Escape-time fractals", and the classic example is the well-known Mandelbrot Set, which is obtained by iterating the function 
 `f(z): z -> z * z + c where z, c &‌#8946; &‌#8450;`.   If we set `c` to the initial value of z for each pixel, i.e. the Complex number to which that pixel maps, we get the Mandelbrot Set for the function.   If we set `c` corresponding to a particular pixel, the same value for every pixel we iterate, then we get the Julia Set of the function for that point.
 
-To see how the structure of the Julia set varies as we go around the border of the standard Mandelbrot set, see my video <a href="https://www.youtube.com/embed/GTTlYxDHjtc">Julia Trip</a>. 
+To see how the structure of the Julia set varies as we go around the border of the standard Mandelbrot set, see my video <a target="_blank" href="https://www.youtube.com/embed/GTTlYxDHjtc">Julia Trip</a>. 
 
-Such sets are called fractals because they exhibit an infinite level of detail (subject, of course, to hardware limitations and the precision of floats) and show self-similarity at different scales. To get an idea of this see <a href="https://www.shadertoy.com/embed/MlGcDw?gui=true&t=10&paused=false&muted=false">my shader which zooms into the standard order 2 Mandelbrot Set</a>.
+Such sets are called fractals because they exhibit an infinite level of detail (subject, of course, to hardware limitations and the precision of floats) and show self-similarity at different scales. To get an idea of this see <a target="_blank" href="https://www.shadertoy.com/embed/MlGcDw?gui=true&t=10&paused=false&muted=false">my shader which zooms into the standard order 2 Mandelbrot Set</a>.
 
 I started programming escape-time fractals a few years ago in Java 8 with JavaFX, and I continue to develop this program, which I used to produce the "Julia Trip" video.
 
-So to create the engine of this app, I basically translated the core engines of my Java app into Javascript, manually - also having to translate the functions to iterate from Java lambdas and replace <a href="https://github.com/teraspora/Complex">my Java Complex Number class</a> by Javascript functions.   Also, in the Java program I parallelise the iterations using one of the native parallel Stream functions, thus:
+So to create the engine of this app, I basically translated the core engines of my Java app into Javascript, manually - also having to translate the functions to iterate from Java lambdas and replace <a target="_blank" href="https://github.com/teraspora/Complex">my Java Complex Number class</a> by Javascript functions.   Also, in the Java program I parallelise the iterations using one of the native parallel Stream functions, thus:
 `IntStream.range(0, width * height).parallel().forEach(pixel -> iterate(pixel));`
 and use four threads to set the colours in the four quadrants, but I have not yet learnt how to do this in Javascript.   However, I hope this to be a future enhancement, using "Web workers", I think, as currently this version is considerably slower than JVM Bytecode.
 
@@ -171,7 +171,7 @@ At the time of writing I have not completely solved the issue of these elements 
 
 On a practical level, though, I am less concerned, as I really intend the app to be run on a PC rather than a phone, as it is seriously CPU-intensive and certainly does not run properly on my old phone, 
 
-I am pleased to say, though, that following my detailed suggestion, Wes Bos and Scott Tolinski have devoted <a href="https://syntax.fm/show/104/css-layout">the whole of Episode 104 of their excellent Syntax podcast</a> to CSS Layout.   I need to listen to this a few more times and experiment with their ideas and suggestions!
+I am pleased to say, though, that following my detailed suggestion, Wes Bos and Scott Tolinski have devoted <a target="_blank" href="https://syntax.fm/show/104/css-layout">the whole of Episode 104 of their excellent Syntax podcast</a> to CSS Layout.   I need to listen to this a few more times and experiment with their ideas and suggestions!
 
 ## Deployment
 
@@ -181,7 +181,7 @@ I pushed my local git repo of code, images and media to a Github repository, and
 
 ### Algorithms
 
-- Mandelbox definition / algorithm from <a href="https://en.wikipedia.org/wiki/Mandelbox">here</a> and various online resources I consulted several years ago (for `boxFold()` and `ballFold()` functions).
+- Mandelbox definition / algorithm from <a target="_blank" href="https://en.wikipedia.org/wiki/Mandelbox">here</a> and various online resources I consulted several years ago (for `boxFold()` and `ballFold()` functions).
 
 - Mandelbrot and Burning Ship fractals are well-known.   The former I have known since the 1970s, and I could not possibly recall exactly whence; the latter I read up on several years ago: it can be found in numerous online locations.
 
@@ -189,7 +189,7 @@ I pushed my local git repo of code, images and media to a Github repository, and
 
 - My algorithm for the fractional part of the colour index (based on how far
 the final value of z is from the bailout circle) modified from
-<a href="http://jussiharkonen.com/gallery/coloring-techniques">"On Smooth Fractal Coloring Techniques" by Jussi H¨ark¨onen</a> (Master’s Thesis, Dept. of Mathematics, °Abo Akademi University), available as .pdf.
+<a target="_blank" href="http://jussiharkonen.com/gallery/coloring-techniques">"On Smooth Fractal Coloring Techniques" by Jussi H¨ark¨onen</a> (Master’s Thesis, Dept. of Mathematics, °Abo Akademi University), available as .pdf.
 
 - The colouring algorithms and those for "Trigify" and "Modify Fraction" are of my own devising.
 
