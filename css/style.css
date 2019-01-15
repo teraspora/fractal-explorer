@@ -1,5 +1,6 @@
 * {
-        box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+                box-sizing: border-box;
         --bg-dark-col: #010012;
         --august-col: #ff9371;
         --body-bg-col: #010000; 
@@ -22,6 +23,7 @@ body, html {
 }
 
 #main-grid {            
+    display: -ms-grid;            
     display: grid;
     grid-gap: 1vmax;
     padding: 1em;
@@ -39,7 +41,8 @@ body, html {
     padding: 0;
     margin:  0;
     font-weight: normal;
-    object-fit: cover;
+    -o-object-fit: cover;
+       object-fit: cover;
     height: auto;
     max-width: 100%;
 }
@@ -54,7 +57,9 @@ body, html {
 #app-name {
     font-size: 4vh;
     padding-left: 1.6vw;
-    align-self: center;
+    -ms-flex-item-align: center;
+        -ms-grid-row-align: center;
+        align-self: center;
     color: var(--august-col);
 }
 
@@ -64,13 +69,16 @@ body, html {
 }
 
 #controls {
+    display: -ms-grid;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+    -ms-grid-rows: 1fr 10px 1fr 10px 1fr 10px 1fr 10px 1fr 10px 1fr 10px 1fr;
     grid-template-rows: repeat(7, 1fr);
     grid-gap: 10px;
     grid-auto-flow: column;
     padding: 1vw;
-    justify-content: space-around;
+    -ms-flex-pack: distribute;
+        justify-content: space-around;
 }
 
 #controls > * {
@@ -113,10 +121,15 @@ input + span {
     text-align: center;
     font-size: 1em;
     font-weight: bold;
-    box-shadow: 0 0 1px 1px;
+    -webkit-box-shadow: 0 0 1px 1px;
+            box-shadow: 0 0 1px 1px;
     cursor: pointer;
     margin: 1px 1px 1px 1px;
+    -webkit-transition: -webkit-transform 0.5s;
+    transition: -webkit-transform 0.5s;
+    -o-transition: transform 0.5s;
     transition: transform 0.5s;
+    transition: transform 0.5s, -webkit-transform 0.5s;
     border: 4px groove var(--light-text-col);
 }
 
@@ -125,8 +138,11 @@ input + span {
 }
 
 .btn:hover {
-    transform: scale(1.04);
-    filter: invert(100%);   /* switch black and white text */
+    -webkit-transform: scale(1.04);
+        -ms-transform: scale(1.04);
+            transform: scale(1.04);
+    -webkit-filter: invert(100%);
+            filter: invert(100%);   /* switch black and white text */
     border: 2px solid white;  
 }
 
@@ -199,32 +215,86 @@ ul.social-icons {
 /* for desktop: */
 @media only screen and (min-width: 1025px) {
     #main-grid {            
+        -ms-grid-columns: 5fr 1vmax 3fr 1vmax 2fr;            
         grid-template-columns: 5fr 3fr 2fr;
+        -ms-grid-rows: 6vh 1vmax 80vh 1vmax 6vh;
         grid-template-rows: 6vh 80vh 6vh;
+    }
+    #main-grid > *:nth-child(1) {
+                -ms-grid-row: 1;
+                -ms-grid-column: 1;
+    }
+    #main-grid > *:nth-child(2) {
+                -ms-grid-row: 1;
+                -ms-grid-column: 3;
+    }
+    #main-grid > *:nth-child(3) {
+                -ms-grid-row: 1;
+                -ms-grid-column: 5;
+    }
+    #main-grid > *:nth-child(4) {
+                -ms-grid-row: 3;
+                -ms-grid-column: 1;
+    }
+    #main-grid > *:nth-child(5) {
+                -ms-grid-row: 3;
+                -ms-grid-column: 3;
+    }
+    #main-grid > *:nth-child(6) {
+                -ms-grid-row: 3;
+                -ms-grid-column: 5;
+    }
+    #main-grid > *:nth-child(7) {
+                -ms-grid-row: 5;
+                -ms-grid-column: 1;
+    }
+    #main-grid > *:nth-child(8) {
+                -ms-grid-row: 5;
+                -ms-grid-column: 3;
+    }
+    #main-grid > *:nth-child(9) {
+                -ms-grid-row: 5;
+                -ms-grid-column: 5;
     }
 
     header {
         grid-column: 1/-1;
+        -ms-grid-row: 1;
+        -ms-grid-row-span: 1;
         grid-row: 1/2;
     }
 
     #canv {
+        -ms-grid-column: 1;
+        -ms-grid-column-span: 1;
         grid-column: 1/2;
+        -ms-grid-row: 2;
+        -ms-grid-row-span: 1;
         grid-row: 2/3;
     }
 
     #controls {
+        -ms-grid-column: 2;
+        -ms-grid-column-span: 1;
         grid-column: 2/3;
+        -ms-grid-row: 2;
+        -ms-grid-row-span: 1;
         grid-row: 2/3;    
     }
 
     #side-pane {
+        -ms-grid-column: 3;
+        -ms-grid-column-span: 1;
         grid-column: 3/4 ;
+        -ms-grid-row: 2;
+        -ms-grid-row-span: 1;
         grid-row: 2/3;           
     }
 
     #fr-footer {
         grid-column: 1/-1;
+        -ms-grid-row: 3;
+        -ms-grid-row-span: 1;
         grid-row: 3/4;
     }
 }
