@@ -24,10 +24,6 @@ body, html {
 #main-grid {            
     display: grid;
     grid-gap: 1vmax;
-    justify-content: stretch;
-    align-content: stretch;
-    justify-items: stretch;
-    align-items: stretch;
     padding: 1em;
 }
 

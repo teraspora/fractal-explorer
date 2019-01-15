@@ -78,7 +78,7 @@ var trigify = s => Math.sin(s / maxIterations * (Math.PI * Math.abs(trigifyLevel
 var exponent = 2;
 var funcIndex = 0;
 var altFuncIndex = 0;
-var paletteIndex = 0;
+var paletteIndex = 2;
 var composeFunctions = false;
 var maxIterations = 32;
 
